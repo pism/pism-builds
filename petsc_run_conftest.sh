@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cat > script.queue << EOF
 #PBS -S /bin/bash
 #PBS -l select=1:ncpus=1:model=wes
