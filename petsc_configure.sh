@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ./config/configure.py \
    --with-cc=icc --with-cxx=icpc --with-fc=ifort --with-f77=ifort \
    --with-blas-lapack-dir="/nasa/intel/Compiler/2015.0.090/composer_xe_2015.0.090/mkl/" \
