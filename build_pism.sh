@@ -59,7 +59,7 @@ module load comp-intel/2015.0.090
 module load mpi-intel/5.0.3.048
 export PATH="$PATH:."
 export MPI_GROUP_MAX=64
-mpiexec -np 1 ./conftest-linux-64bit
+mpiexec -np 1 ./conftest-$PETSC_ARCH
 EOF
 
     # run conftest in an interactive job and wait for it to complete
