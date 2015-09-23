@@ -1,15 +1,32 @@
 #!/bin/bash
 
-# stop on error
-set -e
-# print commands before executing them
-set -x
+# Automate building PROJ.4, FFTW, PETSc, and PISM on pleiades.
+#
+# To use this script,
+#
+# - edit your .profile to load modules automatically
+# - download and unpack PETSc
+# - set PETSC_DIR and PETSC_ARCH in your .profile
+# - edit LOCAL_LIB_DIR and PISM_DIR below
+# - run this script
+#
+# This script uses the -x option of qsub, which runs a script in an
+# interactive job, making the rest of the script wait for the
+# completion of this script. (See "man qsub" for details.)
 
+# directory to install PROJ.4 and FFTW in
 LOCAL_LIB_DIR=$HOME/local-test
+
+# PISM installation directory
 PISM_DIR=$HOME/pism-test
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
+
+# stop on error
+set -e
+# print commands before executing them
+set -x
 
 build_petsc() {
     cd $PETSC_DIR
@@ -78,6 +95,10 @@ build_pism() {
     mkdir -p build
     cd build
     rm -f CMakeCache.txt
+
+    # use Intel's MPI compiler wrappers
+    export CC=mpiicc
+    export CXX=mpiicpc
     cmake -DPETSC_EXECUTABLE_RUNS=YES \
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
