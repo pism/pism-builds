@@ -47,7 +47,7 @@ build_fftw3() {
     tar xzvf fftw-3.3.4.tar.gz
 
     cd fftw-3.3.4
-    ./configure --prefix=$LOCAL_LIB_DIR
+    ./configure --enable-shared --prefix=$LOCAL_LIB_DIR
 
     make all
     make install
@@ -58,10 +58,11 @@ build_proj4() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    git clone --depth 1 https://github.com/OSGeo/proj.4.git
+    git clone --depth 1 -b 4.9.2-maintenance https://github.com/OSGeo/proj.4.git
 
     cd proj.4
-    ./autogen.sh
+    # remove and re-generate files created by autoconf
+    autoreconf --force --install
     ./configure --prefix=$LOCAL_LIB_DIR
 
     make all
@@ -72,15 +73,16 @@ build_pism() {
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
 
-    git clone -b dev https://github.com/pism/pism.git .
+    git clone --depth 1 -b dev https://github.com/pism/pism.git . || git pull
 
-    mkdir build
+    mkdir -p build
     cd build
+    rm -f CMakeCache.txt
     cmake -DPETSC_EXECUTABLE_RUNS=YES \
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
+          -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ4=YES ..
-          # -DPism_USE_PARALLEL_NETCDF4=YES \
     make -j2 install
 }
 
