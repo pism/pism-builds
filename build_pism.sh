@@ -63,7 +63,8 @@ mpiexec -np 1 ./conftest-$PETSC_ARCH
 EOF
 
     # run conftest in an interactive job and wait for it to complete
-    qsub -q devel -I -x ./conftest-$PETSC_ARCH
+    qsub -q devel script.queue
+    read -p "Wait for the job to complete and press RETURN."
 
     ./reconfigure-$PETSC_ARCH.py
 
