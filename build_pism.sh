@@ -122,6 +122,8 @@ build_pism() {
     make -j2 install
 }
 
+build_petsc
+
 build_proj4
 
 build_fftw3
