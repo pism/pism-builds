@@ -20,10 +20,9 @@ module load udunits/2.1.19
 
 export PETSC_DIR=~/petsc-3.6.1
 export PETSC_ARCH=linux-64bit
-export CC=mpicc
-export CXX=mpicxx
 
-PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin                     # Add private commands to PATH
+# Add private commands to PATH
+PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin
 
 # list currently loaded modules
 module list
