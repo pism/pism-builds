@@ -23,6 +23,9 @@ PISM_DIR=$HOME/pism-test
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
+MPI_INCLUDE="/nasa/sgi/mpt/2.12r16/include"
+MPI_LIBRARY="/nasa/sgi/mpt/2.12r16/lib/libmpi.so"
+
 # stop on error
 set -e
 # print commands before executing them
@@ -36,8 +39,8 @@ build_petsc() {
     ./config/configure.py \
         --with-cc=icc --with-cxx=icpc --with-fc=0 \
         --with-blas-lapack-dir="/nasa/intel/Compiler/2015.0.090/composer_xe_2015.0.090/mkl/" \
-        --with-mpi-lib="/nasa/sgi/mpt/2.12r16/lib/libmpi.so" \
-        --with-mpi-include="/nasa/sgi/mpt/2.12r16/include" \
+        --with-mpi-lib=$MPI_LIBRARY \
+        --with-mpi-include=$MPI_INCLUDE \
         --with-64-bit-indices=1 \
         --known-mpi-shared-libraries=1 \
         --with-debugging=0 \
@@ -112,9 +115,11 @@ build_pism() {
     rm -f CMakeCache.txt
 
     # use Intel's MPI compiler wrappers
-    export CC=mpiicc
-    export CXX=mpiicpc
-    cmake -DPETSC_EXECUTABLE_RUNS=YES \
+    export CC=icc
+    export CXX=icpc
+    cmake -DMPI_C_INCLUDE_PATH=$MPI_INCLUDE \
+          -DMPI_C_LIBRARIES=$MPI_LIBRARY \
+          -DPETSC_EXECUTABLE_RUNS=YES \
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
