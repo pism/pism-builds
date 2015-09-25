@@ -1,18 +1,17 @@
-# -*- mode: shell-script -*-
 # $Header: /cvsroot/bcfg2/bcfg2/Cfg/etc/skel_NAS/.profile/.profile,v 1.1 2009/12/11 16:05:13 dtalcott Exp $
 # These commands are executed on a login or start of a PBS job.
 
 # First, run the NAS standard setup.
 
 if [ -e /usr/local/lib/init/global.profile ]; then
-        . /usr/local/lib/init/global.profile
+	. /usr/local/lib/init/global.profile
 fi
 
 # Add your commands here to extend your PATH, etc.
 
 module load cmake/2.8.12.1
-module load comp-intel/2015.0.090
 module load mpi-sgi/mpt.2.12r16 
+module load comp-intel/2015.0.090
 module load gsl/1.14
 module load python/2.7.10
 module load netcdf/4.1.3/intel/mpt
@@ -21,11 +20,23 @@ module load udunits/2.1.19
 export PETSC_DIR=~/petsc-3.6.1
 export PETSC_ARCH=linux-64bit
 
-# Add private commands to PATH
-PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin
+alias al='alias'
+alias cls='clear'
+alias hi='history'
+alias la='ls -a'
+alias ll='ls -lg'
+alias lh='ls -lh'
+alias ncv='ncview -minmax all'
+alias nch='ncdump -h'
+
+PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin			# Add private commands to PATH
 
 # list currently loaded modules
 module list
+
+export PISM_PREFIX=~/pism/bin/
+export PISM_DO=echo
+export PISM_MPIDO='mpiexec -n'
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}

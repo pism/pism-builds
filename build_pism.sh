@@ -15,10 +15,10 @@
 # completion of this script. (See "man qsub" for details.)
 
 # directory to install PROJ.4 and FFTW in
-LOCAL_LIB_DIR=$HOME/local-test
+LOCAL_LIB_DIR=$HOME/local
 
 # PISM installation directory
-PISM_DIR=$HOME/pism-test
+PISM_DIR=$HOME/pism
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
@@ -129,10 +129,10 @@ build_pism() {
     make -j2 install
 }
 
-# build_petsc
+build_petsc
 
-# build_proj4
+build_proj4
 
-# build_fftw3
+build_fftw3
 
 build_pism
