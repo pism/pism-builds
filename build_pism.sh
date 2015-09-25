@@ -59,7 +59,7 @@ build_petsc() {
 
 . /usr/share/modules/init/bash
 module load comp-intel/2015.0.090
-module load mpi-intel/5.0.3.048
+module load mpi-sgi/mpt.2.12r16 
 export PATH="$PATH:."
 export MPI_GROUP_MAX=64
 mpiexec -np 1 ./conftest-$PETSC_ARCH
@@ -120,17 +120,19 @@ build_pism() {
     cmake -DMPI_C_INCLUDE_PATH=$MPI_INCLUDE \
           -DMPI_C_LIBRARIES=$MPI_LIBRARY \
           -DPETSC_EXECUTABLE_RUNS=YES \
+          -DCMAKE_CXX_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
+          -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
-          -DPism_USE_PROJ4=YES ..
+          -DPism_USE_PROJ4=YES $PISM_DIR/sources 
     make -j2 install
 }
 
-build_petsc
+# build_petsc
 
-build_proj4
+# build_proj4
 
-build_fftw3
+# build_fftw3
 
 build_pism
