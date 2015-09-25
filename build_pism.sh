@@ -9,10 +9,6 @@
 # - set PETSC_DIR and PETSC_ARCH in your .profile
 # - edit LOCAL_LIB_DIR and PISM_DIR below
 # - run this script
-#
-# This script uses the -x option of qsub, which runs a script in an
-# interactive job, making the rest of the script wait for the
-# completion of this script. (See "man qsub" for details.)
 
 # directory to install PROJ.4 and FFTW in
 LOCAL_LIB_DIR=$HOME/local
