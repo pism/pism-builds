@@ -31,6 +31,7 @@ alias ll='ls -lg'
 alias lh='ls -lh'
 alias ncv='ncview -minmax all'
 alias nch='ncdump -h'
+alias em='emacs -nw -Q'
 
 PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin			# Add private commands to PATH
 
