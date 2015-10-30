@@ -28,8 +28,11 @@ set -e
 set -x
 
 build_petsc() {
+    rm -rf $PETSC_DIR
+    mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
+    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
     # Note: we use Intel compilers, disable Fortran, use 64-bit
     # indices, shared libraries, and no debugging.
     ./config/configure.py \
