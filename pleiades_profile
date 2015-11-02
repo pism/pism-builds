@@ -10,18 +10,20 @@ fi
 # Add your commands here to extend your PATH, etc.
 
 module load cmake/2.8.12.1
-module load mpi-sgi/mpt.2.12r16 
+#module load mpi-sgi/mpt.2.12r16 
+module load mpi-intel/5.0.3.048
 module load comp-intel/2015.0.090
 module load gsl/1.14
 module load python/2.7.10
-module load netcdf/4.1.3/intel/mpt
+#module load netcdf/4.1.3/intel/mpt
 module load udunits/2.1.19
-module load ncview/2.1.2
-module load nco/4.3.2
-module load pkgsrc/2015Q2
+#module load ncview/2.1.2
+#module load nco/4.3.2
+#module load pkgsrc/2015Q2
 
 export PETSC_DIR=~/petsc-3.6.1
 export PETSC_ARCH=linux-64bit
+export LOCAL_LIB_DIR=$HOME/local
 
 alias al='alias'
 alias cls='clear'
@@ -40,7 +42,7 @@ module list
 
 export PISM_PREFIX=~/pism/bin/
 export PISM_DO=echo
-export PISM_MPIDO='mpiexec -n'
+export PISM_MPIDO='mpiexec.hydra -n'
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
