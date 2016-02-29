@@ -1,18 +1,21 @@
-# Default .profile file
+# Default .bash_profile
 # Users are encouraged to edit this file to meet their needs.
 # History
 # 20151207 lof load module PrgEnv-intel
-# 20151103 onn Initial version for chinook
+# 20151103 onn Initial version
+#************************************************************************
 
-# execute .kshrc if the file exists
-if [ -f ~/.kshrc ]; then
-      . ~/.kshrc
-      export ENV=$HOME/.kshrc
+# Execute .bashrc if the file exists (typically contains aliases and functions)
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
 fi
 
 # The following example illustrates how to extend your path
 # to add additional libraries and executables to your shell default path
 #export PATH=${PATH}:/usr/local/bin:/usr/local/pkg/ferret/ferret-6.4/bin
+
+# set for invoking ksh to give access to modules
+export ENV=$HOME/.kshrc
 
 # check if this is an interactive session
 /usr/bin/tty -s
@@ -22,8 +25,8 @@ if [ 0 = $? ]; then
   host=`uname -n`
   PS1="$host % "
   export PS1
-
 fi
+
 export EDITOR=/usr/bin/vim
 
 # Umask 'masks off' default permission bits.
@@ -39,7 +42,8 @@ module load cmake/2.8.12.2
 module load cdo/1.7.0
 module load gsl/1.16
 module load hdf5-parallel/1.8.15p1.intel-2016
-module load netcdf/4.3.0.intel-2016
+module load netcdf-parallel/4.3.3.1-parallel.intel-2016
+module load parallel-netcdf/1.6.1.intel-2016
 module load proj/4.9.2RC2
 module load slurm
 

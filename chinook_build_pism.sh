@@ -122,13 +122,13 @@ build_pism() {
 	  -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources 
-    make -j2 install
+    make -j 1 install
 }
 
 T="$(date +%s)"
 
 
-build_petsc
+# build_petsc
 
 build_pism
 
