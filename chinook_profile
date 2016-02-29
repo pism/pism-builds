@@ -1,28 +1,49 @@
-# $Header: /cvsroot/bcfg2/bcfg2/Cfg/etc/skel_NAS/.profile/.profile,v 1.1 2009/12/11 16:05:13 dtalcott Exp $
-# These commands are executed on a login or start of a PBS job.
+# Default .profile file
+# Users are encouraged to edit this file to meet their needs.
+# History
+# 20151207 lof load module PrgEnv-intel
+# 20151103 onn Initial version for chinook
 
-# First, run the NAS standard setup.
-
-if [ -e /usr/local/lib/init/global.profile ]; then
-	. /usr/local/lib/init/global.profile
+# execute .kshrc if the file exists
+if [ -f ~/.kshrc ]; then
+      . ~/.kshrc
+      export ENV=$HOME/.kshrc
 fi
+
+# The following example illustrates how to extend your path
+# to add additional libraries and executables to your shell default path
+#export PATH=${PATH}:/usr/local/bin:/usr/local/pkg/ferret/ferret-6.4/bin
+
+# check if this is an interactive session
+/usr/bin/tty -s
+if [ 0 = $? ]; then
+
+  # Setup prompt appearance
+  host=`uname -n`
+  PS1="$host % "
+  export PS1
+
+fi
+export EDITOR=/usr/bin/vim
+
+# Umask 'masks off' default permission bits.
+umask 077
+
+export HISTSIZE=1000
 
 # Add your commands here to extend your PATH, etc.
 
-module load cmake/2.8.12.1
-#module load mpi-sgi/mpt.2.12r16 
-module load mpi-intel/5.0.3.048
-module load comp-intel/2015.0.090
-module load gsl/1.14
-module load python/2.7.10
-#module load netcdf/4.1.3/intel/mpt
-module load udunits/2.1.19
-#module load ncview/2.1.2
-#module load nco/4.3.2
-#module load pkgsrc/2015Q2
+module load PrgEnv-intel
+module load cmake/2.8.12.2
+module load cdo/1.7.0
+module load gsl/1.16
+module load hdf5-parallel/1.8.15p1.intel-2016
+module load netcdf/4.3.0.intel-2016
+module load proj/4.9.2RC2
+module load python/anaconda3-2.5.0
 
-export PETSC_DIR=~/petsc-3.6.1
-export PETSC_ARCH=linux-64bit
+#export PETSC_DIR=~/petsc-3.6.1
+#export PETSC_ARCH=linux-64bit
 export LOCAL_LIB_DIR=$HOME/local
 
 alias al='alias'
