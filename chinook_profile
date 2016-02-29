@@ -33,6 +33,7 @@ export HISTSIZE=1000
 
 # Add your commands here to extend your PATH, etc.
 
+module purge
 module load PrgEnv-intel
 module load cmake/2.8.12.2
 module load cdo/1.7.0
@@ -40,10 +41,10 @@ module load gsl/1.16
 module load hdf5-parallel/1.8.15p1.intel-2016
 module load netcdf/4.3.0.intel-2016
 module load proj/4.9.2RC2
-module load python/anaconda3-2.5.0
+module load slurm
 
-#export PETSC_DIR=~/petsc-3.6.1
-#export PETSC_ARCH=linux-64bit
+export PETSC_DIR=~/petsc-maint
+export PETSC_ARCH=linux-64bit
 export LOCAL_LIB_DIR=$HOME/local
 
 alias al='alias'
@@ -63,7 +64,7 @@ module list
 
 export PISM_PREFIX=~/pism/bin/
 export PISM_DO=echo
-export PISM_MPIDO='mpiexec.hydra -n'
+export PISM_MPIDO='mpirun -np'
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
