@@ -31,26 +31,26 @@ MPI_INCLUDE="/opt/scyld/openmpi/1.10.1/intel/include"
 MPI_LIBRARY="/opt/scyld/openmpi/1.10.1/intel/lib/libmpi.so"
 
 build_petsc() {
-    # rm -rf $PETSC_DIR
-    # mkdir -p $PETSC_DIR
+    rm -rf $PETSC_DIR
+    mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    # git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
-    # # Note: we use Intel compilers, disable Fortran, use 64-bit
-    # # indices, shared libraries, and no debugging.
-    # ./config/configure.py \
-    #     --with-cc=icc --with-cxx=icpc --with-fc=0 \
-    #     --with-blas-lapack-dir="/usr/lib64/atlas/" \
-    #     --with-mpi-lib=$MPI_LIBRARY \
-    #     --with-mpi-include=$MPI_INCLUDE \
-    #     --with-64-bit-indices=1 \
-    #     --known-mpi-shared-libraries=1 \
-    #     --with-debugging=0 \
-    #     --with-valgrind=0 \
-    #     --with-x=0 \
-    #     --with-ssl=0 \
-    #     --with-batch=1  \
-    #     --with-shared-libraries=1
+    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
+    # Note: we use Intel compilers, disable Fortran, use 64-bit
+    # indices, shared libraries, and no debugging.
+    ./config/configure.py \
+        --with-cc=icc --with-cxx=icpc --with-fc=0 \
+        --with-blas-lapack-dir="/usr/lib64/atlas/" \
+        --with-mpi-lib=$MPI_LIBRARY \
+        --with-mpi-include=$MPI_INCLUDE \
+        --with-64-bit-indices=1 \
+        --known-mpi-shared-libraries=1 \
+        --with-debugging=0 \
+        --with-valgrind=0 \
+        --with-x=0 \
+        --with-ssl=0 \
+        --with-batch=1  \
+        --with-shared-libraries=1
 
     cat > script.queue << EOF
 #!/bin/sh
