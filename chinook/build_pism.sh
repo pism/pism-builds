@@ -4,7 +4,7 @@
 #
 # To use this script,
 #
-# - add "source /path/to/chinook_profile" to your .bash_profile
+# - add "source /path/to/chinook/profile" to your .bash_profile
 # - edit LOCAL_LIB_DIR and PISM_DIR below
 # - run this script
 
