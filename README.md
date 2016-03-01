@@ -1,3 +1,4 @@
-# pleiades
+# Building PISM on some HPC systems
 
-some scripts to compile petsc and pism on pleiades
+This repository contains scripts that help with building PISM and its
+prerequisites (such as PETSc) on some HPC systems.
