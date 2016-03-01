@@ -1,12 +1,10 @@
 #!/bin/bash
 
-# Automate building FFTW, PETSc, and PISM on chinook.
+# Automate building PETSc and PISM on chinook.
 #
 # To use this script,
 #
-# - edit your .profile to load modules automatically
-# - download and unpack PETSc
-# - set PETSC_DIR and PETSC_ARCH in your .profile
+# - add "source /path/to/chinook_profile" to your .bash_profile
 # - edit LOCAL_LIB_DIR and PISM_DIR below
 # - run this script
 
@@ -82,22 +80,6 @@ EOF
 
     make all
 }
-
-build_fftw3() {
-    # download and build FFTW3
-    mkdir -p $LOCAL_LIB_DIR/sources
-    cd $LOCAL_LIB_DIR/sources
-
-    wget -nc http://www.fftw.org/fftw-3.3.4.tar.gz
-    tar xzvf fftw-3.3.4.tar.gz
-
-    cd fftw-3.3.4
-    ./configure --enable-shared --prefix=$LOCAL_LIB_DIR
-
-    make all
-    make install
-}
-
 
 build_pism() {
     mkdir -p $PISM_DIR/sources
