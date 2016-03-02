@@ -1,41 +1,4 @@
 # -*- mode: sh -*-
-# Default .bash_profile
-# Users are encouraged to edit this file to meet their needs.
-# History
-# 20151207 lof load module PrgEnv-intel
-# 20151103 onn Initial version
-#************************************************************************
-
-# Execute .bashrc if the file exists (typically contains aliases and functions)
-if [ -f ~/.bashrc ]; then
-        . ~/.bashrc
-fi
-
-# The following example illustrates how to extend your path
-# to add additional libraries and executables to your shell default path
-#export PATH=${PATH}:/usr/local/bin:/usr/local/pkg/ferret/ferret-6.4/bin
-
-# set for invoking ksh to give access to modules
-export ENV=$HOME/.kshrc
-
-# check if this is an interactive session
-/usr/bin/tty -s
-if [ 0 = $? ]; then
-
-  # Setup prompt appearance
-  host=`uname -n`
-  PS1="$host % "
-  export PS1
-fi
-
-export EDITOR=/usr/bin/vim
-
-# Umask 'masks off' default permission bits.
-umask 077
-
-export HISTSIZE=1000
-
-# Add your commands here to extend your PATH, etc.
 
 module purge
 module load PrgEnv-intel
@@ -62,7 +25,8 @@ alias ncv='ncview -minmax all'
 alias nch='ncdump -h'
 alias em='emacs -nw -Q'
 
-PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin			# Add private commands to PATH
+# Add private commands to PATH
+PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin
 
 # list currently loaded modules
 module list
