@@ -91,7 +91,7 @@ build_pism() {
     cd build
     rm -f CMakeCache.txt
 
-    # use Intel's MPI compiler wrappers
+    # use Intel's C and C++ compilers
     export CC=icc
     export CXX=icpc
     cmake -DMPI_C_INCLUDE_PATH=$MPI_INCLUDE \
@@ -100,8 +100,9 @@ build_pism() {
           -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
+          -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR;$HDF5PARALLEL_ROOT;$NETCDF_ROOT" \
           -DPism_USE_PARALLEL_NETCDF4=YES \
-          -DPism_USE_PROJ4=YES $PISM_DIR/sources 
+          -DPism_USE_PROJ4=YES $PISM_DIR/sources
     make -j $N install
 }
 
