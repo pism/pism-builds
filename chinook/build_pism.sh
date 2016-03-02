@@ -96,7 +96,6 @@ build_pism() {
     export CXX=icpc
     cmake -DMPI_C_INCLUDE_PATH=$MPI_INCLUDE \
           -DMPI_C_LIBRARIES=$MPI_LIBRARY \
-          -DPETSC_EXECUTABLE_RUNS=YES \
           -DCMAKE_CXX_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
           -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
