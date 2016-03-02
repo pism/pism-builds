@@ -1,0 +1,34 @@
+#!/bin/bash
+
+export PETSC_DIR=~/petsc-maint
+export PETSC_ARCH=linux-64bit
+export LOCAL_LIB_DIR=$HOME/local
+
+# make files readable by group members by default
+umask g+rx
+
+export EDITOR="emacs -nw"
+alias ed=$EDITOR
+
+alias al='alias'
+alias cls='clear'
+alias hi='history'
+alias la='ls -a'
+alias ll='ls -lg'
+alias lh='ls -lh'
+alias ncv='ncview -minmax all'
+alias nch='ncdump -h'
+alias em='emacs -nw -Q'
+
+# Add private commands to PATH
+PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin
+
+export PISM_PREFIX=~/pism/bin/
+export PISM_DO=echo
+
+# last initialization step: report settings
+module list
+
+echo 'PETSC_DIR = ' ${PETSC_DIR}
+echo 'PETSC_ARCH = ' ${PETSC_ARCH}
+echo 'PATH = ' ${PATH}
