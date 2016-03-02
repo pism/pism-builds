@@ -99,9 +99,8 @@ build_pism() {
           -DPETSC_EXECUTABLE_RUNS=YES \
           -DCMAKE_CXX_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
           -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
-          -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
-	  -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
+          -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources 
     make -j $N install
