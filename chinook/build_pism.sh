@@ -102,6 +102,7 @@ build_pism() {
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
+          -DPism_USE_PNETCDF=YES \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources 
     make -j $N install
 }
