@@ -50,3 +50,4 @@ build_pism() {
 }
 
 build_petsc
+build_pism
