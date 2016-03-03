@@ -18,6 +18,3 @@ module load python/anaconda2-2.5.0
 alias interact="srun -p standard -I --pty /bin/bash"
 
 export PISM_MPIDO='mpirun -np'
-
-# last step: include common settings
-source ../common_settings

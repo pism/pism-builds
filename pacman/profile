@@ -25,6 +25,3 @@ module load openmpi/gnu/1.8.8
 alias interact="qsub -q debug -l nodes=1:ppn=16 -X -I"
 
 export PISM_MPIDO='mpirun -np'
-
-# last step: include common settings
-source ../common_settings

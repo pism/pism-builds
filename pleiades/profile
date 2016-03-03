@@ -22,6 +22,3 @@ module load udunits/2.1.19
 #module load pkgsrc/2015Q2
 
 export PISM_MPIDO='mpiexec.hydra -n'
-
-# last step: include common settings
-source ../common_settings
