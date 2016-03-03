@@ -1,4 +1,4 @@
-# -*- mode: sh -*-
+#!/bin/bash
 
 # PGI does not support C++11, so we have to use GCC
 module swap PrgEnv-pgi PrgEnv-gnu
@@ -13,19 +13,10 @@ module load netcdf-hdf5parallel/4.2.0
 module load fftw/3.3.0.1
 module load gsl/1.15.gnu
 
-export PETSC_DIR=/u1/uaf/khroulev/local/petsc-maint
-export PETSC_ARCH=opt-64bit
-
 # useful modules not needed to build PISM
 module load ncview/2.1.5
 
-# make files readable by group members by default
-umask g+rx
-
-export EDITOR="emacs -nw"
-alias ed=$EDITOR
-
-export PATH=$HOME/local/bin:$PATH
-
 # short-cut for interactive jobs
 alias interact="qsub -q standard -l nodes=1:ppn=12 -I"
+
+export PISM_MPIDO='aprun -n'

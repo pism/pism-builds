@@ -1,4 +1,4 @@
-# -*- mode: sh -*-
+#!/bin/bash
 
 module purge
 module load PrgEnv-intel
@@ -16,31 +16,7 @@ module load slurm
 # netcdf-parallel module, confusing PISM's build system
 # module load parallel-netcdf/1.6.1.intel-2016
 
-export PETSC_DIR=~/petsc-maint
-export PETSC_ARCH=linux-64bit
-export LOCAL_LIB_DIR=$HOME/local
-
-alias al='alias'
-alias cls='clear'
-alias hi='history'
-alias la='ls -a'
-alias ll='ls -lg'
-alias lh='ls -lh'
-alias ncv='ncview -minmax all'
-alias nch='ncdump -h'
-alias em='emacs -nw -Q'
+# start an interactive job
 alias interact="srun -p standard -I --pty /bin/bash"
 
-# Add private commands to PATH
-PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin
-
-# list currently loaded modules
-module list
-
-export PISM_PREFIX=~/pism/bin/
-export PISM_DO=echo
 export PISM_MPIDO='mpirun -np'
-
-echo 'PETSC_DIR = ' ${PETSC_DIR}
-echo 'PETSC_ARCH = ' ${PETSC_ARCH}
-echo 'PATH = ' ${PATH}
