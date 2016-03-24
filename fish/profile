@@ -1,12 +1,20 @@
 #!/bin/bash
 
 # PGI does not support C++11, so we have to use GCC
-module swap PrgEnv-pgi PrgEnv-gnu
-# netcdf-hdf5parallel requires GCC 4.7
-module swap gcc/4.9.0 gcc/4.7.3
+module rm PrgEnv-pgi
+module load PrgEnv-gnu
+
+# cray-mpich2 does not seem to support gcc 4.9, and neither does netcdf-hdf5parallel
+module rm gcc/4.9.0
+module load gcc/4.7.3
+
 # re-load cray-mpich2 so that it picks up that we're using GCC 4.7
 module rm cray-mpich2
 module load cray-mpich2
+
+# re-load cray-libsci so that it picks up that we're using GCC 4.7
+module rm cray-libsci
+module load cray-libsci
 
 # prerequisite libraries
 module load netcdf-hdf5parallel/4.2.0
