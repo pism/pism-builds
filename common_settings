@@ -19,12 +19,14 @@ alias lh='ls -lh'
 alias ncv='ncview -minmax all'
 alias nch='ncdump -h'
 alias em='emacs -nw -Q'
+alias myqstat='qstat -u `whoami`'
+
+export PISM_DIR=~/pism
+export PISM_PREFIX=${PISM_DIR}/bin/
+export PISM_DO=echo
 
 # Add private commands to PATH
-PATH=$PATH:$HOME/pism/bin:$HOME/pism/util:$HOME/bin:$HOME/local/bin
-
-export PISM_PREFIX=~/pism/bin/
-export PISM_DO=echo
+export PATH=$PATH:${PISM_PREFIX}:${LOCAL_LIB_DIR}/bin:$HOME/bin
 
 # last initialization step: report settings
 /usr/bin/tty -s
