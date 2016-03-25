@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# PISM installation directory
-PISM_DIR=$HOME/pism
-
-# directory to install libraries in
-LOCAL_LIB_DIR=$HOME/local
-
 # No. of cores for make
 N=6
 
@@ -102,9 +96,13 @@ set (Pism_ADD_FPIC OFF CACHE BOOL "")
 set (Pism_LINK_STATICALLY ON CACHE BOOL "")
 
 # No Proj.4 on fish.arsc.edu
-set (Pism_USE_PROJ4 OFF CACHE BOOL "")
+set (Pism_USE_PROJ4 ON CACHE BOOL "")
+set (PROJ4_INCLUDES "${LOCAL_LIB_DIR}/include" CACHE STRING "")
+set (PROJ4_LIBRARIES "${LOCAL_LIB_DIR}/lib/libproj.a" CACHE STRING "")
+
 # No TAO on fish.arsc.edu, but we use PETSc that's recent enough
 set (Pism_USE_TAO ON CACHE BOOL "")
+
 # No PNetCDF on fish (alas)
 set (Pism_USE_PNETCDF OFF CACHE BOOL "")
 
@@ -116,7 +114,6 @@ set (GSL_LIBRARIES "${GSL_ROOT}/lib/libgsl.a;${GSL_ROOT}/lib/libgslcblas.a" CACH
 set (GSL_INCLUDES  "${GSL_ROOT}/include" CACHE STRING "" FORCE)
 
 # Set custom UDUNITS2 location
-set (UDUNITS2_ROOT ${UDUNITS2_ROOT})
 set (UDUNITS2_LIBRARIES "${UDUNITS2_ROOT}/lib/libudunits2.a;/usr/lib64/libexpat.a" CACHE STRING "" FORCE)
 set (UDUNITS2_INCLUDES  "${UDUNITS2_ROOT}/include" CACHE STRING "" FORCE)
 
@@ -135,7 +132,7 @@ T="$(date +%s)"
 
 build_petsc &> petsc-build-log.txt
 
-build_proj &> proj-build-log.txt
+build_proj4 &> proj4-build-log.txt
 
 build_pism  &> pism-build-log.txt
 
