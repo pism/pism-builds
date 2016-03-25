@@ -26,5 +26,6 @@ module load ncview/2.1.5
 
 # short-cut for interactive jobs
 alias interact="qsub -q standard -l nodes=1:ppn=12 -I"
+alias interact_gpu="qsub -q gpu -l nodes=1:ppn=16 -I"
 
 export PISM_MPIDO='aprun -n'
