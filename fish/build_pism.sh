@@ -3,6 +3,9 @@
 # PISM installation directory
 PISM_DIR=$HOME/pism
 
+# directory to install libraries in
+LOCAL_LIB_DIR=$HOME/local
+
 # No. of cores for make
 N=6
 
@@ -52,6 +55,21 @@ EOF
     ./reconfigure-$PETSC_ARCH.py
 
     make all
+}
+
+build_proj4 () {
+    # download and build PROJ.4
+    mkdir -p $LOCAL_LIB_DIR/sources/proj.4
+    cd $LOCAL_LIB_DIR/sources/proj.4
+
+    git clone --depth 1 -b 4.9.2-maintenance https://github.com/OSGeo/proj.4.git . || git pull
+
+    # remove and re-generate files created by autoconf
+    autoreconf --force --install
+    ./configure --prefix=$LOCAL_LIB_DIR
+
+    make all
+    make install
 }
 
 build_pism () {
@@ -113,6 +131,15 @@ EOF
     make -j $N install
 }
 
+T="$(date +%s)"
+
 build_petsc &> petsc-build-log.txt
 
+build_proj &> proj-build-log.txt
+
 build_pism  &> pism-build-log.txt
+
+T="$(($(date +%s)-T))"
+echo "Time in seconds: ${T}"
+
+printf "Pretty format: %02d:%02d:%02d:%02d\n" "$((T/86400))" "$((T/3600%24))" "$((T/60%60))" "$((T%60))"
