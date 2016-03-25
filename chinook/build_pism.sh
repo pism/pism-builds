@@ -5,14 +5,8 @@
 # To use this script,
 #
 # - add "source /path/to/chinook/profile" to your .bash_profile
-# - edit LOCAL_LIB_DIR and PISM_DIR below
+# - add "source /path/to/common_settings" to your .bash_profile
 # - run this script
-
-# directory to install libraries in
-LOCAL_LIB_DIR=$HOME/local
-
-# PISM installation directory
-PISM_DIR=$HOME/pism
 
 # No. of cores for make
 N=8

@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# directory to install libraries in
-LOCAL_LIB_DIR=$HOME/local
-
-# PISM installation directory
-PISM_DIR=$HOME/pism
-
 # No. of cores for make
 N=8
 
