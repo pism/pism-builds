@@ -5,7 +5,6 @@
 # To use this script,
 #
 # - edit your .profile to load modules automatically
-# - download and unpack PETSc
 # - set PETSC_DIR and PETSC_ARCH in your .profile
 # - edit LOCAL_LIB_DIR and PISM_DIR below
 # - run this script
