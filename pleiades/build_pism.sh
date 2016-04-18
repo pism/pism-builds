@@ -34,11 +34,11 @@ build_hdf5() {
     # download and build HDF5 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
+    ver=1.8.16
+    wget -nc http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-${ver}.tar
+    tar -xvf hdf5-${ver}.tar
 
-    wget -nc http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.15-patch1.tar
-    tar -xvf hdf5-1.8.15-patch1.tar
-
-    cd hdf5-1.8.15-patch1
+    cd hdf5-${ver}
     CC=mpicc CFLAGS=-g ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR
 
     make all -j $N
@@ -49,11 +49,11 @@ build_netcdf() {
     # download and build netcdf                                                                                            
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
+    ver=4.4.0
+    wget -nc ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${ver}.tar.gz
+    tar -zxvf netcdf-${ver}.tar.gz
 
-    wget -nc ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4.3.3.1.tar.gz
-    tar -zxvf netcdf-4.3.3.1.tar.gz
-
-    cd netcdf-4.3.3.1
+    cd netcdf-${ver}
     CC=mpicc CFLAGS=-g CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
 	--enable-netcdf4 \
 	--disable-dap \
