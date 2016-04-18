@@ -3,7 +3,7 @@
 module purge
 module load PrgEnv-intel
 module load cmake/2.8.12.2
-module load cdo/1.7.0
+module load cdo/1.7.1
 module load gsl/1.16
 # load anaconda first because anaconda's ncdump is broken, loading the
 # netcdf-parallel later makes sure its ncdump is first in the $PATH
@@ -17,6 +17,6 @@ module load slurm
 # module load parallel-netcdf/1.6.1.intel-2016
 
 # start an interactive job
-alias interact="srun -p standard -I --pty /bin/bash"
+alias interact="srun -p debug -I --pty /bin/bash"
 
 export PISM_MPIDO='mpirun -np'

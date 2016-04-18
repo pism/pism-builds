@@ -24,6 +24,8 @@ module load gsl/1.15.gnu
 # useful modules not needed to build PISM
 module load ncview/2.1.5
 
+module load python
+
 # short-cut for interactive jobs
 alias interact="qsub -q standard -l nodes=1:ppn=12 -I"
 alias interact_gpu="qsub -q gpu -l nodes=1:ppn=16 -I"

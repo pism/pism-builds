@@ -88,10 +88,8 @@ build_pism() {
     # use Intel's C and C++ compilers
     export CC=icc
     export CXX=icpc
-    cmake -DMPI_C_INCLUDE_PATH=$MPI_INCLUDE \
-          -DMPI_C_LIBRARIES=$MPI_LIBRARY \
-          -DCMAKE_CXX_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
-          -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
+    cmake -DCMAKE_CXX_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006,2102" \
+          -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR;$HDF5PARALLEL_ROOT;$NETCDF_ROOT" \
