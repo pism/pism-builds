@@ -36,7 +36,7 @@ build_hdf5() {
     cd $LOCAL_LIB_DIR/sources
     ver=1.8.8
 
-    wget -nc http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-$ver.tar
+    wget -nc http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-$ver/src/hdf5-$ver.tar
     tar -xvf hdf5-$ver.tar
 
     cd hdf5-$ver
