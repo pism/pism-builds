@@ -10,6 +10,7 @@ fi
 # Add your commands here to extend your PATH, etc.
 
 module load cmake/2.8.12.1
+module load git/2.4.5
 #module load mpi-sgi/mpt.2.12r16
 module load mpi-intel/5.0.3.048
 module load comp-intel/2015.0.090
