@@ -19,8 +19,8 @@ set -e
 # print commands before executing them
 set -x
 
-MPI_INCLUDE="/opt/scyld/openmpi/1.10.1/intel/include"
-MPI_LIBRARY="/opt/scyld/openmpi/1.10.1/intel/lib/libmpi.so"
+MPI_INCLUDE="/opt/scyld/openmpi/1.10.2/intel/include"
+MPI_LIBRARY="/opt/scyld/openmpi/1.10.2/intel/lib/libmpi.so"
 
 build_petsc() {
     rm -rf $PETSC_DIR
@@ -47,7 +47,7 @@ build_petsc() {
     cat > script.queue << EOF
 #!/bin/sh
  
-#SBATCH --partition=standard
+#SBATCH --partition=t1small
 #SBATCH --ntasks=1
 #SBATCH --tasks-per-node=1
 #SBATCH --mail-user=aaschwanden@alaska.edu
@@ -75,6 +75,16 @@ EOF
     make all
 }
 
+build_petsc4py() {
+    rm -rf $HOME/petsc4py
+    mkdir -p $HOME/petsc4py
+    cd $HOME/petsc4py
+    git clone https://bitbucket.org/petsc/petsc4py.git .
+    cd $HOME/petsc4py
+    python setup.py build
+    python setup.py install
+}
+
 build_pism() {
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
@@ -100,9 +110,8 @@ build_pism() {
 
 T="$(date +%s)"
 
-
-# build_petsc
-
+build_petsc
+build_petsc4py
 build_pism
 
 
