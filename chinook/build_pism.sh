@@ -22,6 +22,25 @@ set -x
 MPI_INCLUDE="/opt/scyld/openmpi/1.10.1/intel/include"
 MPI_LIBRARY="/opt/scyld/openmpi/1.10.1/intel/lib/libmpi.so"
 
+build_nco() {
+    mkdir -p $LOCAL_LIB_DIR/sources
+    cd $LOCAL_LIB_DIR/sources
+    rm -rf nco
+    git clone https://github.com/nco/nco.git
+    cd nco
+    git checkout 4.5.2
+
+    CC=mpicc CFLAGS=-g CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+	--prefix=$LOCAL_LIB_DIR \
+	--enable-netcdf-4 \
+	--enable-udunits2 \
+	--enable-openmp 2>&1 | tee nco_configure.log
+
+    make -j $N  2>&1 | tee nco_compile.log
+    make install  2>&1 | tee nco_install.log
+
+}
+
 build_petsc() {
     rm -rf $PETSC_DIR
     mkdir -p $PETSC_DIR
@@ -101,9 +120,10 @@ build_pism() {
 T="$(date +%s)"
 
 
+build_nco
 # build_petsc
 
-build_pism
+# build_pism
 
 
 T="$(($(date +%s)-T))"

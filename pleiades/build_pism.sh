@@ -50,7 +50,7 @@ build_netcdf() {
     # download and build netcdf                                                                                            
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    ver=4.2.0
+    ver=4.1.3
 
     wget -nc ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-$ver.tar.gz
     tar -zxvf netcdf-$ver.tar.gz
