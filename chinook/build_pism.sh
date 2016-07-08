@@ -28,9 +28,9 @@ build_nco() {
     rm -rf nco
     git clone https://github.com/nco/nco.git
     cd nco
-    git checkout 4.5.2
+    git checkout 4.6.0
 
-    CC=mpicc CFLAGS=-g CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+    CC=mpicc CFLAGS=-g CPPFLAGS=-I$LOCAL_LIB_DIR/include LIBS="-liomp5 -lpthread" LDFLAGS="-L$LOCAL_LIB_DIR/lib -L/usr/lib64" ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
 	--enable-udunits2 \
