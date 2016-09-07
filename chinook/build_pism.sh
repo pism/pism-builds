@@ -123,6 +123,7 @@ build_pism() {
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR;$HDF5PARALLEL_ROOT;$NETCDF_ROOT" \
           -DPism_USE_PARALLEL_NETCDF4=YES \
+	  -DPism_USE_PNETCDF=YES \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources
     make -j $N install
 }
@@ -131,9 +132,9 @@ T="$(date +%s)"
 
 
 build_nco
-#build_petsc
-#build_petsc4py
-#build_pism
+build_petsc
+build_petsc4py
+build_pism
 
 
 T="$(($(date +%s)-T))"
