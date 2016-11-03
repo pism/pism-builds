@@ -21,6 +21,6 @@ module load slurm
 # module load parallel-netcdf/1.6.1.intel-2016
 
 # start an interactive job
-alias interact="srun -p debug -I --pty /bin/bash"
+alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
 
 export PISM_MPIDO='mpirun -np'

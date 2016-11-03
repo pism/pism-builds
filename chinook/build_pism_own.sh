@@ -29,9 +29,9 @@ build_hdf5() {
     # download and build HDF5 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    ver=1.8.8
-
-    wget -nc http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-$ver/src/hdf5-$ver.tar
+    ver=1.10.0-patch1
+    
+    wget -nc  https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-$ver/src/hdf5-$ver.tar
     tar -xvf hdf5-$ver.tar
 
     cd hdf5-$ver
@@ -45,13 +45,13 @@ build_netcdf() {
     # download and build netcdf                                                                                            
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    ver=4.1.3
+    ver=4.4.1
 
     wget -nc ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-$ver.tar.gz
     tar -zxvf netcdf-$ver.tar.gz
 
     cd netcdf-$ver
-    CC=mpicc CFLAGS=-g CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+    CC=mpicc CFLAGS=-g CPPFLAGS="-I$LOCAL_LIB_DIR/include" LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
 	--enable-netcdf4 \
 	--disable-dap \
 	--prefix=$LOCAL_LIB_DIR 2>&1 | tee netcdf_configure.log
@@ -68,7 +68,7 @@ build_nco() {
     cd nco
     git checkout 4.6.0
 
-    CC=mpicc CFLAGS=-g CPPFLAGS=-I$LOCAL_LIB_DIR/include LIBS="-liomp5 -lpthread" LDFLAGS="-L$LOCAL_LIB_DIR/lib -L/usr/lib64" ./configure \
+    CC=mpicc CFLAGS=-g CPPFLAGS="-I$LOCAL_LIB_DIR/include" LIBS="-liomp5 -lpthread" LDFLAGS="-L$LOCAL_LIB_DIR/lib -L/usr/lib64" ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
 	--enable-udunits2 \
@@ -146,7 +146,7 @@ build_pism() {
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
 
-    git clone --depth 1 -b dev https://github.com/pism/pism.git . || git pull
+    git clone -b dev https://github.com/pism/pism.git . || git pull
 
     mkdir -p build
     cd build
@@ -169,7 +169,7 @@ T="$(date +%s)"
 
 build_hdf5
 build_netcdf
-#build_nco
+build_nco
 #build_petsc
 #build_petsc4py
 build_pism
