@@ -19,6 +19,9 @@ set -e
 # print commands before executing them
 set -x
 
+# directory to install libraries in
+LOCAL_LIB_DIR=$HOME/local
+
 MPI_INCLUDE="/opt/scyld/openmpi/1.10.2/intel/include"
 MPI_LIBRARY="/opt/scyld/openmpi/1.10.2/intel/lib/libmpi.so"
 
