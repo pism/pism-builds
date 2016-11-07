@@ -1,8 +1,10 @@
 #!/bin/bash
 
 module purge
-module load PrgEnv-intel
-module load cmake/2.8.12.2
+#module load PrgEnv-intel
+module load compiler/icc/2016.3.210-GCC-5.4.0-2.26
+module rm cmake/2.8.12
+module load cmake/3.5.2
 module load cdo/1.7.1
 module load gsl/1.16
 # load anaconda first because anaconda's ncdump is broken, loading the
