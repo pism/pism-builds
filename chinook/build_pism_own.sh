@@ -26,35 +26,40 @@ MPI_INCLUDE="/opt/scyld/openmpi/1.10.2/intel/include"
 MPI_LIBRARY="/opt/scyld/openmpi/1.10.2/intel/lib/libmpi.so"
 
 build_hdf5() {
-    # download and build HDF5 
+    # download and build HDF5
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    ver=1.10.0-patch1
-    
-    wget -nc  https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-$ver/src/hdf5-$ver.tar
-    tar -xvf hdf5-$ver.tar
 
-    cd hdf5-$ver
-    CC=mpicc CFLAGS=-g ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR
+    version=1.8.17
+    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.0-patch1/src/hdf5-1.10.0-patch1.tar.gz
+    url=https://support.hdfgroup.org/ftp/HDF5/current/src/hdf5-${version}.tar.gz
 
-    make all -j $N
-    make install
+    wget -nc ${url}
+    tar xzvf hdf5-${version}.tar.gz
+
+    cd hdf5-${version}
+    CC=mpicc ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR 2>&1 | tee hdf5_configure.log
+
+    make all -j $N 2>&1 | tee hdf5_compile.log
+    make install 2>&1 | tee hdf5_install.log
 }
 
 build_netcdf() {
-    # download and build netcdf                                                                                            
+    # download and build netcdf
+
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    ver=4.4.1
+    version=4.4.1
+    url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${version}.tar.gz
 
-    wget -nc ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-$ver.tar.gz
-    tar -zxvf netcdf-$ver.tar.gz
+    wget -nc ${url}
+    tar -zxvf netcdf-${version}.tar.gz
 
-    cd netcdf-$ver
-    CC=mpicc CFLAGS=-g CPPFLAGS="-I$LOCAL_LIB_DIR/include" LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
-	--enable-netcdf4 \
-	--disable-dap \
-	--prefix=$LOCAL_LIB_DIR 2>&1 | tee netcdf_configure.log
+    cd netcdf-${version}
+    CC=mpicc CPPFLAGS="-I$LOCAL_LIB_DIR/include" LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+      --enable-netcdf4 \
+      --disable-dap \
+      --prefix=$LOCAL_LIB_DIR 2>&1 | tee netcdf_configure.log
 
     make all -j $N 2>&1 | tee netcdf_compile.log
     make install 2>&1 | tee netcdf_install.log
@@ -68,15 +73,18 @@ build_nco() {
     cd nco
     git checkout 4.6.0
 
-    CC=mpicc CFLAGS=-g CPPFLAGS="-I$LOCAL_LIB_DIR/include" LIBS="-liomp5 -lpthread" LDFLAGS="-L$LOCAL_LIB_DIR/lib -L/usr/lib64" ./configure \
-	--prefix=$LOCAL_LIB_DIR \
-	--enable-netcdf-4 \
-	--enable-udunits2 \
-	--enable-openmp 2>&1 | tee nco_configure.log
+    export CC=mpicc
+    export CPPFLAGS="-I$LOCAL_LIB_DIR/include"
+    export LIBS="-liomp5 -lpthread -lm"
+    export LDFLAGS="-L$LOCAL_LIB_DIR/lib -L/usr/lib64"
+    ./configure \
+        --prefix=$LOCAL_LIB_DIR \
+        --enable-netcdf-4 \
+        --enable-udunits2 \
+        --enable-openmp 2>&1 | tee nco_configure.log
 
     make -j $N  2>&1 | tee nco_compile.log
     make install  2>&1 | tee nco_install.log
-
 }
 
 build_petsc() {
@@ -101,31 +109,8 @@ build_petsc() {
         --with-batch=1  \
         --with-shared-libraries=1
 
-    cat > script.queue << EOF
-#!/bin/sh
- 
-#SBATCH --partition=t1small
-#SBATCH --ntasks=1
-#SBATCH --tasks-per-node=1
-#SBATCH --mail-user=aaschwanden@alaska.edu
-#SBATCH --mail-type=BEGIN
-#SBATCH --mail-type=END
-#SBATCH --mail-type=FAIL
-#SBATCH --output=pism.%j
-
-export PATH="$PATH:."
-
-. /usr/share/Modules/init/sh
-module load PrgEnv-intel
-module load cmake/2.8.12.2
-module load slurm
-
-mpirun -np 1 ./conftest-$PETSC_ARCH
-EOF
-
     # run conftest in an interactive job and wait for it to complete
-    sbatch script.queue
-    read -p "Wait for the job to complete and press RETURN."
+    srun -n 1 -N 1 -p t2small mpirun ./conftest-$PETSC_ARCH
 
     ./reconfigure-$PETSC_ARCH.py
 
@@ -143,25 +128,28 @@ build_petsc4py() {
 }
 
 build_pism() {
+    opt="-O3 -ipo -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
+
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
 
     git clone -b dev https://github.com/pism/pism.git . || git pull
 
+    rm -rf build
     mkdir -p build
     cd build
-    rm -f CMakeCache.txt
 
     # use Intel's C and C++ compilers
     export CC=icc
     export CXX=icpc
-    cmake -DCMAKE_CXX_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006,2102" \
-          -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006" \
+    cmake -DCMAKE_CXX_FLAGS="${opt} -diag-disable=cpu-dispatch,10006,2102" \
+          -DCMAKE_C_FLAGS="${opt} -diag-disable=cpu-dispatch,10006" \
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
-	  -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
+          -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
-          -DPism_USE_PROJ4=YES $PISM_DIR/sources 
+          -DPism_USE_JANSSON=NO \
+          -DPism_USE_PROJ4=YES $PISM_DIR/sources
     make -j $N install
 }
 
@@ -169,8 +157,8 @@ T="$(date +%s)"
 
 build_hdf5
 build_netcdf
-build_nco
-#build_petsc
+#build_nco
+build_petsc
 #build_petsc4py
 build_pism
 
