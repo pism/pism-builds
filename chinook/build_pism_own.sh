@@ -147,6 +147,7 @@ build_pism() {
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
+          -DPETSC_EXECUTABLE_RUNS=ON \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_JANSSON=NO \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources
