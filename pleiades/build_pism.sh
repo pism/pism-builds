@@ -68,12 +68,12 @@ build_netcdf() {
 build_nco() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    rm -rf nco
-    git clone https://github.com/nco/nco.git
+    # rm -rf nco
+    # git clone https://github.com/nco/nco.git
     cd nco
-    git checkout 4.5.2
+    git checkout 4.6.2
 
-    CC=mpicc CFLAGS=-g CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+    CC=mpicc CPPFLAGS="-I$LOCAL_LIB_DIR/include -I/nasa/nco/4.4.6/include" LDFLAGS="-L$LOCAL_LIB_DIR/lib -L/nasa/nco/4.4.6/lib" ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
 	--enable-udunits2 \
@@ -91,9 +91,9 @@ build_cdo(){
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc https://code.zmaw.de/attachments/download/11392/cdo-1.7.0.tar.gz
-    tar -zxvf cdo-1.7.0.tar.gz
-    cd cdo-1.7.0
+    wget -nc https://code.zmaw.de/attachments/download/12760/cdo-1.7.2.tar.gz
+    tar -zxvf cdo-1.7.2.tar.gz
+    cd cdo-1.7.2
 
     CC=mpicc CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
         --prefix=$LOCAL_LIB_DIR \
