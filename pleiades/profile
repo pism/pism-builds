@@ -9,7 +9,7 @@ fi
 
 # Add your commands here to extend your PATH, etc.
 
-module load cmake/2.8.12.1
+module load pkgsrc/2016Q2
 module load git/2.4.5
 #module load mpi-sgi/mpt.2.12r16
 module load mpi-intel/5.0.3.048
@@ -23,3 +23,4 @@ module load udunits/2.1.19
 #module load pkgsrc/2015Q2
 
 export PISM_MPIDO='mpiexec.hydra -n'
+PATH=/nasa/pkgsrc/2016Q2/bin:/nasa/pkgsrc/2016Q2/sbin:$PATH

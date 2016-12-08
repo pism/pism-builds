@@ -40,7 +40,7 @@ build_hdf5() {
     tar -xvf hdf5-$ver.tar
 
     cd hdf5-$ver
-    CC=mpicc CFLAGS=-g ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR
+    CC=mpicc ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR
 
     make all -j $N
     make install
@@ -56,7 +56,7 @@ build_netcdf() {
     tar -zxvf netcdf-$ver.tar.gz
 
     cd netcdf-$ver
-    CC=mpicc CFLAGS=-g CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+    CC=mpicc CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
 	--enable-netcdf4 \
 	--disable-dap \
 	--prefix=$LOCAL_LIB_DIR 2>&1 | tee netcdf_configure.log
@@ -68,8 +68,8 @@ build_netcdf() {
 build_nco() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    # rm -rf nco
-    # git clone https://github.com/nco/nco.git
+    rm -rf nco
+    git clone https://github.com/nco/nco.git
     cd nco
     git checkout 4.6.2
 
@@ -95,12 +95,13 @@ build_cdo(){
     tar -zxvf cdo-1.7.2.tar.gz
     cd cdo-1.7.2
 
-    CC=mpicc CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+    CC=mpicc ./configure \
         --prefix=$LOCAL_LIB_DIR \
 	--with-netdf=$LOCAL_LIB_DIR \
 	--with-hdf5=$LOCAL_LIB_DIR \
+	--with-proj=$LOCAL_LIB_DIR \
+	--with-udunits2=/nasa/udunits/2.1.19 \
 	--with-zlib=$LOCAL_LIB_DIR \
-	--disable-openmp \
 	--with-proj=$LOCAL_LIB_DIR 2>&1 | tee cdo_configure.log
 
     make -j $N 2>&1 | tee cdo_compile.log
@@ -264,23 +265,23 @@ build_pism() {
 
 T="$(date +%s)"
 
-build_hdf5
+#build_hdf5
 
-build_netcdf
+#build_netcdf
 
-build_petsc
+#build_petsc
 
-build_proj4
+#build_proj4
 
-build_fftw3
+#build_fftw3
 
 build_pism
 
-build_nco
+#build_nco
 
-build_cdo
+#build_cdo
 
-build_ncview
+#build_ncview
 
 T="$(($(date +%s)-T))"
 echo "Time in seconds: ${T}"
