@@ -23,8 +23,7 @@ build_hdf5() {
     cd $LOCAL_LIB_DIR/sources
 
     version=1.8.17
-    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.0-patch1/src/hdf5-1.10.0-patch1.tar.gz
-    url=https://support.hdfgroup.org/ftp/HDF5/current/src/hdf5-${version}.tar.gz
+    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${version}/src/hdf5-${version}.tar.gz
 
     wget -nc ${url}
     tar xzvf hdf5-${version}.tar.gz
