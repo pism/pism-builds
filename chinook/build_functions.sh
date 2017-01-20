@@ -34,9 +34,7 @@ build_hdf5() {
     tar xzvf ${name}.tar.gz
 
     cd ${name}
-    export CC=mpicc
-    export CFLAGS="-fPIC"
-    ./configure --disable-shared --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
+    CC=mpicc ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
 
     make all -j $N 2>&1 | tee hdf5_compile.log
     make install 2>&1 | tee hdf5_install.log
@@ -54,9 +52,7 @@ build_netcdf() {
     tar -zxvf netcdf-${version}.tar.gz
 
     cd netcdf-${version}
-    export CC=mpicc
-    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include"
-    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib
+    CC=mpicc CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include" LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib \
     ./configure \
       --enable-netcdf4 \
       --disable-dap \
