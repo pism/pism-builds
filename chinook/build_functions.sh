@@ -22,14 +22,19 @@ build_hdf5() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    version=1.8.17
-    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${version}/src/hdf5-${version}.tar.gz
+    # 1.8 branch
+    name=hdf5-1.8.18
+    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.18/src/${name}.tar.gz
+
+    # 1.10 branch
+    name=hdf5-1.10.0-patch1
+    url=https://support.hdfgroup.org/ftp/HDF5/current/src/${name}.tar.gz
 
     wget -nc ${url}
-    tar xzvf hdf5-${version}.tar.gz
+    tar xzvf ${name}.tar.gz
 
-    cd hdf5-${version}
-    CC=mpicc ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
+    cd ${name}
+    CC=mpicc ./configure --disable-shared --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
 
     make all -j $N 2>&1 | tee hdf5_compile.log
     make install 2>&1 | tee hdf5_install.log
@@ -40,7 +45,7 @@ build_netcdf() {
 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    version=4.4.1
+    version=4.4.1.1
     url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${version}.tar.gz
 
     wget -nc ${url}
