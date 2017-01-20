@@ -34,7 +34,9 @@ build_hdf5() {
     tar xzvf ${name}.tar.gz
 
     cd ${name}
-    CC=mpicc ./configure --disable-shared --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
+    export CC=mpicc
+    export CFLAGS="-fPIC"
+    ./configure --disable-shared --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
 
     make all -j $N 2>&1 | tee hdf5_compile.log
     make install 2>&1 | tee hdf5_install.log
