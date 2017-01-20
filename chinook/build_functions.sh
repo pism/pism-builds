@@ -52,7 +52,9 @@ build_netcdf() {
     tar -zxvf netcdf-${version}.tar.gz
 
     cd netcdf-${version}
-    CC=mpicc CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include" LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib \
+    export CC=mpicc
+    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include"
+    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib
     ./configure \
       --enable-netcdf4 \
       --disable-dap \
