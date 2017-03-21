@@ -1,12 +1,17 @@
 #!/bin/bash
 
+module purge
 module load toolchain/pic-intel/2016b
 module load devel/CMake/3.5.2-pic-intel-2016b 
 module load numlib/FFTW/3.3.5-pic-intel-2016b
 module load lib/PROJ/4.9.2-pic-intel-2016b
-module load phys/UDUNITS/2.2.20-pic-intel-2016b
+module load numlib/GSL/2.1-pic-intel-2016b
 
 # start an interactive job
 alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
 
 export PISM_MPIDO='mpirun -np'
+
+# don't load anaconda when building PISM: it pulls in its own NetCDF
+# stuff, which can confuse things
+# module load python/anaconda2-2.5.0
