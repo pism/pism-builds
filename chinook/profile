@@ -1,11 +1,13 @@
 #!/bin/bash
 
 module purge
+module load slurm
 module load toolchain/pic-intel/2016b
 module load devel/CMake/3.5.2-pic-intel-2016b 
 module load numlib/FFTW/3.3.5-pic-intel-2016b
 module load lib/PROJ/4.9.2-pic-intel-2016b
 module load numlib/GSL/2.1-pic-intel-2016b
+module load tools/ANTLR/2.7.7-pic-intel-2016b-Python-2.7.12
 
 # start an interactive job
 alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"

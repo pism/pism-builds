@@ -14,8 +14,8 @@ N=8
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
-MPI_INCLUDE="/opt/scyld/openmpi/1.10.2/intel/include"
-MPI_LIBRARY="/opt/scyld/openmpi/1.10.2/intel/lib/libmpi.so"
+MPI_INCLUDE="/opt/scyld/openmpi/1.10.4/intel/include"
+MPI_LIBRARY="/opt/scyld/openmpi/1.10.4/intel/lib/libmpi.so"
 
 build_hdf5() {
     # download and build HDF5
@@ -70,7 +70,7 @@ build_nco() {
     rm -rf nco
     git clone https://github.com/nco/nco.git
     cd nco
-    git checkout 4.6.0
+    git checkout 4.6.5
 
     export CC=mpicc
     export CPPFLAGS=-I$LOCAL_LIB_DIR/include
@@ -109,7 +109,7 @@ build_petsc() {
         --with-shared-libraries=1
 
     # run conftest in an interactive job and wait for it to complete
-    srun -n 1 -N 1 -p t2small mpirun ./conftest-$PETSC_ARCH
+    srun -t 20 -n 1 -N 1 -p t2small mpirun ./conftest-$PETSC_ARCH
 
     ./reconfigure-$PETSC_ARCH.py
 
@@ -159,10 +159,10 @@ build_pism() {
 }
 
 build_all() {
-    build_nco
     build_petsc
-    build_petsc4py
+    #build_petsc4py
     build_hdf5
     build_netcdf
+    build_nco
     build_pism
 }
