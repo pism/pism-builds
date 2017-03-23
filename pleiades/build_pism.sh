@@ -21,10 +21,12 @@ N=8
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
-#MPI_INCLUDE="/nasa/sgi/mpt/2.12r16/include"
-#MPI_LIBRARY="/nasa/sgi/mpt/2.12r16/lib/libmpi.so"
-MPI_INCLUDE="/nasa/intel/impi/5.0.3.048/intel64/include"
-MPI_LIBRARY="/nasa/intel/impi/5.0.3.048/intel64/lib/libmpi.so"
+export MPICC_CC=icc
+export MPICXX_CXX=icpc
+export CC=mpicc
+
+MPI_INCLUDE="/nasa/sgi/mpt/2.15r20/include"
+MPI_LIBRARY="/nasa/sgi/mpt/2.15r20/lib/libmpi.so"
 # stop on error
 set -e
 # print commands before executing them
@@ -34,32 +36,44 @@ build_hdf5() {
     # download and build HDF5 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    ver=1.8.8
 
-    wget -nc http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-$ver/src/hdf5-$ver.tar
-    tar -xvf hdf5-$ver.tar
+    # 1.10 branch
+    name=hdf5-1.10.0-patch1
+    url=https://support.hdfgroup.org/ftp/HDF5/current/src/${name}.tar.gz
 
-    cd hdf5-$ver
-    CC=mpicc ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR
+    wget -nc ${url}
+    tar xzvf ${name}.tar.gz
 
-    make all -j $N
-    make install
+    cd ${name}
+    ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR 2>&1 | tee hdf5_configure.log
+
+    make all -j $N 2>&1 | tee hdf5_compile.log
+    make install 2>&1 | tee hdf5_install.log
+
 }
 
 build_netcdf() {
-    # download and build netcdf                                                                                            
+    # download and build netcdf
+
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    ver=4.1.3
+    version=4.4.1.1
+    url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${version}.tar.gz
 
-    wget -nc ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-$ver.tar.gz
-    tar -zxvf netcdf-$ver.tar.gz
+    wget -nc ${url}
+    tar -zxvf netcdf-${version}.tar.gz
 
-    cd netcdf-$ver
-    CC=mpicc CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
-	--enable-netcdf4 \
-	--disable-dap \
-	--prefix=$LOCAL_LIB_DIR 2>&1 | tee netcdf_configure.log
+    cd netcdf-${version}
+    export CFLAGS='-O3 -xHost -ip -no-prec-div -static-intel'
+    export CXXFLAGS='-O3 -xHost -ip -no-prec-div -static-intel'
+    export CPP='icc -E'
+    export CXXCPP='icpc -E'
+    export CPPFLAGS="-I$LOCAL_LIB_DIR/include"
+    export LDFLAGS=-L$LOCAL_LIB_DIR/lib
+    ./configure \
+      --enable-netcdf4 \
+      --disable-dap \
+      --prefix=$LOCAL_LIB_DIR 2>&1 | tee netcdf_configure.log
 
     make all -j $N 2>&1 | tee netcdf_compile.log
     make install 2>&1 | tee netcdf_install.log
@@ -71,9 +85,9 @@ build_nco() {
     rm -rf nco
     git clone https://github.com/nco/nco.git
     cd nco
-    git checkout 4.6.2
+    git checkout 4.6.5
 
-    CC=mpicc CPPFLAGS="-I$LOCAL_LIB_DIR/include -I/nasa/nco/4.4.6/include" LDFLAGS="-L$LOCAL_LIB_DIR/lib -L/nasa/nco/4.4.6/lib" ./configure \
+    CPPFLAGS="-I$LOCAL_LIB_DIR/include -I/nasa/nco/4.4.6/include" LDFLAGS="-L$LOCAL_LIB_DIR -L/nasa/nco/4.4.6/lib" ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
 	--enable-udunits2 \
@@ -134,7 +148,7 @@ build_ncview(){
     tar -zxvf ncview-2.1.6.tar.gz
     cd ncview-2.1.6
 
-    CC=mpicc CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+    CC=mpiicc CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
 	--with-nc-config=${LOCAL_LIB_DIR}/bin/nc-config \
 	--with-png_incdir=${LOCAL_LIB_DIR}/include \
@@ -170,7 +184,7 @@ build_petsc() {
     # indices, shared libraries, and no debugging.
     ./config/configure.py \
         --with-cc=icc --with-cxx=icpc --with-fc=0 \
-        --with-blas-lapack-dir="/nasa/intel/Compiler/2015.0.090/composer_xe_2015.0.090/mkl/" \
+        --with-blas-lapack-dir="//nasa/intel/Compiler/2016.2.181/compilers_and_libraries_2016.2.181/linux/mkl/" \
         --with-mpi-lib=$MPI_LIBRARY \
         --with-mpi-include=$MPI_INCLUDE \
         --with-64-bit-indices=1 \
@@ -184,18 +198,17 @@ build_petsc() {
 
     cat > script.queue << EOF
 #PBS -S /bin/bash
-#PBS -l select=1:ncpus=1:model=wes
+#PBS -l select=1:ncpus=1:model=bro
 #PBS -l walltime=200
 #PBS -W group_list=s1560
 #PBS -m e
 
 . /usr/share/modules/init/bash
-module load comp-intel/2015.0.090
-#module load mpi-sgi/mpt.2.12r16 
-module load mpi-intel/5.0.3.048 
+module load comp-intel/2016.2.181
+module load mpi-sgi/mpt.2.15r20
 export PATH="$PATH:."
 export MPI_GROUP_MAX=64
-mpiexec.hydra -np 1 ./conftest-$PETSC_ARCH
+mpiexec -np 1 ./conftest-$PETSC_ARCH
 EOF
 
     # run conftest in an interactive job and wait for it to complete
@@ -255,9 +268,8 @@ build_pism() {
           -DPETSC_EXECUTABLE_RUNS=YES \
           -DCMAKE_CXX_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
           -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
-          -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
+          -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
-	  -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources 
     make -j2 install
@@ -265,22 +277,14 @@ build_pism() {
 
 T="$(date +%s)"
 
-#build_hdf5
-
-#build_netcdf
-
-#build_petsc
-
-#build_proj4
-
-#build_fftw3
-
+build_hdf5
+build_netcdf
+build_petsc
+build_proj4
+build_fftw3
 build_pism
-
 #build_nco
-
 #build_cdo
-
 #build_ncview
 
 T="$(($(date +%s)-T))"

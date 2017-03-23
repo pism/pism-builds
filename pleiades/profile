@@ -9,18 +9,13 @@ fi
 
 # Add your commands here to extend your PATH, etc.
 
+module purge
+module load comp-intel/2016.2.181
+module load mpi-sgi/mpt.2.15r20
 module load pkgsrc/2016Q2
-module load git/2.4.5
-#module load mpi-sgi/mpt.2.12r16
-module load mpi-intel/5.0.3.048
-module load comp-intel/2015.0.090
-module load gsl/1.14
-module load python/2.7.10
-#module load netcdf/4.1.3/intel/mpt
+#module load gsl/1.14
 module load udunits/2.1.19
-#module load ncview/2.1.2
-#module load nco/4.3.2
-#module load pkgsrc/2015Q2
+module load python/2.7.11
 
 export PISM_MPIDO='mpiexec.hydra -n'
 PATH=/nasa/pkgsrc/2016Q2/bin:/nasa/pkgsrc/2016Q2/sbin:$PATH
