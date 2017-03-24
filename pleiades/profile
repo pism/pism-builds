@@ -13,9 +13,11 @@ module purge
 module load comp-intel/2016.2.181
 module load mpi-sgi/mpt.2.15r20
 module load pkgsrc/2016Q2
-#module load gsl/1.14
 module load udunits/2.1.19
 module load python/2.7.11
+module load gcc/4.9.3
+module load nco/4.6.2
+module load ncview/2.1.2
 
-export PISM_MPIDO='mpiexec.hydra -n'
+export PISM_MPIDO='mpiexec -n'
 PATH=/nasa/pkgsrc/2016Q2/bin:/nasa/pkgsrc/2016Q2/sbin:$PATH

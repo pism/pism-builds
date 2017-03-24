@@ -105,9 +105,9 @@ build_cdo(){
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc https://code.zmaw.de/attachments/download/12760/cdo-1.7.2.tar.gz
-    tar -zxvf cdo-1.7.2.tar.gz
-    cd cdo-1.7.2
+    wget -nc https://code.zmaw.de/attachments/download/13772/cdo-1.8.0.tar.gz
+    tar -zxvf cdo-1.8.0.tar.gz
+    cd cdo-1.8.0
 
     CC=mpicc ./configure \
         --prefix=$LOCAL_LIB_DIR \
@@ -266,8 +266,8 @@ build_pism() {
     cmake -DMPI_C_INCLUDE_PATH=$MPI_INCLUDE \
           -DMPI_C_LIBRARIES=$MPI_LIBRARY \
           -DPETSC_EXECUTABLE_RUNS=YES \
-          -DCMAKE_CXX_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
-          -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2" \
+          -DCMAKE_CXX_FLAGS="-std=c++11 -O3 -ipo -axCORE-AVX2 -xSSE4.2" \
+          -DCMAKE_C_FLAGS="-std=c11 -O3 -ipo -axCORE-AVX2 -xSSE4.2" \
           -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
@@ -285,7 +285,7 @@ build_fftw3
 build_pism
 #build_nco
 #build_cdo
-#build_ncview
+build_ncview
 
 T="$(($(date +%s)-T))"
 echo "Time in seconds: ${T}"
