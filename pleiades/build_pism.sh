@@ -87,14 +87,14 @@ build_nco() {
     cd nco
     git checkout 4.6.5
 
-    CPPFLAGS="-I$LOCAL_LIB_DIR/include -I/nasa/nco/4.4.6/include" LDFLAGS="-L$LOCAL_LIB_DIR -L/nasa/nco/4.4.6/lib" ./configure \
+    CPPFLAGS="-I$LOCAL_LIB_DIR/include -I/nasa/nco/4.4.6/include" CFLAGS="-I/nasa/nco/4.4.6/include -L/nasa/nco/4.4.6/lib" LDFLAGS="-L$LOCAL_LIB_DIR -L/nasa/nco/4.4.6/lib -lantlr" ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
 	--enable-udunits2 \
 	--enable-openmp 2>&1 | tee nco_configure.log
 
-    make -j $N  2>&1 | tee nco_compile.log
-    make install  2>&1 | tee nco_install.log
+    #make -j $N  2>&1 | tee nco_compile.log
+    #make install  2>&1 | tee nco_install.log
 
 }
 
@@ -144,11 +144,11 @@ build_ncview(){
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc ftp://cirrus.ucsd.edu/pub/ncview/ncview-2.1.6.tar.gz
-    tar -zxvf ncview-2.1.6.tar.gz
-    cd ncview-2.1.6
+    wget -nc ftp://cirrus.ucsd.edu/pub/ncview/ncview-2.1.7.tar.gz
+    tar -zxvf ncview-2.1.7.tar.gz
+    cd ncview-2.1.7
 
-    CC=mpiicc CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+    CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
 	--with-nc-config=${LOCAL_LIB_DIR}/bin/nc-config \
 	--with-png_incdir=${LOCAL_LIB_DIR}/include \
@@ -162,11 +162,11 @@ build_png() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-1.6.18.tar.gz
-    tar -zxvf libpng-1.6.18.tar.gz
-    cd libpng-1.6.18
+    wget -nc ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-1.6.29.tar.gz
+    tar -zxvf libpng-1.6.29.tar.gz
+    cd libpng-1.6.29
 
-    CC=mpicc ./configure \
+    ./configure \
         --prefix=${LOCAL_LIB_DIR}  2>&1 | tee png_configure.log
 
     make -j $N 2>&1 | tee png_compile.log
@@ -183,10 +183,8 @@ build_petsc() {
     # Note: we use Intel compilers, disable Fortran, use 64-bit
     # indices, shared libraries, and no debugging.
     ./config/configure.py \
-        --with-cc=icc --with-cxx=icpc --with-fc=0 \
+        --with-cc=$MPICC_CC --with-cxx=$MPICXX_CXX --with-fc=0 \
         --with-blas-lapack-dir="//nasa/intel/Compiler/2016.2.181/compilers_and_libraries_2016.2.181/linux/mkl/" \
-        --with-mpi-lib=$MPI_LIBRARY \
-        --with-mpi-include=$MPI_INCLUDE \
         --with-64-bit-indices=1 \
         --known-mpi-shared-libraries=1 \
         --with-debugging=0 \
@@ -277,12 +275,12 @@ build_pism() {
 
 T="$(date +%s)"
 
-build_hdf5
-build_netcdf
-build_petsc
-build_proj4
-build_fftw3
-build_pism
+#build_hdf5
+#build_netcdf
+#build_petsc
+#build_proj4
+#build_fftw3
+#build_pism
 #build_nco
 #build_cdo
 build_ncview

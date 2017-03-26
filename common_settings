@@ -26,7 +26,7 @@ export PISM_PREFIX=${PISM_DIR}/bin/
 export PISM_DO=echo
 
 # Add private commands to PATH
-export PATH=$PATH:${PISM_PREFIX}:${PISM_DIR}/util/:${LOCAL_LIB_DIR}/bin:$HOME/bin
+export PATH=${PISM_PREFIX}:${PISM_DIR}/util/:${LOCAL_LIB_DIR}/bin:$HOME/bin:$PATH
 
 # last initialization step: report settings
 /usr/bin/tty -s
