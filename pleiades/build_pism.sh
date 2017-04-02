@@ -40,11 +40,19 @@ build_hdf5() {
     # 1.10 branch
     name=hdf5-1.10.0-patch1
     url=https://support.hdfgroup.org/ftp/HDF5/current/src/${name}.tar.gz
-
+    
+    # 1.8 branch
+    #  name=hdf5-1.8.18
+    #   url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.18/src/${name}.tar.gz
+    
     wget -nc ${url}
     tar xzvf ${name}.tar.gz
-
-    cd ${name}
+    #    rm -rf hdf5
+    #    git clone -b hdf5_1_8_18 --depth 1 https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git 
+    cd hdf5
+    export CFLAGS='-O3 -xHost -ip'
+    export CXXFLAGS='-O3 -xHost -ip'
+    export FCFLAGS='-O3 -xHost -ip'
     ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR 2>&1 | tee hdf5_configure.log
 
     make all -j $N 2>&1 | tee hdf5_compile.log
@@ -275,15 +283,15 @@ build_pism() {
 
 T="$(date +%s)"
 
-#build_hdf5
-#build_netcdf
-#build_petsc
+build_hdf5
+build_netcdf
+build_petsc
 #build_proj4
 #build_fftw3
-#build_pism
+build_pism
 #build_nco
 #build_cdo
-build_ncview
+#build_ncview
 
 T="$(($(date +%s)-T))"
 echo "Time in seconds: ${T}"
