@@ -11,7 +11,9 @@ fi
 
 module purge
 module load comp-intel/2016.2.181
-module load mpi-sgi/mpt.2.15r20
+#module load comp-intel/2015.3.187
+#module load mpi-sgi/mpt.2.15r20
+module load mpi-intel/5.0.3.048
 module load pkgsrc/2016Q2
 module load udunits/2.1.19
 module load python/2.7.11

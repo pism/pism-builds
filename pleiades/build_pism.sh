@@ -21,13 +21,15 @@ N=8
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
-export MPICC_CC=icc
-export MPICXX_CXX=icpc
+export MPICC_CC=mpiicc
+export MPICXX_CXX=mpiicpc
 export CC=mpicc
 
 MPI_INCLUDE="/nasa/sgi/mpt/2.15r20/include"
 MPI_LIBRARY="/nasa/sgi/mpt/2.15r20/lib/libmpi.so"
-# stop on error
+
+MPI_INCLUDE="/nasa/intel/impi/5.0.3.048/intel64/include"
+MPI_LIBRARY="/nasa/intel/impi/5.0.3.048/intel64/lib/libmpi.so"# stop on error
 set -e
 # print commands before executing them
 set -x
@@ -42,18 +44,17 @@ build_hdf5() {
     url=https://support.hdfgroup.org/ftp/HDF5/current/src/${name}.tar.gz
     
     # 1.8 branch
-    #  name=hdf5-1.8.18
-    #   url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.18/src/${name}.tar.gz
+    name=hdf5-1.8.8
+    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.18/src/${name}.tar.gz
     
-    wget -nc ${url}
-    tar xzvf ${name}.tar.gz
-    #    rm -rf hdf5
-    #    git clone -b hdf5_1_8_18 --depth 1 https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git 
+    #wget -nc ${url}
+    #tar xzvf ${name}.tar.gz
+    rm -rf hdf5
+    git clone -b hdf5_1_10_1 --depth 1 https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git 
     cd hdf5
-    export CFLAGS='-O3 -xHost -ip'
-    export CXXFLAGS='-O3 -xHost -ip'
-    export FCFLAGS='-O3 -xHost -ip'
-    ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR 2>&1 | tee hdf5_configure.log
+    #export CFLAGS='-xHost -ip'
+    #export CXXFLAGS='-xHost -ip'
+    CC=mpicc ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
 
     make all -j $N 2>&1 | tee hdf5_compile.log
     make install 2>&1 | tee hdf5_install.log
@@ -65,23 +66,24 @@ build_netcdf() {
 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    version=4.4.1.1
+    version=4.4.1
     url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${version}.tar.gz
 
     wget -nc ${url}
     tar -zxvf netcdf-${version}.tar.gz
 
     cd netcdf-${version}
-    export CFLAGS='-O3 -xHost -ip -no-prec-div -static-intel'
-    export CXXFLAGS='-O3 -xHost -ip -no-prec-div -static-intel'
-    export CPP='icc -E'
-    export CXXCPP='icpc -E'
-    export CPPFLAGS="-I$LOCAL_LIB_DIR/include"
-    export LDFLAGS=-L$LOCAL_LIB_DIR/lib
-    ./configure \
+    #export CFLAGS='-xHost -ip -no-prec-div -static-intel'
+    #export CXXFLAGS='-xHost -ip -no-prec-div -static-intel'
+    #export CPP='icc -E'
+    #export CXXCPP='icpc -E'
+    export CFLAGS='-g'
+    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include"
+    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib
+    CC=mpicc ./configure \
       --enable-netcdf4 \
       --disable-dap \
-      --prefix=$LOCAL_LIB_DIR 2>&1 | tee netcdf_configure.log
+      --prefix=$LOCAL_LIB_DIR/netcdf 2>&1 | tee netcdf_configure.log
 
     make all -j $N 2>&1 | tee netcdf_compile.log
     make install 2>&1 | tee netcdf_install.log
@@ -211,10 +213,11 @@ build_petsc() {
 
 . /usr/share/modules/init/bash
 module load comp-intel/2016.2.181
-module load mpi-sgi/mpt.2.15r20
+#module load mpi-sgi/mpt.2.15r20
+module load mpi-intel/5.0.3.048
 export PATH="$PATH:."
 export MPI_GROUP_MAX=64
-mpiexec -np 1 ./conftest-$PETSC_ARCH
+mpiexec.hydra -np 1 ./conftest-$PETSC_ARCH
 EOF
 
     # run conftest in an interactive job and wait for it to complete
@@ -274,7 +277,7 @@ build_pism() {
           -DPETSC_EXECUTABLE_RUNS=YES \
           -DCMAKE_CXX_FLAGS="-std=c++11 -O3 -ipo -axCORE-AVX2 -xSSE4.2" \
           -DCMAKE_C_FLAGS="-std=c11 -O3 -ipo -axCORE-AVX2 -xSSE4.2" \
-          -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR" \
+          -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources 
@@ -283,8 +286,8 @@ build_pism() {
 
 T="$(date +%s)"
 
-build_hdf5
-build_netcdf
+#build_hdf5
+#build_netcdf
 build_petsc
 #build_proj4
 #build_fftw3
