@@ -16,19 +16,18 @@ echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
 MPI_INCLUDE="/opt/scyld/openmpi/1.10.4/intel/include"
 MPI_LIBRARY="/opt/scyld/openmpi/1.10.4/intel/lib/libmpi.so"
+#MPI_INCLUDE="/usr/local/pkg/mpi/OpenMPI/1.10.3-GCC-5.4.0-2.26/include"
+#MPI_LIBRARY="/usr/local/pkg/mpi/OpenMPI/1.10.3-GCC-5.4.0-2.26/lib/libmpi.so"
+
 
 build_hdf5() {
     # download and build HDF5
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    # 1.8 branch
-    name=hdf5-1.8.18
-    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.18/src/${name}.tar.gz
-
-    # 1.10 branch
-    name=hdf5-1.10.0-patch1
-    url=https://support.hdfgroup.org/ftp/HDF5/current/src/${name}.tar.gz
+    # We use 1.8.15 because newer version seg fault with Intel 2016 Compilers
+    name=hdf5-1.8.15
+    url=https://support.hdfgroup.org/ftp/HDF5/releases/${name}/src/${name}.tar.gz
 
     wget -nc ${url}
     tar xzvf ${name}.tar.gz
@@ -52,6 +51,7 @@ build_netcdf() {
     tar -zxvf netcdf-${version}.tar.gz
 
     cd netcdf-${version}
+    export CC=$LOCAL_LIB_DIR/hdf5/bin/h5pcc
     export CC=mpicc
     export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include"
     export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib
@@ -109,7 +109,7 @@ build_petsc() {
         --with-shared-libraries=1
 
     # run conftest in an interactive job and wait for it to complete
-    srun -t 20 -n 1 -N 1 -p t2small mpirun ./conftest-$PETSC_ARCH
+    srun -t 20 -n 1 -N 1 -p debug mpirun ./conftest-$PETSC_ARCH
 
     ./reconfigure-$PETSC_ARCH.py
 
@@ -140,13 +140,14 @@ build_pism() {
 
     # use Intel's C and C++ compilers
     opt="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
-    export CC=icc
-    export CXX=icpc
+    #opt="-O3"
+    export CC=mpicc
+    export CXX=mpicxx
     cmake -DCMAKE_CXX_FLAGS="${opt} -diag-disable=cpu-dispatch,10006,2102" \
           -DCMAKE_C_FLAGS="${opt} -diag-disable=cpu-dispatch,10006" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPETSC_EXECUTABLE_RUNS=ON \
-          -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
+	  -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
           -DMPI_C_INCLUDE_PATH="$MPI_INCLUDE" \
           -DMPI_C_LIBRARIES="$MPI_LIBRARY" \
           -DPism_USE_JANSSON=NO \
@@ -163,6 +164,6 @@ build_all() {
     #build_petsc4py
     build_hdf5
     build_netcdf
-    build_nco
     build_pism
+    #build_nco
 }
