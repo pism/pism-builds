@@ -73,9 +73,10 @@ build_nco() {
     git checkout 4.6.5
 
     export CC=mpicc
-    export CPPFLAGS=-I$LOCAL_LIB_DIR/include
-    export LIBS="-liomp5 -lpthread"
-    export LDFLAGS="-L$LOCAL_LIB_DIR/lib -L/usr/lib64"
+    export CPPFLAGS=-I$LOCAL_LIB_DIR/netcdf/include
+    opt="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
+    #export LIBS="-liomp5 -lpthread"
+    export LDFLAGS="-L$LOCAL_LIB_DIR/netcdf/lib -L/usr/lib64"
     ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
@@ -84,6 +85,30 @@ build_nco() {
 
     make -j $N  2>&1 | tee nco_compile.log
     make install  2>&1 | tee nco_install.log
+}
+
+build_cdo(){
+
+    #build_zlib
+
+    mkdir -p $LOCAL_LIB_DIR/sources
+    cd $LOCAL_LIB_DIR/sources
+
+    wget -nc https://code.zmaw.de/attachments/download/14271/cdo-1.8.1.tar.gz
+    tar -zxvf cdo-1.8.1.tar.gz
+    cd cdo-1.8.1
+
+    CC=mpicc ./configure \
+        --prefix=$LOCAL_LIB_DIR \
+        --with-netcdf=$LOCAL_LIB_DIR/netcdf \
+	--with-hdf5=$LOCAL_LIB_DIR/hdf5 \
+        --with-proj=/usr/local/pkg/lib/PROJ/4.9.2-pic-intel-2016b \
+        --with-udunits2=/usr/local/pkg/phys/UDUNITS/2.2.20-pic-intel-2016b \
+        #--with-zlib=$LOCAL_LIB_DIR \
+        2>&1 | tee cdo_configure.log
+
+    make -j $N 2>&1 | tee cdo_compile.log
+    make install 2>&1 | tee cdo_install.log
 }
 
 build_petsc() {
@@ -160,10 +185,11 @@ build_pism() {
 }
 
 build_all() {
-    build_petsc
+    #build_petsc
     #build_petsc4py
-    build_hdf5
-    build_netcdf
-    build_pism
+    #build_hdf5
+    #build_netcdf
+    #build_pism
     #build_nco
+    build_cdo
 }
