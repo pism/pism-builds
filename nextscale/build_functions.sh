@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Automate building PETSc and PISM on PIK IBM NeXtScale.
-# Following the build script by Andy Aschwanden (UAF)
+# Following the build script by Constantine Khroulev and Andy Aschwanden (UAF)
 #
 # To use this script,
 #
@@ -277,7 +277,7 @@ build_pism() {
           -DMPI_C_DIR="$MPI_DIR" \
           -DPism_USE_JANSSON=NO \
           -DPism_USE_PARALLEL_NETCDF4=YES \
-          -DPism_USE_PARALLEL_HDF5=ON \
+          -DPism_USE_PARALLEL_HDF5=OFF \
           -DPism_USE_PROJ4=YES \
           -DPism_BUILD_EXTRA_EXECS:BOOL=OFF \
           $PISM_DIR/sources
