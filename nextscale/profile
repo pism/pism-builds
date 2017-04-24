@@ -1,0 +1,89 @@
+#!/bin/bash
+
+
+export PETSC_ARCH=linux-intel-64bit
+export LOCAL_LIB_DIR=$HOME/software
+export PETSC_DIR=${LOCAL_LIB_DIR}/petsc-intel
+export PETSC_DIR=${LOCAL_LIB_DIR}/petsc-intel-batch
+#export PETSC_DIR=/p/system/packages/petsc/3.7.5/
+
+# make files readable by group members by default
+umask g+rx
+
+export EDITOR="emacs -nw"
+alias ed=$EDITOR
+
+alias al='alias'
+alias cls='clear'
+alias hi='history'
+alias la='ls -a'
+alias ll='ls -lg'
+alias lh='ls -lh'
+alias ncv='ncview -minmax all'
+alias nch='ncdump -h'
+alias em='emacs -nw -Q'
+alias myqstat='qstat -u `whoami`'
+
+export PISM_DIR=$HOME/pism17/pism0.7_dev
+export PISM_PREFIX=${PISM_DIR}/bin/
+export PISM_DO=echo
+
+# Add private commands to PATH
+export PATH=${PISM_PREFIX}:${PISM_DIR}/util/:${LOCAL_LIB_DIR}/bin:$HOME/bin:$PATH
+
+# last initialization step: report settings
+/usr/bin/tty -s
+if [ 0 = $? ]; then
+    module list
+
+    echo 'PETSC_DIR  = ' ${PETSC_DIR}
+    echo 'PETSC_ARCH = ' ${PETSC_ARCH}
+    echo 'PATH       = ' ${PATH}
+fi
+
+
+module purge
+
+module load cmake/3.2.3
+module load intel/2017.1
+unset I_MPI_FABRICS
+
+export CC=mpiicc
+export CXX=mpiicpc
+export FC=mpiifort
+
+#export CFLAGS -fPIC -g -O3 -fp-model precise -std=c++11
+#export CXXFLAGS -fPIC -g -O3 -fp-model precise -std=c++11
+#export CFLAGS="-fp-model precise -std=c++11 -no-fast-transcendentals"
+#export CXXFLAGS="-fp-model precise -std=c++11 -no-fast-transcendentals"
+export CFLAGS="-fp-model precise -no-fast-transcendentals"
+export CXXFLAGS="-fp-model precise -no-fast-transcendentals"
+
+#module load petsc/3.7.5
+
+#module load netcdf-c/4.4.1.1/intel/parallel
+
+#module load hdf5/1.8.18/intel/parallel
+#prepend-path PATH /p/system/packages/hdf5/1.8.18/impi/lib 
+
+#module load udunits/2.2.19
+#module load fftw/3.3.4
+#module load gsl/1.16
+module load proj4/4.9.3
+
+module load texlive/2015
+module load valgrind/3.10.1/gnu
+
+#not necessary for installation
+#module load nco/4.5.0 
+#module load cdo/1.7.1 
+#module load ncview/2.1.6 
+
+# start an interactive job
+#alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
+
+export PISM_MPIDO='mpiexec.hydra -bootstrap slurm -n'
+
+# don't load anaconda when building PISM: it pulls in its own NetCDF
+# stuff, which can confuse things
+# module load anaconda/2.3.0
