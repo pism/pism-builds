@@ -7,7 +7,9 @@ build_ocgis() {
     python setup.py install --user
 }
 
-pip install netCDF4 --user
-pip install jupyter --user
-pip install pygdal --user
+#pip install netCDF4 --user
+#pip install jupyter --user
+#pip install pygdal --user
+
+build
 build_ocgis()

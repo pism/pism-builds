@@ -172,7 +172,6 @@ build_pism() {
           -DCMAKE_C_FLAGS="${opt} -diag-disable=cpu-dispatch,10006" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPETSC_EXECUTABLE_RUNS=ON \
-	  -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
           -DMPI_C_INCLUDE_PATH="$MPI_INCLUDE" \
           -DMPI_C_LIBRARIES="$MPI_LIBRARY" \
           -DPism_USE_JANSSON=NO \
@@ -189,7 +188,7 @@ build_all() {
     #build_petsc4py
     #build_hdf5
     #build_netcdf
-    #build_pism
+    build_pism
     #build_nco
-    build_cdo
+    #build_cdo
 }
