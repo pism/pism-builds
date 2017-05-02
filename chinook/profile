@@ -4,6 +4,7 @@ module purge
 module load slurm
 module load toolchain/pic-intel/2016b
 module load data/GDAL/2.1.0-pic-intel-2016b
+module load tools/NCO/4.6.1-pic-intel-2016b
 module swap data/netCDF/4.4.1-pic-intel-2016b data/netCDF/4.4.1.1-pic-intel-2016b
 module load devel/CMake/3.5.2-pic-intel-2016b 
 module load numlib/FFTW/3.3.5-pic-intel-2016b

@@ -100,8 +100,8 @@ build_cdo(){
 
     CC=mpicc ./configure \
         --prefix=$LOCAL_LIB_DIR \
-        --with-netcdf=$LOCAL_LIB_DIR/netcdf \
-	--with-hdf5=$LOCAL_LIB_DIR/hdf5 \
+	--with-hdf5=/usr/local/pkg/data/HDF5/1.8.15-pic-intel-2016b \
+	--with-netcdf=/usr/local/pkg/data/netCDF/4.4.1.1-pic-intel-2016b \
         --with-proj=/usr/local/pkg/lib/PROJ/4.9.2-pic-intel-2016b \
         --with-udunits2=/usr/local/pkg/phys/UDUNITS/2.2.20-pic-intel-2016b \
         #--with-zlib=$LOCAL_LIB_DIR \
@@ -186,9 +186,9 @@ build_pism() {
 build_all() {
     #build_petsc
     #build_petsc4py
-    #build_hdf5
-    #build_netcdf
+    # HDF5: not needed anymore, chinook has a module (AA: 5/1/17)
+    # netCDF4: not needed anymore, chinook has a module (AA: 5/1/17)
     build_pism
-    #build_nco
+    # NCO: not needed anymore, we can use the chinook module (AA: 5/1/17)
     #build_cdo
 }
