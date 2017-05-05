@@ -16,8 +16,6 @@ echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
 MPI_INCLUDE="/opt/scyld/openmpi/1.10.4/intel/include"
 MPI_LIBRARY="/opt/scyld/openmpi/1.10.4/intel/lib/libmpi.so"
-#MPI_INCLUDE="/usr/local/pkg/mpi/OpenMPI/1.10.3-GCC-5.4.0-2.26/include"
-#MPI_LIBRARY="/usr/local/pkg/mpi/OpenMPI/1.10.3-GCC-5.4.0-2.26/lib/libmpi.so"
 
 
 build_hdf5() {
@@ -145,10 +143,10 @@ build_petsc4py() {
     rm -rf $HOME/petsc4py
     mkdir -p $HOME/petsc4py
     cd $HOME/petsc4py
-    git clone https://bitbucket.org/petsc/petsc4py.git .
+    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc4py.git .
     cd $HOME/petsc4py
     python setup.py build
-    python setup.py install
+    python setup.py install --user
 }
 
 build_pism() {
@@ -188,7 +186,7 @@ build_all() {
     #build_petsc4py
     # HDF5: not needed anymore, chinook has a module (AA: 5/1/17)
     # netCDF4: not needed anymore, chinook has a module (AA: 5/1/17)
-    build_pism
+    #build_pism
     # NCO: not needed anymore, we can use the chinook module (AA: 5/1/17)
-    #build_cdo
+    build_cdo
 }
