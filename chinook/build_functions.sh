@@ -14,8 +14,8 @@ N=8
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
-MPI_INCLUDE="/opt/scyld/openmpi/1.10.4/intel/include"
-MPI_LIBRARY="/opt/scyld/openmpi/1.10.4/intel/lib/libmpi.so"
+MPI_INCLUDE="/opt/scyld/openmpi/1.10.6/intel/include"
+MPI_LIBRARY="/opt/scyld/openmpi/1.10.6/intel/lib/libmpi.so"
 
 
 build_hdf5() {
@@ -117,9 +117,12 @@ build_petsc() {
     git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
     # Note: we use Intel compilers, disable Fortran, use 64-bit
     # indices, shared libraries, and no debugging.
+    # use Intel's C and C++ compilers                                                                                                                                                                                                           
+    opt="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
     ./config/configure.py \
         --with-cc=icc --with-cxx=icpc --with-fc=0 \
-        --with-blas-lapack-dir="/usr/lib64/atlas/" \
+	--CFLAGS="$opt" --CXXFLAGS="$opt" \
+        --with-blas-lapack-dir="/usr/local/pkg/numlib/imkl/11.3.3.210-pic-iompi-2016b/mkl/lib/intel64" \
         --with-mpi-lib=$MPI_LIBRARY \
         --with-mpi-include=$MPI_INCLUDE \
         --with-64-bit-indices=1 \
@@ -182,11 +185,8 @@ build_pism() {
 }
 
 build_all() {
-    #build_petsc
+    build_petsc
     #build_petsc4py
-    # HDF5: not needed anymore, chinook has a module (AA: 5/1/17)
-    # netCDF4: not needed anymore, chinook has a module (AA: 5/1/17)
-    #build_pism
-    # NCO: not needed anymore, we can use the chinook module (AA: 5/1/17)
-    build_cdo
+    build_pism
+    # build_cdo
 }
