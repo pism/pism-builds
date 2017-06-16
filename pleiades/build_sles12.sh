@@ -17,6 +17,8 @@ PISM_DIR=$HOME/pism-sles12
 # No. of cores for make
 N=8
 
+export PETSC_DIR=$HOME/petsc-sles12
+
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
