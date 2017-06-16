@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # Automate building PROJ.4, FFTW, PETSc, and PISM on pleiades.
 #
@@ -10,10 +9,10 @@
 # - run this script
 
 # directory to install libraries in
-LOCAL_LIB_DIR=$HOME/local
+LOCAL_LIB_DIR=$HOME/local-sles12
 
 # PISM installation directory
-PISM_DIR=$HOME/pism
+PISM_DIR=$HOME/pism-sles12
 
 # No. of cores for make
 N=8
@@ -21,62 +20,33 @@ N=8
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
-export MPICC_CC=mpiicc
-export MPICXX_CXX=mpiicpc
-export CC=mpicc
+export MPICC_CC=icc
+export MPICXX_CXX=icpc
+#export CC=mpicc
 
-MPI_INCLUDE="/nasa/sgi/mpt/2.15r20/include"
-MPI_LIBRARY="/nasa/sgi/mpt/2.15r20/lib/libmpi.so"
 
-MPI_INCLUDE="/nasa/intel/impi/5.0.3.048/intel64/include"
-MPI_LIBRARY="/nasa/intel/impi/5.0.3.048/intel64/lib/libmpi.so"# stop on error
+MPI_INCLUDE="/nasa/sgi/mpt/2.14r19/include"
+MPI_LIBRARY="/nasa/sgi/mpt/2.14r19/lib/libmpi.so"
+
+# stop on error
 set -e
 # print commands before executing them
 set -x
 
-build_hdf5() {
-    # download and build HDF5 
+build_udunits2() {
+    # download and build udunits2           
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
+    version=2.2.25
+    wget -nc ftp://ftp.unidata.ucar.edu/pub/udunits/udunits-${version}.tar.gz
+    tar -zxvf udunits-${version}.tar.gz
+    cd udunits-${version}
 
-    rm -rf hdf5
-    git clone -b hdf5_1_10_1 --depth 1 https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git 
-    cd hdf5
-    #export CFLAGS='-xHost -ip'
-    #export CXXFLAGS='-xHost -ip'
-    CC=mpicc ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
+    CC=gcc ./configure --prefix=$LOCAL_LIB_DIR 2>&1 | tee udunits_configure.log
 
-    make all -j $N 2>&1 | tee hdf5_compile.log
-    make install 2>&1 | tee hdf5_install.log
+    make all -j $N 2>&1 | tee udunits_make.log
+    make install 2>&1 | tee udunits_install.log
 
-}
-
-build_netcdf() {
-    # download and build netcdf
-
-    mkdir -p $LOCAL_LIB_DIR/sources
-    cd $LOCAL_LIB_DIR/sources
-    version=4.4.1.1
-    url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${version}.tar.gz
-
-    wget -nc ${url}
-    tar -zxvf netcdf-${version}.tar.gz
-
-    cd netcdf-${version}
-    #export CFLAGS='-xHost -ip -no-prec-div -static-intel'
-    #export CXXFLAGS='-xHost -ip -no-prec-div -static-intel'
-    #export CPP='icc -E'
-    #export CXXCPP='icpc -E'
-    export CFLAGS='-g'
-    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include"
-    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib
-    CC=mpicc ./configure \
-      --enable-netcdf4 \
-      --disable-dap \
-      --prefix=$LOCAL_LIB_DIR/netcdf 2>&1 | tee netcdf_configure.log
-
-    make all -j $N 2>&1 | tee netcdf_compile.log
-    make install 2>&1 | tee netcdf_install.log
 }
 
 build_nco() {
@@ -105,16 +75,14 @@ build_cdo(){
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc https://code.zmaw.de/attachments/download/14686/cdo-1.8.2.tar.gz
+    wget -nc --no-check-certificate https://code.zmaw.de/attachments/download/14686/cdo-1.8.2.tar.gz
     tar -zxvf cdo-1.8.2.tar.gz
     cd cdo-1.8.2
 
-    CC=mpicc ./configure \
+    CC=$MPICC_CC LIBS="-lmpi" ./configure \
         --prefix=$LOCAL_LIB_DIR \
-	--with-netdf=$LOCAL_LIB_DIR/netcdf \
-	--with-hdf5=$LOCAL_LIB_DIR/hdf5 \
-	--with-proj=$LOCAL_LIB_DIR \
-	--with-udunits2=/nasa/udunits/2.1.19 \
+	--with-netcdf=/nasa/netcdf/4.4.1.1_mpt \
+	--with-hdf5=/nasa/hdf5/1.8.18_mpt \
 	--with-zlib=$LOCAL_LIB_DIR \
 	--with-proj=$LOCAL_LIB_DIR 2>&1 | tee cdo_configure.log
 
@@ -150,7 +118,7 @@ build_ncview(){
 
     CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
-	--with-nc-config=${LOCAL_LIB_DIR}/bin/nc-config \
+	--with-nc-config=/nasa/netcdf/4.4.1.1_mpt/bin/nc-config \
 	--with-png_incdir=${LOCAL_LIB_DIR}/include \
 	--with-png_libdir=${LOCAL_LIB_DIR}/lib 2>&1 | tee ncview_configure.log
 
@@ -159,6 +127,7 @@ build_ncview(){
 }
 
 build_png() {
+
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
@@ -166,7 +135,7 @@ build_png() {
     tar -zxvf libpng-1.6.29.tar.gz
     cd libpng-1.6.29
 
-    ./configure \
+    CC=icpc ./configure \
         --prefix=${LOCAL_LIB_DIR}  2>&1 | tee png_configure.log
 
     make -j $N 2>&1 | tee png_compile.log
@@ -183,10 +152,15 @@ build_petsc() {
     # Note: we use Intel compilers, disable Fortran, use 64-bit
     # indices, shared libraries, and no debugging.
     ./config/configure.py \
-        --with-cc=$MPICC_CC --with-cxx=$MPICXX_CXX --with-fc=0 \
-        --with-blas-lapack-dir="//nasa/intel/Compiler/2016.2.181/compilers_and_libraries_2016.2.181/linux/mkl/" \
+	--with-mpi-dir=/nasa/sgi/mpt/2.14r19 \
+	--with-blas-lapack-dir=/nasa/intel/Compiler/2016.2.181/mkl/lib/intel64 \
+	--with-cpp=/usr/bin/cpp \
+	--with-gnu-compilers=0 \
+	--known-mpi-shared-libraries=1 \
+	--with-vendor-compilers=intel \
+	-COPTFLAGS=-g -O3 -axCORE-AVX2,AVX -xSSE4.2 -CXXOPTFLAGS=-g -O3 -axCORE-AVX2,AVX -xSSE4.2 -FOPTFLAGS=-g -O3 -axCORE-AVX2,AVX -xSSE4.2 \
+        --with-fc=0 \
         --with-64-bit-indices=1 \
-        --known-mpi-shared-libraries=1 \
         --with-debugging=0 \
         --with-valgrind=0 \
         --with-x=0 \
@@ -196,18 +170,19 @@ build_petsc() {
 
     cat > script.queue << EOF
 #PBS -S /bin/bash
-#PBS -l select=1:ncpus=1:model=bro
+#PBS -l select=1:ncpus=1:model=bro:aoe=sles12
 #PBS -l walltime=200
 #PBS -W group_list=s1560
 #PBS -m e
 
 . /usr/share/modules/init/bash
+module purge
 module load comp-intel/2016.2.181
-#module load mpi-sgi/mpt.2.15r20
-module load mpi-intel/5.0.3.048
+module load mpi-sgi/mpt
+#module load mpi-intel/5.0.3.048
 export PATH="$PATH:."
 export MPI_GROUP_MAX=64
-mpiexec.hydra -np 1 ./conftest-$PETSC_ARCH
+mpiexec -np 1 ./conftest-$PETSC_ARCH
 EOF
 
     # run conftest in an interactive job and wait for it to complete
@@ -265,26 +240,25 @@ build_pism() {
     cmake -DMPI_C_INCLUDE_PATH=$MPI_INCLUDE \
           -DMPI_C_LIBRARIES=$MPI_LIBRARY \
           -DPETSC_EXECUTABLE_RUNS=YES \
-          -DCMAKE_CXX_FLAGS="-std=c++11 -O3 -ipo -axCORE-AVX2 -xSSE4.2" \
-          -DCMAKE_C_FLAGS="-std=c11 -O3 -ipo -axCORE-AVX2 -xSSE4.2" \
-          -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
+	  -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR" \
+          -DCMAKE_CXX_FLAGS="-std=c++11 -O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006,2102 -lhdf5" \
+          -DCMAKE_C_FLAGS="-std=c11 -O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006 -lhdf5" \
+	  -LINK_LIBRARIES="-lhdf5" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
-          -DPism_USE_PROJ4=YES $PISM_DIR/sources 
-    make -j2 install
+          -DPism_USE_PROJ4=YES $PISM_DIR/sources
+    make -j4 install
 }
 
 T="$(date +%s)"
 
-#build_hdf5
-#build_netcdf
 #build_petsc
 #build_proj4
-#build_fftw3
+#build_udunits2
 #build_pism
 #build_nco
-build_cdo
-#build_ncview
+#build_cdo
+build_ncview
 
 T="$(($(date +%s)-T))"
 echo "Time in seconds: ${T}"

@@ -11,12 +11,13 @@ fi
 
 module purge
 module load comp-intel/2016.2.181
-module load mpi-intel/5.0.3.048
-module load pkgsrc/2016Q2
-module load udunits/2.1.19
-module load python/2.7.11
-module load gcc/4.9.3
-#module load nco/4.6.2
+module load mpi-sgi/mpt
+module load pkgsrc/2016Q4
+module load python/2.7.12
+module load gcc/4.9.4
+module load hdf5/1.8.18_mpt
+module load netcdf/4.4.1.1_mpt
+#module load nco/4.6.3
 
 export PISM_MPIDO='mpiexec -n'
-PATH=/nasa/pkgsrc/2016Q2/bin:/nasa/pkgsrc/2016Q2/sbin:$PATH
+#PATH=/nasa/pkgsrc/2016Q4/bin:/nasa/pkgsrc/2016Q4/sbin:$PATH
