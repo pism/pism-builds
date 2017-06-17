@@ -150,7 +150,7 @@ build_ncview(){
 
     CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
-	--with-nc-config=${LOCAL_LIB_DIR}/bin/nc-config \
+	--with-nc-config=${LOCAL_LIB_DIR}/netcdf/bin/nc-config \
 	--with-png_incdir=${LOCAL_LIB_DIR}/include \
 	--with-png_libdir=${LOCAL_LIB_DIR}/lib 2>&1 | tee ncview_configure.log
 
@@ -271,14 +271,14 @@ build_pism() {
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources 
-    make -j2 install
+    make -j4 install
 }
 
 T="$(date +%s)"
 
 #build_hdf5
 #build_netcdf
-build_petsc
+#build_petsc
 #build_proj4
 #build_fftw3
 build_pism

@@ -109,7 +109,6 @@ build_zlib() {
 
 build_ncview(){
 
-    build_png
 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
@@ -117,32 +116,30 @@ build_ncview(){
     wget -nc ftp://cirrus.ucsd.edu/pub/ncview/ncview-2.1.7.tar.gz
     tar -zxvf ncview-2.1.7.tar.gz
     cd ncview-2.1.7
+    cat > libpng.patch <<EOF
+--- configure   2016-03-21 09:52:34.000000000 -0700
++++ configure_new       2017-06-16 14:58:37.187912859 -0700
+@@ -5504,7 +5504,7 @@
+        echo "** Could not find the png.h file, so -frames support will not be included  **"
+        echo "** Install the PNG library (and development headers) to fix this           **"
+ fi
+-PNG_LIBNAME=libpng.so
++PNG_LIBNAME=libpng16.so
 
-    CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib ./configure \
+ # Check whether --with-png_libdir was given.
+ if test "${with_png_libdir+set}" = set; then :
+EOF
+
+    patch < libpng.patch
+
+    CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib LIBS='-lpng -ludunits2' ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
 	--with-nc-config=/nasa/netcdf/4.4.1.1_mpt/bin/nc-config \
-	--with-png_incdir=${LOCAL_LIB_DIR}/include \
-	--with-png_libdir=${LOCAL_LIB_DIR}/lib 2>&1 | tee ncview_configure.log
+	--with-png_incdir=/nasa/pkgsrc/sles12/2016Q4/include \
+	--with-png_libdir=/nasa/pkgsrc/sles12/2016Q4/lib 2>&1 | tee ncview_configure.log
 
     make -j $N 2>&1 | tee ncview_compile.log
     make install 2>&1 | tee ncview_install.log
-}
-
-build_png() {
-
-    mkdir -p $LOCAL_LIB_DIR/sources
-    cd $LOCAL_LIB_DIR/sources
-
-    wget -nc ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-1.6.29.tar.gz
-    tar -zxvf libpng-1.6.29.tar.gz
-    cd libpng-1.6.29
-
-    CC=icpc ./configure \
-        --prefix=${LOCAL_LIB_DIR}  2>&1 | tee png_configure.log
-
-    make -j $N 2>&1 | tee png_compile.log
-    make install 2>&1 | tee png_install.log
-
 }
 
 build_petsc() {
