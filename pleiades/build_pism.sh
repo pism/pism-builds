@@ -270,6 +270,7 @@ build_pism() {
           -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
+          -DPism_ENABLE_DOCUMENTATION=NO \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources 
     make -j2 install
 }
