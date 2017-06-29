@@ -59,7 +59,6 @@ build_nco() {
     cd nco
     git checkout 4.6.5
 
-    # UDUNITS2_PATH=$HOME/local/ CPPFLAGS="-I$LOCAL_LIB_DIR/include -I/nasa/nco/4.4.6/include" CFLAGS="-I/nasa/nco/4.4.6/include -L/nasa/nco/4.4.6/lib" LDFLAGS="-L$LOCAL_LIB_DIR -L/nasa/nco/4.4.6/lib -lantlr" ./configure \
     NETCDF_ROOT=/nasa/netcdf/4.4.1.1_mpt ANTLR_ROOT=/nasa/nco/4.4.6 UDUNITS2_PATH=$LOCAL_LIB_DIR ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
@@ -254,7 +253,7 @@ T="$(date +%s)"
 
 #build_petsc
 #build_proj4
-#build_udunits2
+build_udunits2
 #build_pism
 build_nco
 #build_cdo
