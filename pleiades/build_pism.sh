@@ -27,8 +27,8 @@ export MPICXX_CXX=icpc
 #export CC=mpicc
 
 
-MPI_INCLUDE="/nasa/sgi/mpt/2.14r19/include"
-MPI_LIBRARY="/nasa/sgi/mpt/2.14r19/lib/libmpi.so"
+MPI_INCLUDE="/nasa/sgi/mpt/2.15r20/include"
+MPI_LIBRARY="/nasa/sgi/mpt/2.15r20/lib/libmpi.so"
 
 # stop on error
 set -e
@@ -57,9 +57,9 @@ build_nco() {
     rm -rf nco
     git clone https://github.com/nco/nco.git
     cd nco
-    git checkout 4.6.5
+    git checkout 4.6.7
 
-    NETCDF_ROOT=/nasa/netcdf/4.4.1.1_mpt ANTLR_ROOT=/nasa/nco/4.4.6 UDUNITS2_PATH=$LOCAL_LIB_DIR ./configure \
+    NETCDF_ROOT=/nasa/netcdf/4.4.1.1_mpt ANTLR_ROOT=/nasa/sles11/nco/4.6.2/gcc/mpt UDUNITS2_PATH=$LOCAL_LIB_DIR ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
 	--enable-udunits2 \
@@ -132,7 +132,7 @@ EOF
 
     patch < libpng.patch
 
-    CC=mpicc CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib LIBS='-lpng -ludunits2' ./configure \
+    CC=mpicc CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib LIBS='-L$LOCAL_LIB_DIR/lib -lpng -Bstatic -ludunits2 -Bdynamic' ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
 	--with-nc-config=/nasa/netcdf/4.4.1.1_mpt/bin/nc-config \
 	--with-png_incdir=/nasa/pkgsrc/sles12/2016Q4/include \
@@ -151,7 +151,7 @@ build_petsc() {
     # Note: we use Intel compilers, disable Fortran, use 64-bit
     # indices, shared libraries, and no debugging.
     ./config/configure.py \
-	--with-mpi-dir=/nasa/sgi/mpt/2.14r19 \
+	--with-mpi-dir=/nasa/sgi/mpt/2.15r20 \
 	--with-blas-lapack-dir=/nasa/intel/Compiler/2016.2.181/mkl/lib/intel64 \
 	--with-cpp=/usr/bin/cpp \
 	--with-gnu-compilers=0 \
@@ -227,7 +227,7 @@ build_pism() {
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
 
-    git clone --depth 1 -b dev https://github.com/pism/pism.git . || git pull
+    git clone --depth 1 -b thk_calving https://github.com/pism/pism.git . || git pull
 
     mkdir -p build
     cd build
@@ -253,9 +253,9 @@ T="$(date +%s)"
 
 #build_petsc
 #build_proj4
-build_udunits2
-#build_pism
-build_nco
+#build_udunits2
+build_pism
+#build_nco
 #build_cdo
 #build_ncview
 
