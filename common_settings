@@ -27,13 +27,3 @@ export PISM_DO=echo
 
 # Add private commands to PATH
 export PATH=${PISM_PREFIX}:${PISM_DIR}/util/:${LOCAL_LIB_DIR}/bin:$HOME/bin:$PATH
-
-# last initialization step: report settings
-/usr/bin/tty -s
-if [ 0 = $? ]; then
-    module list
-
-    echo 'PETSC_DIR  = ' ${PETSC_DIR}
-    echo 'PETSC_ARCH = ' ${PETSC_ARCH}
-    echo 'PATH       = ' ${PATH}
-fi
