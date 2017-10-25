@@ -14,10 +14,8 @@ N=8
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
-MPI_INCLUDE="/opt/scyld/openmpi/1.10.4/intel/include"
-MPI_LIBRARY="/opt/scyld/openmpi/1.10.4/intel/lib/libmpi.so"
-#MPI_INCLUDE="/usr/local/pkg/mpi/OpenMPI/1.10.3-GCC-5.4.0-2.26/include"
-#MPI_LIBRARY="/usr/local/pkg/mpi/OpenMPI/1.10.3-GCC-5.4.0-2.26/lib/libmpi.so"
+MPI_INCLUDE="/opt/scyld/openmpi/1.10.6/intel/include"
+MPI_LIBRARY="/opt/scyld/openmpi/1.10.6/intel/lib/libmpi.so"
 
 
 build_hdf5() {
@@ -100,8 +98,8 @@ build_cdo(){
 
     CC=mpicc ./configure \
         --prefix=$LOCAL_LIB_DIR \
-        --with-netcdf=$LOCAL_LIB_DIR/netcdf \
-	--with-hdf5=$LOCAL_LIB_DIR/hdf5 \
+	--with-hdf5=/usr/local/pkg/data/HDF5/1.8.15-pic-intel-2016b \
+	--with-netcdf=/usr/local/pkg/data/netCDF/4.4.1.1-pic-intel-2016b \
         --with-proj=/usr/local/pkg/lib/PROJ/4.9.2-pic-intel-2016b \
         --with-udunits2=/usr/local/pkg/phys/UDUNITS/2.2.20-pic-intel-2016b \
         #--with-zlib=$LOCAL_LIB_DIR \
@@ -119,9 +117,12 @@ build_petsc() {
     git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
     # Note: we use Intel compilers, disable Fortran, use 64-bit
     # indices, shared libraries, and no debugging.
+    # use Intel's C and C++ compilers                                                                                                                                                                                                           
+    opt="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
     ./config/configure.py \
         --with-cc=icc --with-cxx=icpc --with-fc=0 \
-        --with-blas-lapack-dir="/usr/lib64/atlas/" \
+	--CFLAGS="$opt" --CXXFLAGS="$opt" \
+        --with-blas-lapack-dir="/usr/local/pkg/numlib/imkl/11.3.3.210-pic-iompi-2016b/mkl/lib/intel64" \
         --with-mpi-lib=$MPI_LIBRARY \
         --with-mpi-include=$MPI_INCLUDE \
         --with-64-bit-indices=1 \
@@ -145,10 +146,10 @@ build_petsc4py() {
     rm -rf $HOME/petsc4py
     mkdir -p $HOME/petsc4py
     cd $HOME/petsc4py
-    git clone https://bitbucket.org/petsc/petsc4py.git .
+    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc4py.git .
     cd $HOME/petsc4py
     python setup.py build
-    python setup.py install
+    python setup.py install --user
 }
 
 build_pism() {
@@ -172,7 +173,6 @@ build_pism() {
           -DCMAKE_C_FLAGS="${opt} -diag-disable=cpu-dispatch,10006" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPETSC_EXECUTABLE_RUNS=ON \
-	  -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
           -DMPI_C_INCLUDE_PATH="$MPI_INCLUDE" \
           -DMPI_C_LIBRARIES="$MPI_LIBRARY" \
           -DPism_USE_JANSSON=NO \
@@ -185,11 +185,8 @@ build_pism() {
 }
 
 build_all() {
-    #build_petsc
+    build_petsc
     #build_petsc4py
-    #build_hdf5
-    #build_netcdf
-    #build_pism
-    #build_nco
-    build_cdo
+    build_pism
+    # build_cdo
 }

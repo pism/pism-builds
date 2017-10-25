@@ -9,15 +9,15 @@
 # - run this script
 
 # directory to install libraries in
-LOCAL_LIB_DIR=$HOME/local
+LOCAL_LIB_DIR=$HOME/local-sles12
 
 # PISM installation directory
-PISM_DIR=$HOME/pism
+PISM_DIR=$HOME/pism-sles12
 
 # No. of cores for make
 N=8
 
-export PETSC_DIR=$HOME/petsc
+export PETSC_DIR=$HOME/petsc-sles12
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
@@ -27,8 +27,8 @@ export MPICXX_CXX=icpc
 #export CC=mpicc
 
 
-MPI_INCLUDE="/nasa/sgi/mpt/2.15r20/include"
-MPI_LIBRARY="/nasa/sgi/mpt/2.15r20/lib/libmpi.so"
+MPI_INCLUDE="/nasa/sgi/mpt/2.14r19/include"
+MPI_LIBRARY="/nasa/sgi/mpt/2.14r19/lib/libmpi.so"
 
 # stop on error
 set -e
@@ -57,16 +57,16 @@ build_nco() {
     rm -rf nco
     git clone https://github.com/nco/nco.git
     cd nco
-    git checkout 4.6.7
+    git checkout 4.6.5
 
-    NETCDF_ROOT=/nasa/netcdf/4.4.1.1_mpt ANTLR_ROOT=/nasa/sles11/nco/4.6.2/gcc/mpt UDUNITS2_PATH=$LOCAL_LIB_DIR ./configure \
+    CPPFLAGS="-I$LOCAL_LIB_DIR/include -I/nasa/nco/4.4.6/include" CFLAGS="-I/nasa/nco/4.4.6/include -L/nasa/nco/4.4.6/lib" LDFLAGS="-L$LOCAL_LIB_DIR -L/nasa/nco/4.4.6/lib -lantlr" ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
 	--enable-udunits2 \
 	--enable-openmp 2>&1 | tee nco_configure.log
 
-    make -j $N  2>&1 | tee nco_compile.log
-    make install  2>&1 | tee nco_install.log
+    #make -j $N  2>&1 | tee nco_compile.log
+    #make install  2>&1 | tee nco_install.log
 
 }
 
@@ -132,7 +132,7 @@ EOF
 
     patch < libpng.patch
 
-    CC=mpicc CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib LIBS='-L$LOCAL_LIB_DIR/lib -lpng -Bstatic -ludunits2 -Bdynamic' ./configure \
+    CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/include LDFLAGS=-L$LOCAL_LIB_DIR/lib LIBS='-lpng -ludunits2' ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
 	--with-nc-config=/nasa/netcdf/4.4.1.1_mpt/bin/nc-config \
 	--with-png_incdir=/nasa/pkgsrc/sles12/2016Q4/include \
@@ -151,7 +151,7 @@ build_petsc() {
     # Note: we use Intel compilers, disable Fortran, use 64-bit
     # indices, shared libraries, and no debugging.
     ./config/configure.py \
-	--with-mpi-dir=/nasa/sgi/mpt/2.15r20 \
+	--with-mpi-dir=/nasa/sgi/mpt/2.14r19 \
 	--with-blas-lapack-dir=/nasa/intel/Compiler/2016.2.181/mkl/lib/intel64 \
 	--with-cpp=/usr/bin/cpp \
 	--with-gnu-compilers=0 \
@@ -227,7 +227,7 @@ build_pism() {
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
 
-    git clone --depth 1 -b thk_calving https://github.com/pism/pism.git . || git pull
+    git clone --depth 1 -b dev https://github.com/pism/pism.git . || git pull
 
     mkdir -p build
     cd build
@@ -254,10 +254,10 @@ T="$(date +%s)"
 #build_petsc
 #build_proj4
 #build_udunits2
-build_pism
+#build_pism
 #build_nco
 #build_cdo
-#build_ncview
+build_ncview
 
 T="$(($(date +%s)-T))"
 echo "Time in seconds: ${T}"
