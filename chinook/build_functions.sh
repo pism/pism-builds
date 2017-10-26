@@ -14,8 +14,9 @@ N=8
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
-MPI_INCLUDE="/opt/scyld/openmpi/1.10.6/intel/include"
-MPI_LIBRARY="/opt/scyld/openmpi/1.10.6/intel/lib/libmpi.so"
+OPENMPI=/opt/scyld/openmpi/1.10.7/intel
+MPI_INCLUDE="${OPENMPI}/include"
+MPI_LIBRARY="${OPENMPI}/lib/libmpi.so"
 
 
 build_hdf5() {
