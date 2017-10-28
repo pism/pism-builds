@@ -18,6 +18,8 @@ OPENMPI=/opt/scyld/openmpi/1.10.7/intel
 MPI_INCLUDE="${OPENMPI}/include"
 MPI_LIBRARY="${OPENMPI}/lib/libmpi.so"
 
+MKL=/usr/local/pkg/numlib/imkl/11.3.3.210-pic-iompi-2016b/mkl/lib/intel64
+optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
 
 build_hdf5() {
     # download and build HDF5
@@ -118,22 +120,22 @@ build_petsc() {
     git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
     # Note: we use Intel compilers, disable Fortran, use 64-bit
     # indices, shared libraries, and no debugging.
-    # use Intel's C and C++ compilers                                                                                                                                                                                                           
-    opt="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
+    # use Intel's C and C++ compilers
+
     ./config/configure.py \
-        --with-cc=icc --with-cxx=icpc --with-fc=0 \
-	--CFLAGS="$opt" --CXXFLAGS="$opt" \
-        --with-blas-lapack-dir="/usr/local/pkg/numlib/imkl/11.3.3.210-pic-iompi-2016b/mkl/lib/intel64" \
-        --with-mpi-lib=$MPI_LIBRARY \
-        --with-mpi-include=$MPI_INCLUDE \
-        --with-64-bit-indices=1 \
-        --known-mpi-shared-libraries=1 \
-        --with-debugging=0 \
-        --with-valgrind=0 \
-        --with-x=0 \
-        --with-ssl=0 \
-        --with-batch=1  \
-        --with-shared-libraries=1
+	--with-cc=mpicc \
+	--CFLAGS="${optimization_flags}" \
+	--known-mpi-shared-libraries=1 \
+	--with-cxx=0 \
+	--with-fc=0 \
+	--with-blas-lapack-dir=${MKL} \
+	--with-64-bit-indices=1 \
+	--with-debugging=0 \
+	--with-valgrind=0 \
+	--with-x=0 \
+	--with-ssl=0 \
+	--with-batch=1 \
+	--with-shared-libraries=1
 
     # run conftest in an interactive job and wait for it to complete
     srun -t 20 -n 1 -N 1 -p debug mpirun ./conftest-$PETSC_ARCH
@@ -166,12 +168,10 @@ build_pism() {
     cd build
 
     # use Intel's C and C++ compilers
-    opt="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
-    #opt="-O3"
     export CC=mpicc
     export CXX=mpicxx
-    cmake -DCMAKE_CXX_FLAGS="${opt} -diag-disable=cpu-dispatch,10006,2102" \
-          -DCMAKE_C_FLAGS="${opt} -diag-disable=cpu-dispatch,10006" \
+    cmake -DCMAKE_CXX_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006,2102" \
+          -DCMAKE_C_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPETSC_EXECUTABLE_RUNS=ON \
           -DMPI_C_INCLUDE_PATH="$MPI_INCLUDE" \
