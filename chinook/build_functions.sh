@@ -14,10 +14,6 @@ N=8
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
-OPENMPI=/opt/scyld/openmpi/1.10.7/intel
-MPI_INCLUDE="${OPENMPI}/include"
-MPI_LIBRARY="${OPENMPI}/lib/libmpi.so"
-
 MKL=/usr/local/pkg/numlib/imkl/11.3.3.210-pic-iompi-2016b/mkl/lib/intel64
 optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
 
@@ -172,8 +168,6 @@ build_pism() {
           -DCMAKE_C_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPETSC_EXECUTABLE_RUNS=ON \
-          -DMPI_C_INCLUDE_PATH="$MPI_INCLUDE" \
-          -DMPI_C_LIBRARIES="$MPI_LIBRARY" \
           -DPism_USE_JANSSON=NO \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ4=YES \
