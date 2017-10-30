@@ -118,16 +118,14 @@ build_petsc() {
     cd $PETSC_DIR
 
     git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
-    # Note: we use Intel compilers, disable Fortran, use 64-bit
-    # indices, shared libraries, and no debugging.
-    # use Intel's C and C++ compilers
 
+    # Note that on Chinook mpicc and mpicxx wrap Intel's C and C++ compilers
     ./config/configure.py \
 	--with-cc=mpicc \
+	--with-cxx=mpicxx \
+	--with-fc=0 \
 	--CFLAGS="${optimization_flags}" \
 	--known-mpi-shared-libraries=1 \
-	--with-cxx=0 \
-	--with-fc=0 \
 	--with-blas-lapack-dir=${MKL} \
 	--with-64-bit-indices=1 \
 	--with-debugging=0 \
