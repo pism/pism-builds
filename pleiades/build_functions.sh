@@ -297,6 +297,7 @@ build_pism() {
 
 T="$(date +%s)"
 
+build_all() {
 #build_petsc
 #build_proj4
 #build_udunits2
@@ -304,6 +305,7 @@ build_pism
 #build_nco
 #build_cdo
 #build_ncview
+}
 
 T="$(($(date +%s)-T))"
 echo "Time in seconds: ${T}"
