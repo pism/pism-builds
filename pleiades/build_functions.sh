@@ -273,7 +273,7 @@ build_pism() {
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
 
-    git clone --depth 1 -b thk_calving https://github.com/pism/pism.git . || git pull
+    git clone --depth 1 -b dev https://github.com/pism/pism.git . || git pull
 
     mkdir -p build
     cd build
@@ -286,9 +286,9 @@ build_pism() {
           -DMPI_C_LIBRARIES=$MPI_LIBRARY \
           -DPETSC_EXECUTABLE_RUNS=YES \
 	  -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR" \
-          -DCMAKE_CXX_FLAGS="-std=c++11 -O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006,2102 -lhdf5" \
-          -DCMAKE_C_FLAGS="-std=c11 -O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006 -lhdf5" \
-	  -LINK_LIBRARIES="-lhdf5" \
+          -DCMAKE_CXX_FLAGS="-std=c++11 -O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006,2102" \
+          -DCMAKE_C_FLAGS="-std=c11 -O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006" \
+          -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources
