@@ -26,9 +26,9 @@ export MPICC_CC=icc
 export MPICXX_CXX=icpc
 #export CC=mpicc
 
-
-MPI_INCLUDE="/nasa/sgi/mpt/2.15r20/include"
-MPI_LIBRARY="/nasa/sgi/mpt/2.15r20/lib/libmpi.so"
+# MPI_ROOT is set by the module system
+MPI_INCLUDE="${MPI_ROOT}/include"
+MPI_LIBRARY="${MPI_ROOT}/lib/libmpi.so"
 
 # stop on error
 set -e
@@ -49,7 +49,6 @@ build_hdf5() {
 
     make all -j $N 2>&1 | tee hdf5_compile.log
     make install 2>&1 | tee hdf5_install.log
-
 }
 
 build_netcdf() {
