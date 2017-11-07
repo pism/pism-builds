@@ -11,7 +11,7 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
+    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git . || git pull
 
     opt_flags="-g -O3 -axCORE-AVX2,AVX -xSSE4.2"
 
@@ -19,14 +19,13 @@ build_petsc() {
     # indices, shared libraries, and no debugging.
     ./config/configure.py \
 	--with-cc=icc \
-	--COPTFLAGS=${opt_flags} \
+	--known-mpi-shared-libraries=1 \
+	--COPTFLAGS="${opt_flags}" \
 	--with-cxx=icpc \
 	--with-cpp=/usr/bin/cpp \
-        --with-fc=0 \
+	--with-fc=0 \
 	--with-vendor-compilers=intel \
 	--with-gnu-compilers=0 \
-	--with-mpi-dir=$MPI_ROOT \
-	--known-mpi-shared-libraries=1 \
 	--with-blas-lapack-dir=${MKLROOT}/lib/intel64 \
         --with-64-bit-indices=1 \
         --with-debugging=0 \
