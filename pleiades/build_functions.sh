@@ -93,26 +93,6 @@ build_udunits2() {
 
     make all -j $N 2>&1 | tee udunits_make.log
     make install 2>&1 | tee udunits_install.log
-
-}
-
-build_nco() {
-    mkdir -p $LOCAL_LIB_DIR/sources
-    cd $LOCAL_LIB_DIR/sources
-    rm -rf nco
-    git clone https://github.com/nco/nco.git
-    cd nco
-    git checkout 4.6.7
-
-    NETCDF_ROOT=/nasa/netcdf/4.4.1.1_mpt ANTLR_ROOT=/nasa/sles11/nco/4.6.2/gcc/mpt UDUNITS2_PATH=$LOCAL_LIB_DIR ./configure \
-	--prefix=$LOCAL_LIB_DIR \
-	--enable-netcdf-4 \
-	--enable-udunits2 \
-	--enable-openmp 2>&1 | tee nco_configure.log
-
-    make -j $N  2>&1 | tee nco_compile.log
-    make install  2>&1 | tee nco_install.log
-
 }
 
 build_cdo(){
@@ -301,7 +281,6 @@ build_all() {
 #build_proj4
 #build_udunits2
 build_pism
-#build_nco
 #build_cdo
 #build_ncview
 }
