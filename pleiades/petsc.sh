@@ -7,7 +7,7 @@ set -u
 N=8
 
 build_petsc() {
-    rm -rf $PETSC_DIR
+    # rm -rf $PETSC_DIR
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
@@ -15,8 +15,6 @@ build_petsc() {
 
     opt_flags="-g -O3 -axCORE-AVX2,AVX -xSSE4.2"
 
-    # Note: we use Intel compilers, disable Fortran, use 64-bit
-    # indices, shared libraries, and no debugging.
     ./config/configure.py \
 	--with-cc=icc \
 	--known-mpi-shared-libraries=1 \
@@ -37,23 +35,23 @@ build_petsc() {
 
     cat > script.queue << EOF
 #PBS -S /bin/bash
-#PBS -l select=1:ncpus=1:model=bro:aoe=sles12
-#PBS -l walltime=200
-#PBS -W group_list=s1560
-#PBS -m e
+#PBS -l select=1:ncpus=1:model=bro
+#PBS -q devel
+#PBS -W group_list=s1878
+#PBS -W block=true
 
 . /usr/share/modules/init/bash
+
 module purge
-module load comp-intel/2016.2.181
-module load mpi-sgi/mpt
-export PATH="$PATH:."
-export MPI_GROUP_MAX=64
-mpiexec -np 1 ./conftest-$PETSC_ARCH
+module load comp-intel/2016.2.181 mpi-sgi/mpt
+
+cd \$PBS_O_WORKDIR
+
+mpiexec -np 1 ./conftest-linux-64bit
 EOF
 
     # run conftest in an interactive job and wait for it to complete
-    qsub -I -q devel script.queue
-    # read -p "Wait for the job to complete and press RETURN."
+    qsub script.queue
 
     ./reconfigure-$PETSC_ARCH.py
 
