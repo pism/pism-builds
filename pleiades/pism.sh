@@ -41,6 +41,7 @@ build_pism() {
 
     export CC=icc
     export CXX=icpc
+    export HDF5_ROOT=$LOCAL_LIB_DIR/hdf5
     opt_flags="-O3 -ipo -axCORE-AVX2 -xSSE4.2"
     cmake -DMPI_C_INCLUDE_PATH=$MPI_INCLUDE \
           -DMPI_C_LIBRARIES=$MPI_LIBRARY \
