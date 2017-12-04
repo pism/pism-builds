@@ -12,7 +12,7 @@ build_hdf5() {
     cd $LOCAL_LIB_DIR/sources
 
     rm -rf hdf5
-    git clone -b hdf5_1_10_1 --depth 1 https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git
+    git clone -b hdf5_1_8_12 --depth 1 https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git
     cd hdf5
 
     CC=mpicc ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log

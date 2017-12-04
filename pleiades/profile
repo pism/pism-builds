@@ -11,7 +11,8 @@ fi
 
 module purge
 module load comp-intel/2016.2.181
-module load mpi-sgi/mpt.2.15r20
+# use this specific MPT version because it is known to be compatible with HDF5
+module load mpi-sgi/mpt.2.12r26
 module load python/2.7.12
 module load gcc/4.9.4
 module load hdf5/1.8.18_mpt
