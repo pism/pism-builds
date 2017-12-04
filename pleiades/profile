@@ -22,5 +22,12 @@ module load ncview/2.1.7
 module use -a /nasa/modulefiles/testing
 module load nco/4.6.7
 
-export LD_LIBRARY_PATH=$HOME/local/lib:$LD_LIBRARY_PATH
+add_lib_path () {
+    export LD_LIBRARY_PATH=$1:$LD_LIBRARY_PATH
+}
+
+add_lib_path ${LOCAL_LIB_DIR}/lib
+add_lib_path ${LOCAL_LIB_DIR}/hdf5/lib
+add_lib_path ${LOCAL_LIB_DIR}/netcdf/lib
+
 export PISM_MPIDO='mpiexec -n'
