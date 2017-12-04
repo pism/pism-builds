@@ -10,7 +10,7 @@ build_netcdf() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    version=4.5.0
+    version=4.4.1.1
     url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${version}.tar.gz
 
     wget -nc ${url}
