@@ -18,5 +18,7 @@ set -u
 ./udunits2.sh
 ./proj4.sh
 ./petsc.sh
+./hdf5.sh
+./netcdf.sh
 
 ./pism.sh
