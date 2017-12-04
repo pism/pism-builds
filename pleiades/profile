@@ -20,6 +20,10 @@ module load ncview/2.1.7
 module use -a /nasa/modulefiles/testing
 module load nco/4.6.7
 
+# Increase MPI_TYPE_DEPTH from 14 to 24 (seems to be needed by HDF5
+# when used with SGI MPT 2.12).
+export MPI_TYPE_DEPTH=24
+
 add_lib_path () {
     export LD_LIBRARY_PATH=$1:$LD_LIBRARY_PATH
 }
