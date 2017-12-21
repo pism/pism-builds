@@ -8,12 +8,23 @@
 # - add "source /path/to/common_settings" to your .bash_profile
 # - run this script
 
-source ./build_functions.sh
-
 # stop on error
 set -e
 # print commands before executing them
 set -x
+# stop if a variable is not defined
+set -u
+
+build_all () {
+    # build PISM, its prerequisites, and some tools
+./hdf5.sh
+./netcdf.sh
+./nco.sh
+./cdo.sh
+./petsc.sh
+./petsc4py.sh
+./pism.sh
+}
 
 T="$(date +%s)"
 build_all
