@@ -93,9 +93,9 @@ build_cdo(){
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc https://code.zmaw.de/attachments/download/14271/cdo-1.8.1.tar.gz
-    tar -zxvf cdo-1.8.1.tar.gz
-    cd cdo-1.8.1
+    wget -nc https://code.zmaw.de/attachments/download/15653/cdo-1.9.1.tar.gz
+    tar -zxvf cdo-1.9.1.tar.gz
+    cd cdo-1.9.1
 
     CC=mpicc ./configure \
         --prefix=$LOCAL_LIB_DIR \
@@ -166,7 +166,7 @@ build_pism() {
     cd build
 
     # use Intel's C and C++ compilers
-    opt="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
+    opt="-qopt-report 5 -O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
     #opt="-O3"
     export CC=mpicc
     export CXX=mpicxx
