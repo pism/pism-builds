@@ -9,14 +9,15 @@ N=8
 
 build_cdo(){
 
+    version=1.9.2
     #build_zlib
 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc https://code.zmaw.de/attachments/download/14271/cdo-1.8.1.tar.gz
-    tar -zxvf cdo-1.8.1.tar.gz
-    cd cdo-1.8.1
+    wget -nc https://code.mpimet.mpg.de/attachments/download/16035/cdo-${version}.tar.gz
+    tar -zxvf cdo-${version}.tar.gz
+    cd cdo-${version}
 
     CC=mpicc ./configure \
         --prefix=$LOCAL_LIB_DIR \
