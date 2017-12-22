@@ -10,7 +10,7 @@ module load numlib/FFTW/3.3.5-pic-intel-2016b
 module load lib/PROJ/4.9.2-pic-intel-2016b
 module load numlib/GSL/2.1-pic-intel-2016b
 module load tools/ANTLR/2.7.7-pic-intel-2016b-Python-2.7.12
-module load vis/matplotlib/1.5.1-pic-intel-2016b-Python-2.7.12
+#module load vis/matplotlib/1.5.1-pic-intel-2016b-Python-2.7.12
 module load phys/UDUNITS/2.2.20-pic-intel-2016b
 module load tools/git/2.14.1-pic-intel-2016b
 
