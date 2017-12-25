@@ -41,7 +41,7 @@ build_ncview(){
     tar -zxvf ncview-2.1.7.tar.gz
     cd ncview-2.1.7
 
-    CC=mpicc CFLAGS='-g' CPPFLAGS=-I$LOCAL_LIB_DIR/netcdf/include LDFLAGS=-L$LOCAL_LIB_DIR/netcdf/lib ./configure \
+    CC=mpicc CFLAGS='-g' CPPFLAGS="-I$LOCAL_LIB_DIR/netcdf/include -I$LOCAL_LIB_DIR/include" LDFLAGS="-L$LOCAL_LIB_DIR/netcdf/lib -L$LOCAL_LIB_DIR/lib" ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
 	--with-nc-config=${LOCAL_LIB_DIR}/netcdf/bin/nc-config \
 	--with-png_incdir=${LOCAL_LIB_DIR}/include \
@@ -55,11 +55,11 @@ build_png() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-1.6.18.tar.gz
-    tar -zxvf libpng-1.6.18.tar.gz
-    cd libpng-1.6.18
+    wget -nc ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-1.6.34.tar.gz
+    tar -zxvf libpng-1.6.34.tar.gz
+    cd libpng-1.6.34
 
-    CC=mpiicc ./configure \
+    CC=mpicc ./configure \
         --prefix=${LOCAL_LIB_DIR}  2>&1 | tee png_configure.log
 
     make -j $N 2>&1 | tee png_compile.log
