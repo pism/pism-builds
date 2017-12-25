@@ -41,7 +41,7 @@ build_ncview(){
     tar -zxvf ncview-2.1.7.tar.gz
     cd ncview-2.1.7
 
-    CC=mpicc CFLAGS='-g' CPPFLAGS="-I$LOCAL_LIB_DIR/netcdf/include -I$LOCAL_LIB_DIR/include" LDFLAGS="-L$LOCAL_LIB_DIR/netcdf/lib -L$LOCAL_LIB_DIR/lib" ./configure \
+    CC=mpicc CFLAGS='-g' CPPFLAGS="-I$LOCAL_LIB_DIR/include -I$LOCAL_LIB_DIR/netcdf/include" LDFLAGS="-L$LOCAL_LIB_DIR/lib -L$LOCAL_LIB_DIR/netcdf/lib" ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
 	--with-nc-config=${LOCAL_LIB_DIR}/netcdf/bin/nc-config \
 	--with-png_incdir=${LOCAL_LIB_DIR}/include \
