@@ -22,15 +22,7 @@ configure_pism() {
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_FIND_ROOT_PATH="${prefix}/hdf5;${prefix}/netcdf;${prefix}/pnetcdf" \
         -DCMAKE_INSTALL_PREFIX=${prefix}/pism \
-        -DPism_BUILD_DOCS=YES \
-        -DPism_BUILD_EXTRA_EXECS=YES \
-        -DPism_BUILD_ICEBIN=YES \
-        -DPism_BUILD_PYTHON_BINDINGS=YES \
-        -DPism_DEBUG=YES \
         -DPism_LOOK_FOR_LIBRARIES=YES \
-        -DPism_USE_JANSSON=YES \
-        -DPism_USE_PARALLEL_NETCDF4=YES \
-        -DPism_USE_PNETCDF=YES \
         -DPism_USE_PROJ4=YES \
         ${pism_source_dir}
 }
