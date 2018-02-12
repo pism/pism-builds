@@ -16,7 +16,7 @@ configure_pism() {
     cd ${pism_build_dir}
 
     export PETSC_DIR=~/local/petsc/petsc-3.8.0/
-    export PETSC_ARCH=opt-64bit
+    export PETSC_ARCH=opt-32bit
 
     CC=mpicc CXX=mpicxx cmake \
         -DCMAKE_BUILD_TYPE=Debug \
