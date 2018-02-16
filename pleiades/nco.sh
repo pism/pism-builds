@@ -21,6 +21,7 @@ build_nco() {
     export NETCDF_ROOT=/nasa/netcdf/4.4.1.1_mpt
     export ANTLR_ROOT=/nasa/sles11/nco/4.6.2/gcc/mpt
     export UDUNITS2_PATH=$LOCAL_LIB_DIR
+    export CC=mpicc
     ./configure \
 	--prefix=$LOCAL_LIB_DIR \
 	--enable-netcdf-4 \
@@ -30,3 +31,5 @@ build_nco() {
     make -j $N  2>&1 | tee nco_compile.log
     make install  2>&1 | tee nco_install.log
 }
+
+build_nco
