@@ -3,7 +3,7 @@
 # Automate building PETSc and PISM on PIK IBM NeXtScale.
 #
 # To use this script,
-#
+source profile
 # - add "source /path/to/nextscale/profile" to your .bash_profile
 # - run this script
 

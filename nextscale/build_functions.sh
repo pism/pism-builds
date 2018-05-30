@@ -18,6 +18,12 @@ MPI_INCLUDE="${I_MPI_ROOT}/include64"
 MPI_LIBRARY="${I_MPI_ROOT}/lib64/libmpi.so"
 MPI_DIR="${I_MPI_ROOT}/intel64"
 
+if [ $onbroadwell = True ]; then
+   PART="srun --partition=broadwell --exclusive --ntasks 1"
+else
+   PART=""
+fi
+#echo $PART
 
 build_hdf5() {
 
@@ -25,19 +31,17 @@ build_hdf5() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    # 1.8 branch
-    name=hdf5-1.8.18
-    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.18/src/${name}.tar.gz
+    name=hdf5-1.10.2
+    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/${name}/src/${name}.tar.gz
 
-    # 1.10 branch
-    name=hdf5-1.10.0-patch1
-    url=https://support.hdfgroup.org/ftp/HDF5/current/src/${name}.tar.gz
 
     wget -nc ${url}
     tar xzvf ${name}.tar.gz
 
     cd ${name}
-    CC=$CC ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5-intel 2>&1 | tee hdf5_configure.log
+    CC=$CC ./configure --enable-parallel \
+           --with-zlib=/p/system/slurmdeps/17.11.2/build/zlib-1.2.11 \
+           --prefix=$LOCAL_LIB_DIR/hdf5${addname} 2>&1 | tee hdf5_configure.log
 
     make all -j $N 2>&1 | tee hdf5_compile.log
     make install 2>&1 | tee hdf5_install.log
@@ -49,7 +53,7 @@ build_netcdf() {
 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    version=4.4.1.1
+    version=4.6.1
     url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${version}.tar.gz
 
     wget -nc ${url}
@@ -57,29 +61,34 @@ build_netcdf() {
 
     cd netcdf-${version}
     #export CC=mpiicc
-    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5-intel/include"
-    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5-intel/lib
-    ./configure \
+    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5${addname}/include"
+    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5${addname}/lib
+    $PART ./configure \
       --enable-netcdf4 \
       --disable-dap \
-      --prefix=$LOCAL_LIB_DIR/netcdf-intel 2>&1 | tee netcdf_configure.log
-
-    make all -j $N 2>&1 | tee netcdf_compile.log
-    make install 2>&1 | tee netcdf_install.log
+      --prefix=$LOCAL_LIB_DIR/netcdf${addname} 2>&1 | tee netcdf_configure.log
+    # --with-zlib=/p/system/slurmdeps/17.11.2/build/zlib-1.2.11 \
+    $PART make all -j $N 2>&1 | tee netcdf_compile.log
+    $PART make install 2>&1 | tee netcdf_install.log
 }
 
 
 build_proj4 () {
 
     # download and build PROJ.4
-    mkdir -p $LOCAL_LIB_DIR/sources/proj.4
-    cd $LOCAL_LIB_DIR/sources/proj.4
+    mkdir -p $LOCAL_LIB_DIR/sources
+    cd $LOCAL_LIB_DIR/sources
 
-    git clone --depth 1 -b 4.9.2-maintenance https://github.com/OSGeo/proj.4.git . || git pull
+    version=5.0.1
+    url=http://download.osgeo.org/proj/proj-${version}.tar.gz    
+
+    wget -nc ${url}
+    tar -zxvf proj-${version}.tar.gz
+    cd proj-${version}
 
     # remove and re-generate files created by autoconf
     autoreconf --force --install
-    ./configure --prefix=$LOCAL_LIB_DIR/proj4-4.9.2
+    ./configure --prefix=$LOCAL_LIB_DIR/proj-${version}
 
     make all
     make install
@@ -91,7 +100,7 @@ build_udunits() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    version=2.2.24
+    version=2.2.26
     url=ftp://ftp.unidata.ucar.edu/pub/udunits/udunits-${version}.tar.gz
 
     wget -nc ${url}
@@ -99,11 +108,11 @@ build_udunits() {
 
     cd udunits-${version}
 
-    ./configure \
-      --prefix=$LOCAL_LIB_DIR/udunits-intel 2>&1 | tee udunits_configure.log
+    $PART ./configure \
+      --prefix=$LOCAL_LIB_DIR/udunits${addname} 2>&1 | tee udunits_configure.log
 
-    make all -j $N 2>&1 | tee udunits_compile.log
-    make install 2>&1 | tee udunits_install.log
+    $PART make all -j $N 2>&1 | tee udunits_compile.log
+    $PART make install 2>&1 | tee udunits_install.log
 
 }
 
@@ -113,7 +122,7 @@ build_gsl() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    version=2.3
+    version=2.4
     url=ftp://ftp.gnu.org/gnu/gsl/gsl-${version}.tar.gz
 
     wget -nc ${url}
@@ -121,11 +130,11 @@ build_gsl() {
 
     cd gsl-${version}
 
-    ./configure \
-      --prefix=$LOCAL_LIB_DIR/gsl-intel 2>&1 | tee gsl_configure.log
+    $PART ./configure \
+      --prefix=$LOCAL_LIB_DIR/gsl${addname} 2>&1 | tee gsl_configure.log
 
-    make all -j $N 2>&1 | tee gsl_compile.log
-    make install 2>&1 | tee gsl_install.log
+    $PART make all -j $N 2>&1 | tee gsl_compile.log
+    $PART make install 2>&1 | tee gsl_install.log
 
 }
 
@@ -135,7 +144,7 @@ build_fftw() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    version=3.3.6-pl2
+    version=3.3.7
     url=ftp://ftp.fftw.org/pub/fftw/fftw-${version}.tar.gz
 
     wget -nc ${url}
@@ -143,14 +152,14 @@ build_fftw() {
 
     cd fftw-${version}
 
-    ./configure \
-      --prefix=$LOCAL_LIB_DIR/fftw-intel \
+    $PART ./configure \
+      --prefix=$LOCAL_LIB_DIR/fftw${addname} \
       --with-pic \
       --enable-mpi \
       CC=$CC MPICC=$CC 2>&1 | tee fftw_configure.log
 
-    make -j $N 2>&1 | tee fftw_compile.log
-    make install 2>&1 | tee fftw_install.log
+    $PART make -j $N 2>&1 | tee fftw_compile.log
+    $PART make install 2>&1 | tee fftw_install.log
 
 }
 
@@ -161,17 +170,35 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
+    mkdir -p $LOCAL_LIB_DIR/sources
+    cd $LOCAL_LIB_DIR/sources
 
-    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git . || git pull
+    echo $PETSC_DIR
+
+    version=3.9.1
+    #version=3.8.3
+    url=http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${version}.tar.gz
+
+    wget -nc ${url}
+    tar xzvf petsc-${version}.tar.gz
+
+    cp -r petsc-${version}/* $PETSC_DIR
+    cd $PETSC_DIR
+
+    echo $MKLROOT
+    echo $CFLAGS
+    
 
     # Note: we use Intel compilers, disable Fortran, use 64-bit
     # indices, shared libraries, and debugging.
-    ./config/configure.py \
+    $PART ./config/configure.py \
+        --with-prefix=$PETSC_DIR \
         --with-cc=mpiicc --with-cxx=mpiicpc --with-fc=0 \
         --with-mpi-lib=$MPI_LIBRARY \
         --with-mpi-include=$MPI_INCLUDE \
         --with-blas-lapack-dir="$MKLROOT/lib/intel64" \
         --with-64-bit-indices=1 \
+        --known-64-bit-blas-indices \
         --known-mpi-shared-libraries=1 \
         --with-debugging=1 \
         --with-valgrind=1 \
@@ -201,73 +228,123 @@ build_petsc() {
 #SBATCH --account=ice
 #SBATCH --output=./petsc_config-%j.out
 #SBATCH --error=./petsc_config-%j.err
-#SBATCH --ntasks=16
-#SBATCH --tasks-per-node=16
-#SBATCH --profile=energy
-#SBATCH --acctg-freq=energy=5
-#SBATCH --mail-type=END,FAIL
+#SBATCH --ntasks=1
+#SBATCH --tasks-per-node=1
+#SBATCH --mail-type=FAIL
 #SBATCH --mail-user=albrecht@pik-potsdam.de
 
 cd $PETSC_DIR
-srun -n 1 ./conftest-$PETSC_ARCH
+#srun -n 1 ./conftest-$PETSC_ARCH
+if [ $onbroadwell = True ]; then
+   $PART ./conftest-$PETSC_ARCH
+else
+   srun -n 1 ./conftest-$PETSC_ARCH
+fi
 EOF
 
     sbatch ./conftest-slurm.sh
 
-    read -p "Wait for the job to complete and press RETURN."
+    #read -p "Wait for the job to complete and press RETURN."
+    #read -p "Continuing in 10 Seconds...." -t 10
+    echo "Continuing in 30 Seconds...."
+    sleep 30
+    echo "Continuing ...."
 
-    ./reconfigure-$PETSC_ARCH.py
+    $PART ./reconfigure-$PETSC_ARCH.py
 
-    make all test
+    $PART make all 
+    $PART make test
 }
+
+
+build_swig() {
+
+    # download and build SWIG
+    mkdir -p $LOCAL_LIB_DIR/sources
+    cd $LOCAL_LIB_DIR/sources
+
+    version=3.0.12
+    url=https://sourceforge.net/projects/swig/files/swig/swig-${version}/swig-${version}.tar.gz
+
+    wget ${url}
+    tar xzvf swig-${version}.tar.gz
+    cd swig-${version}
+
+    $PART ./configure \
+      --prefix=$LOCAL_LIB_DIR/swig${addname} 2>&1 | tee swig_configure.log
+
+    $PART make -j $N 2>&1 | tee swig_compile.log
+    $PART make install 2>&1 | tee swig_install.log
+
+}
+
 
 build_petsc4py() {
 
-    module load anaconda/2.3.0
+    module load anaconda/5.0.0
     # create a new virtual environment, with numpy already installed
     #conda create --name python_for_pism_calib numpy
     source activate python_for_pism_calib
     #pip install cython
     #which python
 
-    unset CFLAGS
-    unset CXXFLAGS
+    #unset CFLAGS
+    #unset CXXFLAGS
 
-    PETSC4PYPATH=$LOCAL_LIB_DIR/petsc4py
+    mkdir -p $LOCAL_LIB_DIR/sources
+    cd $LOCAL_LIB_DIR/sources
+
+    version=3.9.1
+    url=https://bitbucket.org/petsc/petsc4py/petsc4py-${version}.tar.gz
+
+    wget ${url}
+    tar xzvf petsc4py-${version}.tar.gz
+
+    PETSC4PYPATH=$LOCAL_LIB_DIR/petsc4py${addname}
     rm -rf $PETSC4PYPATH
-    mkdir -p $PETSC4PYPATH
+    #mkdir -p $PETSC4PYPATH
+    cp -r petsc4py-${version} $PETSC4PYPATH
     cd $PETSC4PYPATH
-    git clone https://bitbucket.org/petsc/petsc4py.git .
-    cd $PETSC4PYPATH
-    python setup.py build
-    python setup.py install
+
+    #git clone https://bitbucket.org/petsc/petsc4py.git $PETSC4PYPATH
+    #cd $PETSC4PYPATH
+    python setup.py install --user
+    #python setup.py build
+    #python setup.py install
 }
 
 
 build_pism() {
+
     set -e
     set -x
-    mkdir -p $PISM_DIR/sources
-    cd $PISM_DIR/sources
+    #mkdir -p $PISM_DIR/sources
+    #cd $PISM_DIR/sources
 
-    #mkdir -p $LOCAL_LIB_DIR/sources
-    #cd $LOCAL_LIB_DIR/sources
+    mkdir -p $LOCAL_LIB_DIR/sources
+    cd $LOCAL_LIB_DIR/sources
 
-    git clone --depth 1 -b dev https://github.com/pism/pism.git . || git pull
+    git clone --depth 1 -b master https://github.com/pism/pism.git || git pull
 
+    cd pism
     rm -rf build
     mkdir -p build
     cd build
 
     # use Intel's C and C++ compilers
-    export PATH=$LOCAL_LIB_DIR/fftw-intel/lib/:$LOCAL_LIB_DIR/fftw-intel/include/:$PATH
-    export PATH=$LOCAL_LIB_DIR/gsl-intel/lib/:$LOCAL_LIB_DIR/gsl-intel/include/:$PATH
-    export PATH=$LOCAL_LIB_DIR/udunits-intel/lib/:$LOCAL_LIB_DIR/udunits-intel/include/:$PATH
+    export PATH=$LOCAL_LIB_DIR/fftw${addname}/lib/:$LOCAL_LIB_DIR/fftw${addname}/include/:$PATH
+    export PATH=$LOCAL_LIB_DIR/gsl${addname}/lib/:$LOCAL_LIB_DIR/gsl${addname}/include/:$PATH
+    export PATH=$LOCAL_LIB_DIR/udunits${addname}/lib/:$LOCAL_LIB_DIR/udunits${addname}/include/:$PATH
     export PATH=$LOCAL_LIB_DIR/doxygen/bin/:$PATH
-    export PATH=/p/system/packages/hdf5/1.8.18/impi/lib/:$PATH
+    #export PATH=/p/system/packages/hdf5/1.8.18/impi/lib/:$PATH
+    export PATH=$HDF5ROOT/lib/:$PATH
+
+    #if build with petsc4py:
+    #export PATH=$LOCAL_LIB_DIR/swig${addname}/:$PATH
+    #export PETSC4PY_LIB=/home/albrecht/software/petsc4py-3.8.1/lib/python2.7/site-packages
+    #export PYTHONPATH=$PETSC4PY_LIB:${PYTHONPATH}
 
     cmake -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-          -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
           -DCMAKE_C_FLAGS="$CFLAGS" \
@@ -277,32 +354,49 @@ build_pism() {
           -DMPI_C_DIR="$MPI_DIR" \
           -DPism_USE_JANSSON=NO \
           -DPism_USE_PARALLEL_NETCDF4=YES \
-          -DPism_USE_PARALLEL_HDF5=OFF \
           -DPism_USE_PROJ4=YES \
           -DPism_BUILD_EXTRA_EXECS:BOOL=OFF \
-          $PISM_DIR/sources
+          -DMPIEXEC=/p/system/slurm/bin/srun \
+           $LOCAL_LIB_DIR/sources/pism \
+          --debug-trycompile ../.
     make -j $N install
     set +x
     set +e
 
- #          -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
- #          -DMPI_C_INCLUDE_PATH="$MPI_INCLUDE" \
- #          -DMPI_C_LIBRARIES="$MPI_LIBRARY" \
+    #if build with petsc4py:
+
+          #-DPETSC_EXECUTABLE_RUNS=ON \
+          #-DPism_BUILD_EXTRA_EXECS:BOOL=ON \
+          #-DMPI_C_INCLUDE_PATH=${I_MPI_ROOT}/include64 \
+          #-DMPI_C_LIBRARIES=${I_MPI_ROOT}/lib64/libmpi.so \
+          #-DHDF5_INCLUDE_DIRS:PATH=$HDF5ROOT/include \
+          #-DHDF5_LIBRARIES:PATH=$HDF5ROOT/lib/libhdf5.so \
+          #-DHDF5_hdf5_LIBRARY_RELEASE:FILEPATH=$HDF5ROOT/lib/libhdf5.so \
+          #-DHDF5_hdf5_hl_LIBRARY_RELEASE:FILEPATH=$HDF5ROOT/lib/libhdf5_hl.so \
+          #-DHDF5_z_LIBRARY_RELEASE:FILEPATH=/usr/lib64/libz.so \
+
+    #export PYTHONPATH=/home/albrecht/.conda/envs/python_for_pism_calib/lib/python2.7/site-packages::$PYTHONPATH
+    #export PYTHONPATH=$PISM_INSTALL_PREFIX/lib/python2.7/site-packages:$PYTHONPATH
+    #export PYTHONPATH=$PISM_INSTALL_PREFIX/bin:${PYTHONPATH}
 
 }
 
 build_all() {
 
-    build_hdf5      # or: module load hdf5/1.8.18/intel/parallel
-    build_netcdf    # or: module load netcdf-c/4.4.1.1/intel/parallel
-    #build_nco      # module load nco/4.5.0
+    #module load pism/stable1.0
 
-    build_petsc	    # or: petsc/3.7.5
-    #build_petsc4py	# not working yet
-    build_udunits   # or: module load udunits/2.2.19 
-    build_gsl       # or: module load gsl/1.16
-    build_fftw      # or: module load fftw/3.3.4
-    build_proj4	    # or: module load proj4/4.9.3
+    build_hdf5      # or: module load hdf5/1.10.2/intel/parallel
+    build_netcdf    # or: module load netcdf-c/4.6.1/intel/parallel
 
-    build_pism
+    build_udunits   # or: module load udunits/2.2.26
+    build_gsl       # or: module load gsl/2.4
+    build_fftw      # or: module load fftw/3.3.7
+    build_proj4     # or: module load proj4/5.0.1
+
+    build_petsc      # or: PETSC_DIR
+
+    build_swig
+    #build_petsc4py
+
+    #build_pism
 }
