@@ -2,24 +2,25 @@
 
 build_ocgis() {
     cd $HOME
-    rm -rf ocgis
+    rm -rf base/ocgis
+    cd base
     git clone git@github.com:NCPP/ocgis.git
     cd ocgis
     python setup.py install --user
 }
 
-pip install netCDF4 --user
-pip install netcdftime --user
-pip install cftime --user
-pip install jupyter[all] --user
-pip install ipython[all] --user
-pip install pyproj --user
-pip install matplotlib --user
-pip install cdo==1.3.2 --user
-pip install nco --user
-pip install cf_units --user
-pip install Unidecode --user
-pip install pyDOE --user
-pip install statsmodels --user
+build_pypismtools() {
+    cd $HOME
+    rm -rf base/ocgis
+    cd base
+    git clone git@github.com:pism/pypismtools.git
+    cd pypismtools
+    python setup.py install --user
+}
+
+for module in netCDF4 netcdftime cftime jupyter[all] ipython[all] pyproj matplotlib cdo==1.3.2 nco cf_units Unidecode pyDOE statsmodels wget PyQt5; do
+    pip install $module --user
+done
 
 build_ocgis
+build_pypismtools
