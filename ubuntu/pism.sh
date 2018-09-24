@@ -6,16 +6,21 @@ set -x
 branch=${1}
 
 prefix=${HOME}/local/
-pism_source_dir=${HOME}/github/pism/pism
-pism_build_dir=${prefix}/build/pism${branch}/
+PISM_DIR=${HOME}/pism
 N=4
 
-configure_pism() {
-    rm -rf ${pism_build_dir}
-    mkdir -p ${pism_build_dir}
-    cd ${pism_build_dir}
 
-    export PETSC_DIR=~/local/petsc/petsc-3.8.0/
+build_pism() {
+    mkdir -p $PISM_DIR/sources
+    cd $PISM_DIR/sources
+
+    git clone --depth 1 -b dev https://github.com/pism/pism.git . || git pull
+
+    rm -rf build
+    mkdir -p build
+    cd build
+
+    export PETSC_DIR=~/local/petsc/petsc-3.10.0/
     export PETSC_ARCH=opt-32bit
 
     CC=mpicc CXX=mpicxx cmake \
@@ -24,7 +29,7 @@ configure_pism() {
         -DCMAKE_INSTALL_PREFIX=${prefix}/pism \
         -DPism_LOOK_FOR_LIBRARIES=YES \
         -DPism_USE_PROJ4=YES \
-        ${pism_source_dir}
+        ${PISM_DIR}/sources
 }
 
-configure_pism
+build_pism
