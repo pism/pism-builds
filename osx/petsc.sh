@@ -8,7 +8,7 @@ prefix=${HOME}/local/petsc
 configure_and_build() {
     sixty_four=$1
     debugging=$2
-    ./config/configure.py \
+    python2.7 ./config/configure.py \
         --with-shared-libraries \
         --with-fc=0 \
         --with-debugging=${debugging} \
