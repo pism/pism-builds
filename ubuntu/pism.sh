@@ -29,8 +29,11 @@ build_pism() {
         -DPism_LOOK_FOR_LIBRARIES=YES \
         -DPism_USE_PROJ4=YES \
         ${PISM_DIR}/sources
+
+    make -j $N install    
     set +x
     set +e
+    
 }
 
 build_pism
