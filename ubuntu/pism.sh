@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -e
-set -x
-
 branch=${1}
 
 prefix=${HOME}/local/
@@ -11,6 +8,8 @@ N=4
 
 
 build_pism() {
+    set -e
+    set -x
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
 
@@ -26,10 +25,12 @@ build_pism() {
     CC=mpicc CXX=mpicxx cmake \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_FIND_ROOT_PATH="${prefix}/hdf5;${prefix}/netcdf;${prefix}/pnetcdf" \
-        -DCMAKE_INSTALL_PREFIX=${prefix}/pism \
+        -DCMAKE_INSTALL_PREFIX=${PISM_DIR} \
         -DPism_LOOK_FOR_LIBRARIES=YES \
         -DPism_USE_PROJ4=YES \
         ${PISM_DIR}/sources
+    set +x
+    set +e
 }
 
 build_pism
