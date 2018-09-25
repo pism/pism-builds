@@ -8,7 +8,7 @@ branch=${1}
 dbg=$2
 
 PISM_DIR=${HOME}/local/pism-${branch}-${dbg}
-
+BUILD_DIR=build-${dbg}
 build_pism() {
     set -e
     set -x
@@ -17,9 +17,9 @@ build_pism() {
 
     git clone --depth 1 -b ${branch} https://github.com/pism/pism.git . || git pull
 
-    rm -rf build
-    mkdir -p build
-    cd build
+    rm -rf ${BUILD_DIR}
+    mkdir -p ${BUILD_DIR}
+    cd ${BUILD_DIR}
 
     export PETSC_DIR=~/local/petsc/petsc-3.10.0/
     
