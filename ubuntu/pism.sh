@@ -2,6 +2,7 @@
 
 branch=${1}
 
+prefix=${HOME}/local/
 PISM_DIR=${HOME}/local/pism
 N=4
 
