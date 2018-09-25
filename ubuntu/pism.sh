@@ -7,7 +7,7 @@ N=4
 branch=${1}
 dbg=$2
 
-PISM_DIR=${HOME}/local/pism-${branch}-${dgb}
+PISM_DIR=${HOME}/local/pism-${branch}-${dbg}
 
 build_pism() {
     set -e
