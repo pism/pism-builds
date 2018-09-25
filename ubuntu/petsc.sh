@@ -29,7 +29,7 @@ build_petsc() {
     export PETSC_DIR=$PWD
 
     export PETSC_ARCH=opt-32bit
-    if [ "$2" == "1" ]; then
+    if [ "$2" = "1" ]; then
         export PETSC_ARCH=dbg-32bit
     fi
     configure_and_build $1 $2
