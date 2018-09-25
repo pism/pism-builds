@@ -25,8 +25,14 @@ build_pism() {
     
     export PETSC_ARCH=${dbg}-32bit
 
+    if [ "$dbg" = "dbg" ]; then
+        export BUILD_TYPE=Debug
+    else
+        export BUILD_TYPE=Release
+    fi
+
     CC=mpicc CXX=mpicxx cmake \
-        -DCMAKE_BUILD_TYPE=$1 \
+        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
         -DCMAKE_INSTALL_PREFIX=${PISM_DIR} \
         -DPism_LOOK_FOR_LIBRARIES=YES \
         -DPism_BUILD_DOCS=YES \
