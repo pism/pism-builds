@@ -9,13 +9,12 @@ N=8
 
 build_cdo(){
 
-    version=1.9.2
-    #build_zlib
+    version=1.9.5
 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc https://code.mpimet.mpg.de/attachments/download/16035/cdo-${version}.tar.gz
+    wget -nc https://code.mpimet.mpg.de/attachments/download/18264/cdo-${version}.tar.gz
     tar -zxvf cdo-${version}.tar.gz
     cd cdo-${version}
 
@@ -25,7 +24,6 @@ build_cdo(){
 	--with-netcdf=/usr/local/pkg/data/netCDF/4.4.1.1-pic-intel-2016b \
         --with-proj=/usr/local/pkg/lib/PROJ/4.9.2-pic-intel-2016b \
         --with-udunits2=/usr/local/pkg/phys/UDUNITS/2.2.20-pic-intel-2016b \
-        #--with-zlib=$LOCAL_LIB_DIR \
         2>&1 | tee cdo_configure.log
 
     make -j $N 2>&1 | tee cdo_compile.log
