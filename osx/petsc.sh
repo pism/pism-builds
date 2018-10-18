@@ -8,7 +8,7 @@ prefix=${HOME}/local/petsc
 configure_and_build() {
     sixty_four=$1
     debugging=$2
-    ./config/configure.py \
+    python2.7 ./config/configure.py \
         --with-shared-libraries \
         --with-fc=0 \
         --with-debugging=${debugging} \
@@ -29,10 +29,7 @@ build_petsc() {
     export PETSC_DIR=$PWD
 
     export PETSC_ARCH=opt-32bit
-    if [ "$2" = "1" ]; then
-        export PETSC_ARCH=dbg-32bit
-    fi
-    configure_and_build $1 $2
+    configure_and_build 0 0
 }
 
-build_petsc $1 $2
+build_petsc
