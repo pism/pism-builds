@@ -2,6 +2,47 @@
 # Andy Aschwanden's MacPort setup & python modules
 
 sudo port -vN install \
+     mpich \
+     hdf5 +mpich +threadsafe +experimental \
+     netcdf +mpich \
+     cdo +cdi +grib_api +mpich \
+     nco  \
+     gdal +netcdf +geos +spatialite +postgresql10 \
+     ncview \
+     git +bash_completion +svn \
+     wget \
+     emacs-app \
+     doxygen \
+     aspell aspell-dict-en aspell-dict-de aspell-dict-de-alt \
+     fondu \
+     ffmpeg +nonfree \
+     py36-numpy +gcc8 +openblas \
+     py36-pyqt5 +webengine +webkit \
+     py36-nose \
+     py36-future \
+     py36-sphinx \
+     py36-sphinx_rtd_theme \
+     py36-jupyter +qtconsole \
+     py36-pip \
+     py36-autopep8 \
+     py36-pyproj \
+     py36-scipy \
+     py36-shapely \
+     py36-cython \
+     py36-netcdf4 +mpich_devel +clang70 \
+     py36-matplotlib \
+     py36-matplotlib-basemap \
+     py36-unidecode \
+     py36-statsmodels \
+     py36-pip \
+     py36-pandas \
+     py36-fiona \
+     py36-gdal \
+     py36-pyproj \
+     py36-unidecode \
+     qgis3
+
+sudo port -vN install \
      mpich-devel-clang70 \
      hdf5 +mpich_devel +threadsafe +experimental +clang70\
      netcdf +mpich_devel +clang70 \
@@ -41,7 +82,7 @@ sudo port -vN install \
      py36-pyproj \
      py36-unidecode \
      qgis3
-     
+
 
 sudo port select --set autopep8 autopep8-36    
 sudo port select --set ipython py36-ipython
