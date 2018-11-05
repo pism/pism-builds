@@ -10,7 +10,7 @@ echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
 FLAGS="-O3"
 
-configure_and_build() {
+build_petsc() {
 
     sixty_four=$1
     debugging=$2
@@ -45,5 +45,5 @@ build_petsc4py() {
     
 }
 
-# build_petsc
+build_petsc 0 0
 build_petsc4py
