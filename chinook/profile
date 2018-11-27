@@ -3,6 +3,7 @@
 module purge
 module load slurm
 module load toolchain/pic-intel/2016b
+module load devel/SWIG/3.0.10-pic-intel-2016b
 module load data/GDAL/2.2.3-pic-intel-2016b-Python-2.7.12
 module load tools/NCO/4.6.1-pic-intel-2016b
 module load devel/CMake/3.5.2-pic-intel-2016b 

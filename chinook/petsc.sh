@@ -26,7 +26,8 @@ build_petsc() {
 	--known-mpi-shared-libraries=1 \
 	--with-blas-lapack-dir=${MKL} \
 	--with-64-bit-indices=1 \
-	--with-debugging=0 \
+        --known-64-bit-blas-indices \
+        --with-debugging=0 \
 	--with-valgrind=0 \
 	--with-x=0 \
 	--with-ssl=0 \
