@@ -18,7 +18,7 @@ build_cdo(){
     tar -zxvf cdo-${version}.tar.gz
     cd cdo-${version}
 
-    CC=mpicc ./configure \
+    CC=mpicc CXX=mpicxx ./configure \
         --prefix=$LOCAL_LIB_DIR \
 	--with-hdf5=/usr/local/pkg/data/HDF5/1.8.15-pic-intel-2016b \
 	--with-netcdf=/usr/local/pkg/data/netCDF/4.4.1.1-pic-intel-2016b \
