@@ -25,6 +25,11 @@ PISM_DIR=$HOME/pism
 # No. of cores for make
 N=8
 
+branch=dev
+if [ $# -gt 0 ] ; then  # if user says "pism.sh frontal-melt" then use "frontal-melt" branch
+  branch="$1"
+fi
+
 # MPI_ROOT is set by the module system
 MPI_INCLUDE="${MPI_ROOT}/include"
 MPI_LIBRARY="${MPI_ROOT}/lib/libmpi.so"
@@ -33,7 +38,9 @@ build_pism() {
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
 
-    git clone --depth 1 -b dev https://github.com/pism/pism.git . || git pull
+    git clone --depth 1 --no-single-branch https://github.com/pism/pism.git . || git pull
+
+    git checkout $branch
 
     mkdir -p build
     cd build
