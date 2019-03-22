@@ -1,16 +1,17 @@
 #!/bin/bash
 # Andy Aschwanden's MacPort setup & python modules
 
+
 sudo port -vN install \
      mpich \
-     hdf5 +mpich +threadsafe +experimental \
+     hdf5 +clang70 +mpich +threadsafe +experimental \
      netcdf +mpich \
-     cdo +cdi +grib_api +mpich \
-     nco  \
-     gdal +netcdf +geos +spatialite +postgresql10 \
+     cdo +cdi +grib_api +mpich +clang70 \
+     nco +clang70 +mpich \
+     gdal +netcdf +geos +spatialite +postgresql10 +hdf5 +mpich +clang70\
      ncview \
      git +bash_completion +svn \
-     boost -python27 +python36 +mpich \
+     boost -python27 +python36 +mpich +clang70 \
      wget \
      emacs-app-devel \
      doxygen \
@@ -43,6 +44,7 @@ sudo port -vN install \
      py36-unidecode \
      qgis3
 
+
 sudo port select --set autopep8 autopep8-36    
 sudo port select --set ipython py36-ipython
 sudo port select --set ipython3 py36-ipython
@@ -57,6 +59,6 @@ sudo port select --set sphinx py36-sphinx
 sudo port select --set nosetests nosetests36
 
 # Python modules
-for module in black netcdftime cftime cf_units cdo nco SALib Unidecode pyDOE; do
+for module in braceexpand black netcdftime cftime cf_units cdo nco SALib Unidecode pyDOE Pillow palettable; do
     pip install $module --user
 done
