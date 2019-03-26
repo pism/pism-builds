@@ -1,6 +1,11 @@
 #!/bin/bash
 # Andy Aschwanden's MacPort setup & python modules
-
+# Note:
+#
+# This is my personal setup which may or may not be right
+# for anyone else.
+# In particular I compile ports with +clang70 +mpich
+# to get OpenMP capabilities in CDO
 
 sudo port -vN install \
      mpich \
@@ -42,7 +47,7 @@ sudo port -vN install \
      py36-gdal \
      py36-pyproj \
      py36-unidecode \
-     qgis3
+     qgis3 +mpich
 
 
 sudo port select --set autopep8 autopep8-36    
