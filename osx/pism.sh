@@ -8,13 +8,14 @@ optimization_flags="-O3"
 
 # No. of cores for make
 N=8
+PISM_DIR=$HOME/pism
 
+# the default branch is "dev"
 branch=dev
 if [ $# -gt 0 ] ; then  # if user says "pism.sh frontal-melt" then use "frontal-melt" branch
   branch="$1"
 fi
 
-PISM_DIR=$HOME/pism
 
 build_pism() {
     set -e

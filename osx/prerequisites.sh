@@ -64,6 +64,6 @@ sudo port select --set sphinx py36-sphinx
 sudo port select --set nosetests nosetests36
 
 # Python modules
-for module in braceexpand black netcdftime cftime cf_units cdo nco SALib Unidecode pyDOE Pillow palettable; do
+for module in braceexpand black netcdftime cftime cf_units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp; do
     pip install $module --user
 done

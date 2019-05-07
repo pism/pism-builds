@@ -37,7 +37,7 @@ build_pism() {
         -DCMAKE_INSTALL_PREFIX=${PISM_DIR} \
         -DPism_LOOK_FOR_LIBRARIES=YES \
         -DPism_BUILD_DOCS=YES \
-        -DPism_BUILD_PYTHON_BINDINGS=YES \
+        -DPism_BUILD_PYTHON_BINDINGS=NO \
         -DPism_USE_PROJ4=YES \
         ${PISM_DIR}/sources
 
