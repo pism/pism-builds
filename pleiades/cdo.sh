@@ -9,8 +9,8 @@ N=8
 # requires zlib and proj.4
 build_cdo() {
 
-    ./zlib.sh
-    ./proj4.sh
+    # ./zlib.sh
+    # ./proj4.sh
 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
