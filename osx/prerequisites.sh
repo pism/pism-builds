@@ -75,4 +75,12 @@ CFLAGS=-I/opt/local/include/udunits2/
 
 sudo port -v install \
      mumps +clang70 +mpich \
-     petsc +clang70 +mpich +mumps
+     petsc +clang70 +mpich +mumps \
+     armadillo  +clang70 +mpich \
+     dolfin +petsc +clang70 +hdf5 \
+     py36-dolfin
+
+# edit the petsc portfile and add
+
+configure.fcflags   -Os
+configure.fflags    -Os -m64
