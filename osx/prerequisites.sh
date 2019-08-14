@@ -40,6 +40,7 @@ sudo port -vN install \
      py36-matplotlib \
      py36-matplotlib-basemap \
      py36-unidecode \
+     py36-seaborn \
      py36-statsmodels \
      py36-pip \
      py36-pandas \
@@ -64,6 +65,14 @@ sudo port select --set sphinx py36-sphinx
 sudo port select --set nosetests nosetests36
 
 # Python modules
-for module in braceexpand black netcdftime cftime cf_units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp; do
+for module in braceexpand black netcdftime cftime cf_units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp tensorflow gpflow GPy; do
     pip install $module --user
 done
+
+# cf-units currently fails to build with pip.
+# compile from github source and use the flag:
+CFLAGS=-I/opt/local/include/udunits2/
+
+sudo port -v install \
+     mumps +clang70 +mpich \
+     petsc +clang70 +mpich +mumps
