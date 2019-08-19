@@ -48,6 +48,7 @@ sudo port -vN install \
      py36-gdal \
      py36-pyproj \
      py36-unidecode \
+     py36-scikit-learn \
      qgis3 +mpich
 
 
@@ -65,7 +66,7 @@ sudo port select --set sphinx py36-sphinx
 sudo port select --set nosetests nosetests36
 
 # Python modules
-for module in braceexpand black netcdftime cftime cf_units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp tensorflow gpflow GPy; do
+for module in braceexpand black netcdftime cftime cf-units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp tensorflow gpflow GPy; do
     pip install $module --user
 done
 
@@ -78,6 +79,7 @@ sudo port -v install \
      petsc +clang70 +mpich +mumps \
      armadillo  +clang70 +mpich \
      dolfin +petsc +clang70 +hdf5 \
+     py36-pkgconfig \  # needed
      py36-dolfin
 
 # edit the petsc portfile and add
