@@ -19,7 +19,7 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
+    git clone --depth=1 -b maint https://gitlab.com/petsc/petsc.git .
 
     python2.7 ./config/configure.py \
         --with-shared-libraries \

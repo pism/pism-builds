@@ -15,7 +15,7 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git .
+    git clone --depth=1 -b maint https://gitlab.com/petsc/petsc.git .
 
     # Note that on Chinook mpicc and mpicxx wrap Intel's C and C++ compilers
     ./config/configure.py \

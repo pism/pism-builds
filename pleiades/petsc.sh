@@ -11,7 +11,7 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc.git . || git pull
+    git clone --depth=1 -b maint https://gitlab.com/petsc/petsc.git . || git pull
 
     opt_flags="-g -O3 -axCORE-AVX2,AVX -xSSE4.2"
 
