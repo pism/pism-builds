@@ -24,7 +24,8 @@ sudo port -vN install \
      fondu \
      ffmpeg +nonfree \
      py36-numpy +gcc8 +openblas \
-     py36-pyqt5 +webengine +webkit \
+     py36-pyqt5-webengine \
+     py36-pyqt5 +webkit \
      py36-nose \
      py36-future \
      py36-sphinx \
@@ -49,6 +50,7 @@ sudo port -vN install \
      py36-pyproj \
      py36-unidecode \
      py36-scikit-learn \
+     py36-xarray \
      qgis3 +mpich
 
 
