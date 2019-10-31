@@ -10,19 +10,24 @@ N=8
 build_netcdf() {
     # download and build netcdf
 
-    mkdir -p $LOCAL_LIB_DIR/sources
-    cd $LOCAL_LIB_DIR/sources
+    hdf5_prefix=${LOCAL_LIB_DIR}/hdf5
+
     version=4.7.2
+    prefix=${LOCAL_LIB_DIR}/netcdf
+    build_dir=${LOCAL_LIB_DIR}/sources/netcdf
     url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${version}.tar.gz
 
-    wget -nc ${url}
-    tar -zxvf netcdf-${version}.tar.gz
+    mkdir -p ${build_dir}
+    pushd ${build_dir}
 
-    cd netcdf-${version}
-    export CC=$LOCAL_LIB_DIR/hdf5/bin/h5pcc
+    wget -nc ${url}
+    tar zxf netcdf-${version}.tar.gz
+
+    pushd netcdf-${version}
     export CC=mpicc
-    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include"
-    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib
+    export CPPFLAGS=-I${hdf5_prefix}/include
+    export LDFLAGS=-L${hdf5_prefix}/lib
+
     ./configure \
       --enable-netcdf4 \
       --disable-dap \
@@ -30,6 +35,9 @@ build_netcdf() {
 
     make all -j $N 2>&1 | tee netcdf_compile.log
     make install 2>&1 | tee netcdf_install.log
+
+    popd
+    popd
 }
 
 build_netcdf
