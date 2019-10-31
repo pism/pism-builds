@@ -14,6 +14,8 @@ module load tools/ANTLR/2.7.7-pic-intel-2016b-Python-2.7.12
 module load phys/UDUNITS/2.2.20-pic-intel-2016b
 module load tools/git/2.14.1-pic-intel-2016b
 
+module swap compiler/icc/2016.3.210-GCC-5.4.0-2.26 compiler/icc/2018.5.274-GCC-5.4.0-2.26
+
 # start an interactive job
 alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
 
