@@ -39,7 +39,7 @@ build_pism() {
 	  -DPism_BUILD_PYTHON_BINDINGS=OFF \
           -DPism_USE_JANSSON=NO \
           -DPism_USE_PARALLEL_NETCDF4=YES \
-          -DPism_USE_PROJ4=YES \
+          -DPism_USE_PROJ=YES \
           $PISM_DIR/sources
     make -j $N install
     set +x
