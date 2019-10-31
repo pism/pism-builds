@@ -13,7 +13,7 @@ build_hdf5() {
     version=1.10.5
     prefix=$LOCAL_LIB_DIR/hdf5
     build_dir=${LOCAL_LIB_DIR}/sources/hdf5
-    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/src/hdf5-${version}.tar.gz
+    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-${version}/src/hdf5-${version}.tar.gz
 
     mkdir -p ${build_dir}
     pushd ${build_dir}
