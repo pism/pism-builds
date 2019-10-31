@@ -15,15 +15,15 @@ build_netcdf() {
     version=4.7.2
     prefix=${LOCAL_LIB_DIR}/netcdf
     build_dir=${LOCAL_LIB_DIR}/sources/netcdf
-    url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${version}.tar.gz
+    url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-${version}.tar.gz
 
     mkdir -p ${build_dir}
     pushd ${build_dir}
 
     wget -nc ${url}
-    tar zxf netcdf-${version}.tar.gz
+    tar zxf netcdf-c-${version}.tar.gz
 
-    pushd netcdf-${version}
+    pushd netcdf-c-${version}
     export CC=mpicc
     export CPPFLAGS=-I${hdf5_prefix}/include
     export LDFLAGS=-L${hdf5_prefix}/lib
