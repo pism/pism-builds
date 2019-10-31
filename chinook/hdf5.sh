@@ -12,15 +12,16 @@ build_hdf5() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    # We use 1.8.15 because newer version seg fault with Intel 2016 Compilers
-    name=hdf5-1.8.15
-    url=https://support.hdfgroup.org/ftp/HDF5/releases/${name}/src/${name}.tar.gz
+    prefix=$LOCAL_LIB_DIR/hdf5
+    version=1.10.5
+
+    url=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/src/hdf5-${version}.tar.gz
 
     wget -nc ${url}
-    tar xzvf ${name}.tar.gz
+    tar xzvf hdf5-${version}.tar.gz
 
-    cd ${name}
-    CC=mpicc ./configure --enable-parallel --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
+    cd hdf5-${version}
+    CC=mpicc ./configure --enable-parallel --prefix=${prefix} 2>&1 | tee hdf5_configure.log
 
     make all -j $N 2>&1 | tee hdf5_compile.log
     make install 2>&1 | tee hdf5_install.log
