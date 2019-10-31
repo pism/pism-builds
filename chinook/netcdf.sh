@@ -12,7 +12,7 @@ build_netcdf() {
 
     hdf5_prefix=${LOCAL_LIB_DIR}/hdf5
 
-    version=4.7.2
+    version=4.7.1
     prefix=${LOCAL_LIB_DIR}/netcdf
     build_dir=${LOCAL_LIB_DIR}/sources/netcdf
     url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-${version}.tar.gz
