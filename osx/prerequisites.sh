@@ -4,68 +4,72 @@
 #
 # This is my personal setup which may or may not be right
 # for anyone else.
-# In particular I compile ports with +clang70 +mpich
+# In particular I compile ports with +clang90 +mpich
 # to get OpenMP capabilities in CDO
 
 sudo port -vN install \
      mpich \
-     hdf5 +clang70 +mpich +threadsafe +experimental \
+     gcc9 \
+     hdf5 +clang80 +mpich +threadsafe +experimental \
      netcdf +mpich \
-     cdo +cdi +grib_api +mpich +clang70 \
-     nco +clang70 +mpich \
-     gdal +netcdf +geos +spatialite +postgresql10 +hdf5 +mpich +clang70\
+     cdo +cdi +grib_api +mpich +clang80 \
+     nco +clang80 +mpich \
+     gdal +netcdf +geos +spatialite +postgresql10 +hdf5 +mpich +clang80\
      ncview \
      git +bash_completion +svn \
-     boost -python27 +python36 +mpich +clang70 \
+     boost -python27 +python37 +mpich +clang80 \
      wget \
      emacs-app-devel \
      doxygen \
      aspell aspell-dict-en aspell-dict-de aspell-dict-de-alt \
      fondu \
      ffmpeg +nonfree \
-     py36-numpy +gcc8 +openblas \
-     py36-pyqt5-webengine \
-     py36-pyqt5 +webkit \
-     py36-nose \
-     py36-future \
-     py36-sphinx \
-     py36-sphinx_rtd_theme \
-     py36-jupyter +qtconsole \
-     py36-pip \
-     py36-autopep8 \
-     py36-pyproj \
-     py36-scipy \
-     py36-shapely \
-     py36-cython \
-     py36-netcdf4 +mpich \
-     py36-matplotlib \
-     py36-matplotlib-basemap \
-     py36-unidecode \
-     py36-seaborn \
-     py36-statsmodels \
-     py36-pip \
-     py36-pandas \
-     py36-fiona \
-     py36-gdal \
-     py36-pyproj \
-     py36-unidecode \
-     py36-scikit-learn \
-     py36-xarray \
-     qgis3 +mpich
+     black \ 
+     py37-numpy +gcc9 +openblas \
+     py37-pyqt5-webengine \
+     py37-pyqt5 +webkit \
+     py37-nose \
+     py37-simplegeneric \
+     py37-future \
+     py37-sphinx \
+     py37-sphinx_rtd_theme \
+     py37-jupyter +qtconsole \
+     py37-jupyterlab \
+     py37-pip \
+     py37-autopep8 \
+     py37-pyproj \
+     py37-scipy \
+     py37-shapely \
+     py37-cython \
+     py37-netcdf4 +mpich \
+     py37-matplotlib \
+     py37-matplotlib-basemap \
+     py37-unidecode \
+     py37-seaborn \
+     py37-statsmodels \
+     py37-pip \
+     py37-pandas \
+     py37-fiona \
+     py37-gdal \
+     py37-pyproj \
+     py37-unidecode \
+     py37-scikit-learn \
+     py37-xarray \
+     qgis3 +mpich -python36 +python37
 
 
-sudo port select --set autopep8 autopep8-36    
-sudo port select --set ipython py36-ipython
-sudo port select --set ipython3 py36-ipython
-sudo port select --set pep8 pep8-36
-sudo port select --set pip pip36
-sudo port select --set python3 python36
-sudo port select --set python python36
-sudo port select --set cython cython36
-sudo port select --set gcc mp-gcc8
+sudo port select --set autopep8 autopep8-37    
+sudo port select --set ipython py37-ipython
+sudo port select --set ipython3 py37-ipython
+sudo port select --set pep8 pep8-37
+sudo port select --set pip pip37
+sudo port select --set python3 python37
+sudo port select --set python python37
+sudo port select --set cython cython37
+sudo port select --set gcc mp-gcc9
 sudo port select --set mpi mpich-mp-fortran
-sudo port select --set sphinx py36-sphinx
-sudo port select --set nosetests nosetests36
+sudo port select --set sphinx py37-sphinx
+sudo port select --set nosetests nosetests37
 
 # Python modules
 for module in braceexpand black netcdftime cftime cf-units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp tensorflow gpflow GPy; do
@@ -76,13 +80,14 @@ done
 # compile from github source and use the flag:
 CFLAGS=-I/opt/local/include/udunits2/
 
-sudo port -v install \
-     mumps +clang70 +mpich \
-     petsc +clang70 +mpich +mumps \
-     armadillo  +clang70 +mpich \
-     dolfin +petsc +clang70 +hdf5 \
-     py36-pkgconfig \  # needed
-     py36-dolfin
+sudo port -vN install \
+     mumps +clang80 +mpich \
+     petsc +clang80 +mpich +mumps \
+     armadillo  +clang80 +mpich \
+     dolfin +petsc +clang80 +hdf5 \
+     py37-ffc +mpich \
+     py37-pkgconfig \  
+     py37-dolfin
 
 # edit the petsc portfile and add
 
