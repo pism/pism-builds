@@ -10,14 +10,14 @@
 sudo port -vN install \
      mpich \
      gcc9 \
-     hdf5 +clang80 +mpich +threadsafe +experimental \
+     hdf5 +clang90 +mpich +threadsafe +experimental \
      netcdf +mpich \
-     cdo +cdi +grib_api +mpich +clang80 \
-     nco +clang80 +mpich \
-     gdal +netcdf +geos +spatialite +postgresql10 +hdf5 +mpich +clang80\
+     cdo +cdi +grib_api +mpich \
+     nco \
+     gdal +netcdf +geos +spatialite +postgresql10 +hdf5 +mpich +clang90\
      ncview \
      git +bash_completion +svn \
-     boost -python27 +python37 +mpich +clang80 \
+     boost -python27 +python37 +mpich +clang90 \
      wget \
      emacs-app-devel \
      doxygen \
@@ -25,51 +25,54 @@ sudo port -vN install \
      fondu \
      ffmpeg +nonfree \
      black \ 
-     py37-numpy +gcc9 +openblas \
-     py37-pyqt5-webengine \
-     py37-pyqt5 +webkit \
-     py37-nose \
-     py37-simplegeneric \
-     py37-future \
-     py37-sphinx \
-     py37-sphinx_rtd_theme \
-     py37-jupyter +qtconsole \
-     py37-jupyterlab \
-     py37-pip \
-     py37-autopep8 \
-     py37-pyproj \
-     py37-scipy \
-     py37-shapely \
-     py37-cython \
-     py37-netcdf4 +mpich \
-     py37-matplotlib \
-     py37-matplotlib-basemap \
-     py37-unidecode \
-     py37-seaborn \
-     py37-statsmodels \
-     py37-pip \
-     py37-pandas \
-     py37-fiona \
-     py37-gdal \
-     py37-pyproj \
-     py37-unidecode \
-     py37-scikit-learn \
-     py37-xarray \
-     qgis3 +mpich -python36 +python37
+     py38-numpy +gcc9 +openblas \
+     py38-pyqt5-webengine \
+     py38-pyqt5 +webkit \
+     py38-nose \
+     py38-simplegeneric \
+     py38-future \
+     py38-sphinx \
+     py38-sphinx_rtd_theme \
+     py38-jupyter +qtconsole \
+     py38-jupyterlab \
+     py38-pip \
+     py38-autopep8 \
+     py38-pyproj \
+     py38-scipy \
+     py38-shapely \
+     py38-cython \
+     py38-netcdf4 +mpich \
+     py38-matplotlib \
+     py38-matplotlib-basemap \
+     py38-unidecode \
+     py38-seaborn \
+     py38-statsmodels \
+     py38-pip \
+     py38-pandas \
+     py38-fiona \
+     py38-gdal \
+     py38-pyproj \
+     py38-unidecode \
+     py38-scikit-learn \
+     py38-autopep8 \
+     pip_select \ 
+     py38-xarray \
+     py38-pip \
+     py38-jupyterlab \
+     qgis3 +mpich -python36 +python38 -grass
 
 
-sudo port select --set autopep8 autopep8-37    
-sudo port select --set ipython py37-ipython
-sudo port select --set ipython3 py37-ipython
-sudo port select --set pep8 pep8-37
-sudo port select --set pip pip37
-sudo port select --set python3 python37
-sudo port select --set python python37
-sudo port select --set cython cython37
+sudo port select --set autopep8 autopep8-38    
+sudo port select --set pycodestyle pycodestyle-py38
+sudo port select --set pip pip38
+sudo port select --set pip3 pip38
+sudo port select --set python3 python38
+sudo port select --set python python38
+sudo port select --set cython cython38
 sudo port select --set gcc mp-gcc9
 sudo port select --set mpi mpich-mp-fortran
-sudo port select --set sphinx py37-sphinx
-sudo port select --set nosetests nosetests37
+sudo port select --set sphinx py38-sphinx
+sudo port select --set nosetests nosetests38
 
 # Python modules
 for module in braceexpand black netcdftime cftime cf-units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp tensorflow gpflow GPy; do
@@ -81,13 +84,13 @@ done
 CFLAGS=-I/opt/local/include/udunits2/
 
 sudo port -vN install \
-     mumps +clang80 +mpich \
-     petsc +clang80 +mpich +mumps \
-     armadillo  +clang80 +mpich \
-     dolfin +petsc +clang80 +hdf5 \
-     py37-ffc +mpich \
-     py37-pkgconfig \  
-     py37-dolfin
+     mumps +clang90 +mpich \
+     petsc +clang90 +mpich +mumps \
+     armadillo  +clang90 +mpich \
+     dolfin +petsc +clang90 +hdf5 \
+     py38-ffc +mpich \
+     py38-pkgconfig \  
+     py38-dolfin
 
 # edit the petsc portfile and add
 
