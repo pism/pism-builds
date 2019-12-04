@@ -59,6 +59,7 @@ sudo port -vN install \
      py38-xarray \
      py38-pip \
      py38-jupyterlab \
+     py38-virtualenv \
      qgis3 +mpich -python36 +python38 -grass
 
 
@@ -73,6 +74,8 @@ sudo port select --set gcc mp-gcc9
 sudo port select --set mpi mpich-mp-fortran
 sudo port select --set sphinx py38-sphinx
 sudo port select --set nosetests nosetests38
+sudo port select --set virtualenv virtualenv38
+sudo port select --set py-sympy py38-sympy
 
 # Python modules
 for module in braceexpand black netcdftime cftime cf-units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp tensorflow gpflow GPy; do
@@ -87,8 +90,8 @@ sudo port -vN install \
      mumps +clang90 +mpich \
      petsc +clang90 +mpich +mumps \
      armadillo  +clang90 +mpich \
-     dolfin +petsc +clang90 +hdf5 \
      py38-ffc +mpich \
+     dolfin +petsc +clang90 +hdf5 \
      py38-pkgconfig \  
      py38-dolfin
 
