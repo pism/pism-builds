@@ -12,88 +12,96 @@ sudo port -vN install \
      gcc9 \
      hdf5 +clang90 +mpich +threadsafe +experimental \
      netcdf +mpich \
-     cdo +cdi +grib_api +mpich \
+     cdo +cdi +grib_api +mpich  \
      nco \
      gdal +netcdf +geos +spatialite +postgresql10 +hdf5 +mpich +clang90\
      ncview \
      git +bash_completion +svn \
-     boost -python27 +python37 +mpich +clang90 \
+     boost -python27 +python36 +mpich +clang90 \
      wget \
      emacs-app-devel \
      doxygen \
      aspell aspell-dict-en aspell-dict-de aspell-dict-de-alt \
      fondu \
      ffmpeg +nonfree \
-     black \ 
-     py38-numpy +gcc9 +openblas \
-     py38-pyqt5-webengine \
-     py38-pyqt5 +webkit \
-     py38-nose \
-     py38-simplegeneric \
-     py38-future \
-     py38-sphinx \
-     py38-sphinx_rtd_theme \
-     py38-jupyter +qtconsole \
-     py38-jupyterlab \
-     py38-pip \
-     py38-autopep8 \
-     py38-pyproj \
-     py38-scipy \
-     py38-shapely \
-     py38-cython \
-     py38-netcdf4 +mpich \
-     py38-matplotlib \
-     py38-matplotlib-basemap \
-     py38-unidecode \
-     py38-seaborn \
-     py38-statsmodels \
-     py38-pip \
-     py38-pandas \
-     py38-fiona \
-     py38-gdal \
-     py38-pyproj \
-     py38-unidecode \
-     py38-scikit-learn \
-     py38-autopep8 \
+     black \
+     gdb \
+     py36-numpy +gcc9 +openblas \
+     py36-pyqt5-webengine \
+     py36-pyqt5 +scintilla +webkit \
+     py36-nose \
+     py36-simplegeneric \
+     py36-future \
+     py36-sphinx \
+     py36-sphinx_rtd_theme \
+     py36-jupyter +qtconsole \
+     py36-jupyterlab \
+     py36-pip \
+     py36-autopep8 \
+     py36-pyproj \
+     py36-scipy \
+     py36-shapely \
+     py36-cython \
+     py36-netcdf4 +mpich \
+     py36-matplotlib \
+     py36-matplotlib-basemap \
+     py36-unidecode \
+     py36-seaborn \
+     py36-statsmodels \
+     py36-pip \
+     py36-pandas \
+     py36-fiona \
+     py36-gdal \
+     py36-pyproj \
+     py36-unidecode \
+     py36-scikit-learn \
+     py36-autopep8 \
      pip_select \ 
-     py38-xarray \
-     py38-pip \
-     py38-jupyterlab \
-     py38-virtualenv \
-     qgis3 +mpich -python36 +python38 -grass
+     py36-xarray \
+     py36-pip \
+     py36-jupyterlab \
+     py36-virtualenv \
+     py36-sympy \
+     py36-codestyle \
+     py36-autopep8 \
+     py36-virtualenv \
+     grass7 -python38 +python36 \
+     qgis3 +mpich +grass
 
 
-sudo port select --set autopep8 autopep8-38    
-sudo port select --set pycodestyle pycodestyle-py38
-sudo port select --set pip pip38
-sudo port select --set pip3 pip38
-sudo port select --set python3 python38
-sudo port select --set python python38
-sudo port select --set cython cython38
+sudo port select --set autopep8 autopep8-36    
+sudo port select --set pycodestyle pycodestyle-py36
+sudo port select --set pip pip36
+sudo port select --set pip3 pip36
+sudo port select --set python3 python36
+sudo port select --set python python36
+sudo port select --set cython cython36
 sudo port select --set gcc mp-gcc9
 sudo port select --set mpi mpich-mp-fortran
-sudo port select --set sphinx py38-sphinx
-sudo port select --set nosetests nosetests38
-sudo port select --set virtualenv virtualenv38
-sudo port select --set py-sympy py38-sympy
+sudo port select --set sphinx py36-sphinx
+sudo port select --set nosetests nosetests36
+sudo port select --set virtualenv virtualenv36
+sudo port select --set py-sympy py36-sympy
 
 # Python modules
-for module in braceexpand black netcdftime cftime cf-units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp tensorflow gpflow GPy; do
-    pip install $module --user
+for module in braceexpand black netcdftime cftime cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthel GPy sklearn eofs xarray; do
+    python -m pip install $module --user
 done
 
-# cf-units currently fails to build with pip.
+# cfunits currently fails to build with pip.
 # compile from github source and use the flag:
 CFLAGS=-I/opt/local/include/udunits2/
 
+
+# This is only needed if you want dolfin
 sudo port -vN install \
      mumps +clang90 +mpich \
      petsc +clang90 +mpich +mumps \
      armadillo  +clang90 +mpich \
-     py38-ffc +mpich \
+     py36-ffc \
      dolfin +petsc +clang90 +hdf5 \
-     py38-pkgconfig \  
-     py38-dolfin
+     py36-pkgconfig \  
+     py36-dolfin
 
 # edit the petsc portfile and add
 
