@@ -7,7 +7,11 @@
 # In particular I compile ports with +clang90 +mpich
 # to get OpenMP capabilities in CDO
 
-sudo port -vN install \
+if [ -n "$PORT" ] ; then
+    PORT='sudo port'
+fi
+
+$PORT -vN install \
      mpich \
      gcc9 \
      hdf5 +clang90 +mpich +threadsafe +experimental \
@@ -63,19 +67,19 @@ sudo port -vN install \
      qgis3 +mpich -python36 +python38 -grass
 
 
-sudo port select --set autopep8 autopep8-38    
-sudo port select --set pycodestyle pycodestyle-py38
-sudo port select --set pip pip38
-sudo port select --set pip3 pip38
-sudo port select --set python3 python38
-sudo port select --set python python38
-sudo port select --set cython cython38
-sudo port select --set gcc mp-gcc9
-sudo port select --set mpi mpich-mp-fortran
-sudo port select --set sphinx py38-sphinx
-sudo port select --set nosetests nosetests38
-sudo port select --set virtualenv virtualenv38
-sudo port select --set py-sympy py38-sympy
+$PORT select --set autopep8 autopep8-38    
+$PORT select --set pycodestyle pycodestyle-py38
+$PORT select --set pip pip38
+$PORT select --set pip3 pip38
+$PORT select --set python3 python38
+$PORT select --set python python38
+$PORT select --set cython cython38
+$PORT select --set gcc mp-gcc9
+$PORT select --set mpi mpich-mp-fortran
+$PORT select --set sphinx py38-sphinx
+$PORT select --set nosetests nosetests38
+$PORT select --set virtualenv virtualenv38
+$PORT select --set py-sympy py38-sympy
 
 # Python modules
 for module in braceexpand black netcdftime cftime cf-units cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthelp tensorflow gpflow GPy; do
@@ -86,7 +90,7 @@ done
 # compile from github source and use the flag:
 CFLAGS=-I/opt/local/include/udunits2/
 
-sudo port -vN install \
+$PORT -vN install \
      mumps +clang90 +mpich \
      petsc +clang90 +mpich +mumps \
      armadillo  +clang90 +mpich \
