@@ -7,7 +7,7 @@
 # In particular I compile ports with +clang90 +mpich
 # to get OpenMP capabilities in CDO
 
-if [ -n "$PORT" ] ; then
+if [ -z "$PORT" ] ; then
     PORT='sudo port'
 fi
 
