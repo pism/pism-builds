@@ -7,7 +7,11 @@
 # In particular I compile ports with +clang90 +mpich
 # to get OpenMP capabilities in CDO
 
-sudo port -vN install \
+if [ -z "$PORT" ] ; then
+    PORT='sudo port'
+fi
+
+$PORT -vN install \
      mpich \
      gcc9 \
      hdf5 +clang90 +mpich +threadsafe +experimental \
@@ -69,19 +73,20 @@ sudo port -vN install \
      qgis3 +mpich +grass
 
 
-sudo port select --set autopep8 autopep8-36    
-sudo port select --set pycodestyle pycodestyle-py36
-sudo port select --set pip pip36
-sudo port select --set pip3 pip36
-sudo port select --set python3 python36
-sudo port select --set python python36
-sudo port select --set cython cython36
-sudo port select --set gcc mp-gcc9
-sudo port select --set mpi mpich-mp-fortran
-sudo port select --set sphinx py36-sphinx
-sudo port select --set nosetests nosetests36
-sudo port select --set virtualenv virtualenv36
-sudo port select --set py-sympy py36-sympy
+$PORT select --set autopep8 autopep8-36    
+$PORT select --set pycodestyle pycodestyle-py36
+$PORT select --set pip pip36
+$PORT select --set pip3 pip36
+$PORT select --set python3 python36
+$PORT select --set python python36
+$PORT select --set cython cython36
+$PORT select --set gcc mp-gcc9
+$PORT select --set mpi mpich-mp-fortran
+$PORT select --set sphinx py36-sphinx
+$PORT select --set nosetests nosetests36
+$PORT select --set virtualenv virtualenv36
+$PORT select --set py-sympy py36-sympy
+
 
 # Python modules
 for module in braceexpand black netcdftime cftime cdo nco SALib Unidecode pyDOE Pillow palettable sphinxcontrib-bibtex sphinxcontrib-qthel GPy sklearn eofs xarray; do
@@ -92,9 +97,9 @@ done
 # compile from github source and use the flag:
 CFLAGS=-I/opt/local/include/udunits2/
 
-
 # This is only needed if you want dolfin
-sudo port -vN install \
+$PORT -vN install \
+
      mumps +clang90 +mpich \
      petsc +clang90 +mpich +mumps \
      armadillo  +clang90 +mpich \
