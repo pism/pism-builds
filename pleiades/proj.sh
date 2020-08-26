@@ -5,9 +5,9 @@ set -e
 set -u
 
 build_proj() {
-    # download and build PROJ.4
-    mkdir -p $LOCAL_LIB_DIR/sources/proj.4
-    cd $LOCAL_LIB_DIR/sources/proj.4
+    # download and build PROJ
+    mkdir -p $LOCAL_LIB_DIR/sources/proj
+    cd $LOCAL_LIB_DIR/sources/proj
 
     git clone --depth 1 -b 6.3 https://github.com/OSGeo/proj.git . || git pull
 
@@ -20,3 +20,4 @@ build_proj() {
 }
 
 build_proj
+
