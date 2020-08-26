@@ -21,7 +21,7 @@ build_petsc() {
 
     git clone --depth=1 -b maint https://gitlab.com/petsc/petsc.git .
 
-    python2.7 ./config/configure.py \
+    python ./config/configure.py \
         --with-shared-libraries \
         --with-fc=0 \
         --with-debugging=${debugging} \
