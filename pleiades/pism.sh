@@ -54,8 +54,10 @@ build_pism() {
           -DCMAKE_C_FLAGS="-std=c11 ${opt_flags} -diag-disable=cpu-dispatch,10006" \
           -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR;$LOCAL_LIB_DIR/hdf5;$LOCAL_LIB_DIR/netcdf" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
+	  -DPism_BUILD_PYTHON_BINDINGS=OFF \
+          -DPism_USE_JANSSON=NO \
           -DPism_USE_PARALLEL_NETCDF4=YES \
-          -DPism_USE_PROJ4=YES $PISM_DIR/sources
+          -DPism_USE_PROJ=YES \
     make -j4 install
 }
 
