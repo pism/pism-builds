@@ -58,7 +58,10 @@ build_pism() {
           -DPism_USE_JANSSON=NO \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ=YES \
-    make -j4 install
+          $PISM_DIR/sources
+    make -j $N install
+    set +x
+    set +e
 }
 
 build_pism
