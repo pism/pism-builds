@@ -43,11 +43,11 @@ build_petsc() {
 . /usr/share/modules/init/bash
 
 module purge
-module load comp-intel/2016.2.181 mpi-sgi/mpt
-
+# module use -a /nasa/modulefiles/testing
+module load comp-intel/2020.2.254 mpi-hpe/mpt.2.19
 cd \$PBS_O_WORKDIR
 
-mpiexec -np 1 ./conftest-linux-64bit
+mpiexec -np 1 ./conftest-$PETSC_ARCH
 EOF
 
     # run conftest in an interactive job and wait for it to complete

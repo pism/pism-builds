@@ -8,8 +8,6 @@ N=8
 
 build_netcdf() {
     
-    hdf5_prefix=${LOCAL_LIB_DIR}/hdf5
-
     version=4.7.4
     prefix=${LOCAL_LIB_DIR}/netcdf
     build_dir=${LOCAL_LIB_DIR}/sources/netcdf
@@ -22,9 +20,9 @@ build_netcdf() {
     tar zxf netcdf-c-${version}.tar.gz
 
     pushd netcdf-c-${version}
-    export CC=mpicc
-    export CPPFLAGS=-I${hdf5_prefix}/include
-    export LDFLAGS=-L${hdf5_prefix}/lib
+    export CC=icc
+    export MPICC_CC=icc
+    export MPICXX_CXX=icpc
 
     ./configure \
       --enable-netcdf4 \

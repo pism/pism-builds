@@ -18,7 +18,7 @@ set -u
 
 # directory to install libraries in
 LOCAL_LIB_DIR=$HOME/local
-
+hdf5_prefix=/nasa/hdf5/1.12.0_mpt
 # No. of cores for make
 N=8
 
@@ -43,9 +43,10 @@ build_pism() {
     cd build
     rm -f CMakeCache.txt
 
+#    export CPPFLAGS=-I${hdf5_prefix}/include
+#    export LDFLAGS=-L${hdf5_prefix}/lib
     export CC=icc
     export CXX=icpc
-    export HDF5_ROOT=${LOCAL_LIB_DIR}/hdf5
     opt_flags="-O3 -ipo -axCORE-AVX2 -xSSE4.2 -fp-model precise"
     cmake -DMPI_C_INCLUDE_PATH=$MPI_INCLUDE \
           -DMPI_C_LIBRARIES=$MPI_LIBRARY \
