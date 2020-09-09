@@ -15,6 +15,8 @@ set -e
 set -u
 
 ./udunits2.sh
+./gsl.sh
+./fftw3.sh
 ./proj.sh
 ./netcdf.sh
 ./petsc.sh

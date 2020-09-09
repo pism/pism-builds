@@ -20,9 +20,11 @@ build_hdf5() {
     tar xzf hdf5-${version}.tar.gz
     
     pushd hdf5-${version}
-    export CC=mpicc
+    export CC=icc
+    export MPICC_CC=icc 
+    export MPICXX_CXX=icpc
 
-    CC=mpicc ./configure --enable-parallel --disable-static --enable-shared --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
+    ./configure --enable-parallel --disable-static --enable-shared --prefix=$LOCAL_LIB_DIR/hdf5 2>&1 | tee hdf5_configure.log
 
     make all -j $N 2>&1 | tee hdf5_compile.log
     make install 2>&1 | tee hdf5_install.log

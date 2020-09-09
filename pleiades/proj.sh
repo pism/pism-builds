@@ -12,6 +12,7 @@ build_proj() {
     git clone --depth 1 -b 6.3 https://github.com/OSGeo/proj.git . || git pull
 
     # remove and re-generate files created by autoconf
+    export SQLITE3_LIBS=$LOCAL_LIB_DIR
     autoreconf --force --install
     ./configure --prefix=$LOCAL_LIB_DIR
 

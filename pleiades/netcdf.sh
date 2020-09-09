@@ -20,10 +20,11 @@ build_netcdf() {
     tar zxf netcdf-c-${version}.tar.gz
 
     pushd netcdf-c-${version}
-    export CC=icc
-    export MPICC_CC=icc
-    export MPICXX_CXX=icpc
-
+    export CC=icc 
+    export MPICC_CC=icc 
+    export MPICXX_CXX=icpc 
+    export CPPFLAGS="-I/nasa/hdf5/1.12.0_mpt/include"
+    export LDFLAGS="-L/nasa/hdf5/1.12.0_mpt/lib"
     ./configure \
       --enable-netcdf4 \
       --disable-dap \

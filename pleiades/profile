@@ -14,8 +14,7 @@ module use -a /nasa/modulefiles/testing
 module load mpi-hpe/mpt.2.20
 module load comp-intel/2020.2.254
 module load hdf5/1.12.0_mpt 
-module load python3-intel/2020.0.014
-module load pkgsrc/2018Q3 
+# module load python3-intel/2020.0.014
 
 # Increase MPI_TYPE_DEPTH from 14 to 24 (seems to be needed by HDF5
 # when used with SGI MPT 2.12).
