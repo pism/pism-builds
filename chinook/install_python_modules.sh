@@ -18,7 +18,7 @@ build_pypismtools() {
     python setup.py install --user
 }
 
-for module in netCDF4 netcdftime cftime jupyter[all] ipython[all] pyproj matplotlib cdo==1.3.2 nco SALib Rtree pyrtree cf_units Unidecode pyDOE statsmodels wget; do
+for module in netCDF4 netcdftime cftime jupyter[all] ipython[all] pyproj matplotlib cdo nco SALib Rtree pyrtree cf_units Unidecode pyDOE statsmodels wget; do
     pip install $module --user
 done
 

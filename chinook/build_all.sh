@@ -17,11 +17,11 @@ set -u
 
 build_all () {
     # build PISM, its prerequisites, and some tools
-./hdf5.sh
-./netcdf.sh
-./nco.sh
-./cdo.sh
-./proj.sh
+# ./hdf5.sh
+# ./netcdf.sh
+# ./nco.sh
+# ./cdo.sh
+# ./proj.sh
 ./petsc.sh
 ./petsc4py.sh
 ./pism.sh
