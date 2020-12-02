@@ -33,29 +33,9 @@ build_petsc() {
         --with-batch=1  \
         --with-shared-libraries=1
 
-    cat > script.queue << EOF
-#PBS -S /bin/bash
-#PBS -l select=1:ncpus=1:model=bro
-#PBS -q devel
-#PBS -W group_list=s1878
-#PBS -W block=true
+PETSC_DIR=$PETSC_DIR PETSC_ARCH=$PETSC_ARCH make all
+PETSC_DIR=$PETSC_DIR PETSC_ARCH=$PETSC_ARCH make check
 
-. /usr/share/modules/init/bash
-
-module purge
-module load comp-intel/2016.2.181 mpi-sgi/mpt
-
-cd \$PBS_O_WORKDIR
-
-mpiexec -np 1 ./conftest-linux-64bit
-EOF
-
-    # run conftest in an interactive job and wait for it to complete
-    qsub script.queue
-
-    ./reconfigure-$PETSC_ARCH.py
-
-    make all
 }
 
 build_petsc

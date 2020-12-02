@@ -70,6 +70,7 @@ $PORT -vN install \
      py${python}-codestyle \
      py${python}-autopep8 \
      py${python}-virtualenv \
+     py${python}-pytest \     
      PDAL +python${python} \
      swig-python \
      qgis3 +mpich -python36 +python38 +clang${clang}
@@ -88,7 +89,7 @@ $PORT select --set sphinx py${python}-sphinx
 $PORT select --set nosetests nosetests${python}
 $PORT select --set virtualenv virtualenv${python}
 $PORT select --set py-sympy py${python}-sympy
-
+$PORT select --set pytest pytest${python}
 
 # Python modules
 for module in braceexpand cdo nco SALib pyDOE sphinxcontrib-bibtex sphinxcontrib-qthel GPy sklearn nc-time-axis; do

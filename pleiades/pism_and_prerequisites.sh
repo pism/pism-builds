@@ -14,11 +14,11 @@ set -e
 # stop if an environment variable is not defined
 set -u
 
-./fftw3.sh
 ./udunits2.sh
-./proj4.sh
-./petsc.sh
-./hdf5.sh
+./gsl.sh
+./fftw3.sh
+./proj.sh
 ./netcdf.sh
+./petsc.sh
 
 ./pism.sh
