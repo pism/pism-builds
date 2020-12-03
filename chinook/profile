@@ -33,4 +33,6 @@ module load tools/git/2.23.0-GCCcore-8.3.0
 # start an interactive job
 alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
 
+export PYTHONPATH=$PETSC_DIR/$PETSC_ARCH/lib:$PYTHONPATH
+
 export PISM_MPIDO='mpirun -np'

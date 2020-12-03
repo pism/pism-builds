@@ -15,10 +15,11 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b maint https://gitlab.com/petsc/petsc.git .
+    git clone --depth=1 -b release https://gitlab.com/petsc/petsc.git .
 
     # Note that on Chinook mpicc and mpicxx wrap Intel's C and C++ compilers
     ./config/configure.py \
+	--download-petsc4py \
 	--with-cc=mpicc \
 	--with-cxx=mpicxx \
 	--with-fc=0 \
@@ -33,11 +34,6 @@ build_petsc() {
 	--with-ssl=0 \
 	--with-batch=1 \
 	--with-shared-libraries=1
-
-    # run conftest in an interactive job and wait for it to complete
-    srun -t 20 -n 1 -N 1 -p debug mpirun ./conftest-$PETSC_ARCH
-
-    ./reconfigure-$PETSC_ARCH.py
 
     make all
 }

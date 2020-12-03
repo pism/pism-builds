@@ -23,7 +23,6 @@ build_all () {
 # ./cdo.sh
 # ./proj.sh
 ./petsc.sh
-./petsc4py.sh
 ./pism.sh
 }
 
