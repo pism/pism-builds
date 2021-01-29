@@ -19,11 +19,12 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b maint https://gitlab.com/petsc/petsc.git .
+    git clone --depth=1 -b release https://gitlab.com/petsc/petsc.git .
 
     python ./config/configure.py \
         --with-shared-libraries \
         --with-fc=0 \
+        --download-petsc4py \
         --with-debugging=${debugging} \
         --with-64-bit-indices=${sixty_four} \
         --COPTFLAGS=$FLAGS CXXOPTFLAGS=$FLAGS
@@ -33,17 +34,5 @@ build_petsc() {
 }
 
 
-build_petsc4py() {
-    PETSC4PY_DIR=$HOME/petsc4py
-    
-    rm -rf $PETSC4PY_DIR
-    mkdir -p $PETSC4PY_DIR
-    cd $PETSC4PY_DIR
-
-    git clone --depth=1 -b maint https://bitbucket.org/petsc/petsc4py .
-    python setup.py install --user
-    
-}
 
 build_petsc 0 0
-build_petsc4py
