@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PETSC_DIR=~/petsc-maint
+export PETSC_DIR=~/petsc
 export PETSC_ARCH=linux-64bit
 export LOCAL_LIB_DIR=$HOME/local
 
