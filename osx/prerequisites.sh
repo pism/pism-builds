@@ -91,6 +91,7 @@ $PORT select --set nosetests nosetests${python}
 $PORT select --set virtualenv virtualenv${python}
 $PORT select --set py-sympy py${python}-sympy
 $PORT select --set pytest pytest${python}
+$PORT select --set pytest py${python}-openpyxl
 
 # # Python modules
 for module in braceexpand cdo nco SALib pyDOE sphinxcontrib-bibtex sphinxcontrib-qt* GPy sklearn nc-time-axis gpytorch; do
