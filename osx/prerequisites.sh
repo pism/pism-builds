@@ -62,6 +62,7 @@ $PORT -vN install \
      py${python}-autopep8 \
      py${python}-unidecode \
      pip_select \
+     py${python}-pylint \
      py${python}-xarray \
      py${python}-jupyterlab \
      py${python}-virtualenv \
@@ -72,6 +73,7 @@ $PORT -vN install \
      py${python}-pytest \
      py${python}-pymc3 \
      py${python}-pytorch +mpich +clang${clang} \
+     py${pyton}-flake8* \
      swig-python \
      qgis3 +mpich -python36 +python${python} +clang${clang} \
      vtk +python${python} +mpich +clang${clang} +qt5 \
@@ -92,6 +94,7 @@ $PORT select --set virtualenv virtualenv${python}
 $PORT select --set py-sympy py${python}-sympy
 $PORT select --set pytest pytest${python}
 $PORT select --set pytest py${python}-openpyxl
+$PORT select --set pylint pylint${38}
 
 # # Python modules
 for module in braceexpand cdo nco SALib pyDOE sphinxcontrib-bibtex sphinxcontrib-qt* GPy sklearn nc-time-axis gpytorch; do
