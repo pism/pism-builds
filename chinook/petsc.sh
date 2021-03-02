@@ -22,12 +22,17 @@ build_petsc() {
 	--download-petsc4py \
 	--with-cc=mpicc \
 	--with-cxx=mpicxx \
-	--with-fc=0 \
+        --with-fc=mpifort \
+        --download-scalapack \
+        --download-mumps \
+        --download-hypre \
+        --download-parmetis \
+        --download-metis \
+        --download-ptscotch \
+        --with-openmp \
 	--CFLAGS="${optimization_flags}" \
 	--known-mpi-shared-libraries=1 \
 	--with-blas-lapack-dir=${MKL} \
-	--with-64-bit-indices=1 \
-        --known-64-bit-blas-indices \
         --with-debugging=0 \
 	--with-valgrind=0 \
 	--with-x=0 \

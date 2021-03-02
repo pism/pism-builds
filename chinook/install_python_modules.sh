@@ -18,7 +18,7 @@ build_pypismtools() {
     python setup.py install --user
 }
 
-for module in pandas pymc3 GPy torch netCDF4 netcdftime cftime pyproj matplotlib cdo nco SALib cf_units Unidecode pyDOE statsmodels wget; do
+for module in pandas pymc3 GPy torch netCDF4 netcdftime cftime pyproj matplotlib cdo nco SALib cf_units Unidecode pyDOE statsmodels wget gpytorch; do
     pip install $module --user
 done
 
