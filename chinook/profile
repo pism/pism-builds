@@ -1,5 +1,7 @@
 #!/bin/bash
 
+umask 007
+
 module purge
 module load slurm
 module load toolchain/pic-intel/2019b
