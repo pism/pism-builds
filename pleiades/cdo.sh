@@ -15,9 +15,9 @@ build_cdo() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc --no-check-certificate https://code.zmaw.de/attachments/download/14686/cdo-1.8.2.tar.gz
+    wget -nc --no-check-certificate https://code.mpimet.mpg.de/attachments/20826/cdo-1.9.8.tar.gz 
     tar -zxvf cdo-1.8.2.tar.gz
-    cd cdo-1.8.2
+    cd cdo-1.9.8
 
     export CC=icc
     export LIBS="-lmpi"

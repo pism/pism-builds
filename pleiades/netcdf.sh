@@ -20,19 +20,19 @@ build_netcdf() {
     tar zxf netcdf-c-${version}.tar.gz
 
     pushd netcdf-c-${version}
+    export CFLAGS='-g'
+    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include"
+    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib
     export CC=mpicc
-    export CXX=mpicxx
-    export FC=mpif90 
-    export CPPFLAGS="-I/nasa/hdf5/1.12.0_mpt/include"
-    export LDFLAGS="-L/nasa/hdf5/1.12.0_mpt/lib"
-    ./configure \
+
+   ./configure \
       --enable-netcdf4 \
       --disable-dap \
       --prefix=$LOCAL_LIB_DIR/netcdf 2>&1 | tee netcdf_configure.log
 
     make all -j $N 2>&1 | tee netcdf_compile.log
     make install 2>&1 | tee netcdf_install.log
-
+    make check 2>&1 | tee netcdf_check.log
     popd
     popd
 }

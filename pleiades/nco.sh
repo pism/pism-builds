@@ -16,9 +16,9 @@ build_nco() {
     rm -rf nco
     git clone https://github.com/nco/nco.git
     cd nco
-    git checkout 4.6.7
+    git checkout 4.9.4
 
-    export NETCDF_ROOT=/nasa/netcdf/4.4.1.1_mpt
+    export NETCDF_ROOT=$LOCAL_LIB_DIR/netcdf
     export ANTLR_ROOT=/nasa/sles11/nco/4.6.2/gcc/mpt
     export UDUNITS2_PATH=$LOCAL_LIB_DIR
     export CC=mpicc

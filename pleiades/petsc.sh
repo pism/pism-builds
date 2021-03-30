@@ -22,7 +22,6 @@ build_petsc() {
 	--with-cxx=icpc \
 	--with-cpp=/usr/bin/cpp \
 	--with-fc=0 \
-        --download-petsc4py \
 	--with-vendor-compilers=intel \
 	--with-gnu-compilers=0 \
 	--with-blas-lapack-dir=${MKLROOT}/lib/intel64 \

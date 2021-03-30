@@ -11,10 +11,10 @@ fi
 
 module purge
 module use -a /nasa/modulefiles/testing
-module load mpi-hpe/mpt.2.22
-module load comp-intel/2020.2.254
-module load hdf5/1.12.0_mpt
+module load comp-intel/2020.2.254 
+module load mpi-hpe/mpt.2.22 
 module load szip/2.1.1 
+module load hdf5/1.12.0_mpt
 module use -a /swbuild/analytix/tools/modulefiles
 module load miniconda3/v4
 source activate pyt1_7
