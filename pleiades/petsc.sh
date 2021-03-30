@@ -11,7 +11,7 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b maint https://gitlab.com/petsc/petsc.git . || git pull
+    git clone --depth=1 -b release https://gitlab.com/petsc/petsc.git . || git pull
 
     opt_flags="-g -O3 -axCORE-AVX2,AVX -xSSE4.2"
 
@@ -22,6 +22,7 @@ build_petsc() {
 	--with-cxx=icpc \
 	--with-cpp=/usr/bin/cpp \
 	--with-fc=0 \
+        --download-petsc4py \
 	--with-vendor-compilers=intel \
 	--with-gnu-compilers=0 \
 	--with-blas-lapack-dir=${MKLROOT}/lib/intel64 \

@@ -80,6 +80,7 @@ $PORT -vN install \
 
 
 $PORT select --set autopep8 autopep8-${python}    
+$PORT select --set flake8 flake8-${python}    
 $PORT select --set pycodestyle pycodestyle-py${python}
 $PORT select --set pip pip${python}
 $PORT select --set pip3 pip${python}
