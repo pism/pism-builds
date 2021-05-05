@@ -29,7 +29,9 @@ build_petsc() {
         --download-parmetis \
         --download-metis \
         --download-ptscotch \
-	--CFLAGS="${optimization_flags}" \
+        COPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
+        CXXOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
+        FOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
 	--known-mpi-shared-libraries=1 \
 	--with-blas-lapack-dir=${MKL} \
         --with-debugging=0 \
