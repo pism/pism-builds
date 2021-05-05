@@ -7,7 +7,7 @@ set -x
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
-MKL=/usr/local/pkg/numlib/imkl/11.3.3.210-pic-iompi-2016b/mkl/lib/intel64
+MKL=/usr/local/pkg/numlib/imkl/2019.3.199-pic-iompi-2019b/mkl/lib/intel64
 optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
 
 build_petsc() {
@@ -19,15 +19,23 @@ build_petsc() {
 
     # Note that on Chinook mpicc and mpicxx wrap Intel's C and C++ compilers
     ./config/configure.py \
+        --march native \
 	--download-petsc4py \
 	--with-cc=mpicc \
 	--with-cxx=mpicxx \
-	--with-fc=0 \
+        --with-fortran=0 \
+        --with-fc=mpifort \
+        --download-scalapack \
+        --download-ml \
+        --download-mumps \
+        --download-hypre \
+        --download-parmetis \
+        --download-metis \
+        --download-ptscotch \
+        --with-openmp \
 	--CFLAGS="${optimization_flags}" \
 	--known-mpi-shared-libraries=1 \
 	--with-blas-lapack-dir=${MKL} \
-	--with-64-bit-indices=1 \
-        --known-64-bit-blas-indices \
         --with-debugging=0 \
 	--with-valgrind=0 \
 	--with-x=0 \
