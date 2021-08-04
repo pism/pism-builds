@@ -11,8 +11,6 @@ fi
 
 module purge
 module use -a /swbuild/analytix/tools/modulefiles
-# module load miniconda3/v4
-# source activate pyt1_8
 module use -a /nasa/modulefiles/testing
 module load comp-intel/2020.2.254 
 module load mpi-hpe/mpt.2.22 
