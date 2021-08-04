@@ -21,8 +21,6 @@ build_netcdf() {
 
     pushd netcdf-c-${version}
     export CFLAGS='-g'
-    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include"
-    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib
     export CC=mpicc
 
    ./configure \

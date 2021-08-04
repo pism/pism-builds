@@ -10,14 +10,15 @@ fi
 # Add your commands here to extend your PATH, etc.
 
 module purge
+module use -a /swbuild/analytix/tools/modulefiles
+# module load miniconda3/v4
+# source activate pyt1_8
 module use -a /nasa/modulefiles/testing
 module load comp-intel/2020.2.254 
 module load mpi-hpe/mpt.2.22 
 module load szip/2.1.1 
 module load hdf5/1.12.0_mpt
-module use -a /swbuild/analytix/tools/modulefiles
-module load miniconda3/v4
-source activate pyt1_8
+module load python3-intel/2020.0.014
 
 # Increase MPI_TYPE_DEPTH from 14 to 24 (seems to be needed by HDF5
 # when used with SGI MPT 2.12).
