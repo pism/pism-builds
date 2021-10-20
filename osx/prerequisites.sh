@@ -15,10 +15,11 @@ python=39
 
 $PORT -vN install \
      mpich \
-     hdf5 +mpich \
-     netcdf +mpich \
-     cdo +cdi +grib_api +mpich \
-     nco +mpich \
+     mpich +clang11 \
+     hdf5 +mpich +threadsafe +clang11\
+     netcdf +mpich +clang11 \
+     cdo +cdi +grib_api +mpich +clang11 \
+     nco +mpich  \
      gdal +netcdf +hdf5 +mpich  \
      ncview \
      git +bash_completion +svn \
@@ -67,9 +68,7 @@ $PORT -vN install \
      py${python}-sympy \
      py${python}-codestyle \
      py${python}-autopep8 \
-     py${python}-virtualenv \
      py${python}-pytest \
-     py${python}-pytorch +mpich +clang${clang} \
      py${pyton}-flake8* \
      swig-python \
      qgis3 +mpich  
@@ -83,7 +82,7 @@ $PORT select --set python3 python${python}
 $PORT select --set python python${python}
 $PORT select --set cython cython${python}
 $PORT select --set gcc mp-gcc10
-$PORT select --set mpi mpich-fortran
+$PORT select --set mpi mpich-clang11-fortran
 $PORT select --set sphinx py${python}-sphinx
 $PORT select --set nosetests nosetests${python}
 $PORT select --set virtualenv virtualenv${python}

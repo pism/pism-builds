@@ -17,19 +17,12 @@ build_petsc() {
     git clone --depth=1 -b release https://gitlab.com/petsc/petsc.git .
 
     python ./config/configure.py \
-           --with-debugging=${debugging} \
-           --with-cc=mpicc \
-           --with-cxx=mpicxx \
-           --with-fc=mpifort \
            --with-shared-libraries \
            --with-debugging=0 \
+           --with-fc=0 \
            --with-petsc4py \
            COPTFLAGS='-O3 -march=native -mtune=native' \
            CXXOPTFLAGS='-O3 -march=native -mtune=native' \
-           FOPTFLAGS='-O3 -march=native -mtune=native' \
-           --download-f2cblaslapack \
-           --download-mumps \
-           --download-scalapack    
 
     make all
 }
