@@ -11,19 +11,19 @@ if [ -z "$PORT" ] ; then
     PORT='sudo port'
 fi
 
-clang=90
-python=38
+python=39
 
 $PORT -vN install \
-     mpich-clang${clang} \
-     hdf5 +clang${clang} +mpich \
-     netcdf +mpich +clang${clang} \
-     cdo +cdi +grib_api +mpich +clang${clang} \
-     nco +mpich +clang${clang} \
-     gdal +netcdf +geos +spatialite +postgresql12 +hdf5 +mpich +clang${clang} \
+     mpich \
+     mpich +clang11 \
+     hdf5 +mpich +threadsafe +clang11\
+     netcdf +mpich +clang11 \
+     cdo +cdi +grib_api +mpich +clang11 \
+     nco +mpich  \
+     gdal +netcdf +hdf5 +mpich  \
      ncview \
      git +bash_completion +svn \
-     boost -python27 +python${python} +mpich +clang${clang} \
+     boost -python27 +python${python} +mpich \
      wget \
      emacs-app-devel \
      doxygen \
@@ -48,9 +48,8 @@ $PORT -vN install \
      py${python}-scipy \
      py${python}-shapely \
      py${python}-cython \
-     py${python}-netcdf4 +mpich +clang${clang} \
+     py${python}-netcdf4 +mpich \
      py${python}-matplotlib \
-     py${python}-matplotlib-basemap \
      py${python}-seaborn \
      py${python}-statsmodels \
      py${python}-pip \
@@ -69,15 +68,10 @@ $PORT -vN install \
      py${python}-sympy \
      py${python}-codestyle \
      py${python}-autopep8 \
-     py${python}-virtualenv \
      py${python}-pytest \
-     py${python}-pymc3 \
-     py${python}-pytorch +mpich +clang${clang} \
      py${pyton}-flake8* \
      swig-python \
-     qgis3 +mpich -python36 +python${python} +clang${clang} \
-     vtk +python${python} +mpich +clang${clang} +qt5 \
-
+     qgis3 +mpich  
 
 $PORT select --set autopep8 autopep8-${python}    
 $PORT select --set flake8 flake8-${python}    
@@ -88,17 +82,18 @@ $PORT select --set python3 python${python}
 $PORT select --set python python${python}
 $PORT select --set cython cython${python}
 $PORT select --set gcc mp-gcc10
-$PORT select --set mpi mpich-clang${clang}-fortran
+$PORT select --set mpi mpich-clang11-fortran
 $PORT select --set sphinx py${python}-sphinx
 $PORT select --set nosetests nosetests${python}
 $PORT select --set virtualenv virtualenv${python}
 $PORT select --set py-sympy py${python}-sympy
 $PORT select --set pytest pytest${python}
 $PORT select --set pytest py${python}-openpyxl
-$PORT select --set pylint pylint${38}
+$PORT select --set pylint pylint${python}
+$PORT select --set black black${python}
 
 # # Python modules
-for module in braceexpand cdo nco SALib pyDOE sphinxcontrib-bibtex sphinxcontrib-qt* GPy sklearn nc-time-axis gpytorch; do
+for module in braceexpand cdo nco SALib pyDOE sphinxcontrib-bibtex  GPy sklearn gpytorch pytorch-lightning feather; do
     python -m pip install $module --user
 done
 

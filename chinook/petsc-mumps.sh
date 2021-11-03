@@ -51,7 +51,22 @@ build_petsc() {
      --download-mumps \
      --download-scalapack
 
-    make all
+    ./configure \
+     --with-cc=mpicc \
+     --with-cxx=mpicxx \
+     --with-fc=mpifort \
+     --with-shared-libraries \
+     --with-debugging=0 \
+     --with-petsc4py \
+     COPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
+     CXXOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
+     FOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
+     --download-f2cblaslapack \
+     --download-mumps \
+     --download-scalapack
+
+make all
 }
 
 build_petsc
+
