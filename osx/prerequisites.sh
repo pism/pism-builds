@@ -12,48 +12,49 @@ if [ -z "$PORT" ] ; then
 fi
 
 python=39
+clang=11
 
 $PORT -vN install \
-     mpich \
-     mpich +clang11 \
-     hdf5 +mpich +threadsafe +clang11\
-     netcdf +mpich +clang11 \
-     cdo +cdi +grib_api +mpich +clang11 \
+     mpich-clang${clang} \
+     hdf5 +mpich +threadsafe +clang${clang} \
+     netcdf +mpich +clang${clang} \
+     cdo +cdi +grib_api +mpich +clang${clang} \
      nco +mpich  \
      gdal +netcdf +hdf5 +mpich  \
      ncview \
      git +bash_completion +svn \
-     boost -python27 +python${python} +mpich \
      wget \
-     emacs-app-devel \
      doxygen \
      aspell aspell-dict-en aspell-dict-de aspell-dict-de-alt \
-     fondu \
-     ffmpeg +nonfree \
-     gdb \
      py${python}-numpy +openblas \
-     py${python}-pyqt5-webengine \
-     py${python}-pyqt5 +scintilla +webkit \
-     py${python}-nose \
-     py${python}-simplegeneric \
-     py${python}-future \
      py${python}-black \
-     py${python}-sphinx \
-     py${python}-sphinx_rtd_theme \
-     py${python}-jupyter +qtconsole \
      py${python}-jupyterlab \
      py${python}-pip \
      py${python}-autopep8 \
      py${python}-pyproj \
      py${python}-scipy \
-     py${python}-shapely \
-     py${python}-cython \
+     py${python}-nose \
+     py${python}-simplegeneric \
+     py${python}-future \
      py${python}-netcdf4 +mpich \
      py${python}-matplotlib \
      py${python}-seaborn \
      py${python}-statsmodels \
      py${python}-pip \
      py${python}-pandas \
+     py${python}-xarray \
+     py${python}-pytorch-lightning \
+
+     
+     py${python}-numpy +openblas \
+     py${python}-pyqt5-webengine \
+     py${python}-pyqt5 +scintilla +webkit \
+     \
+     py${python}-sphinx \
+     py${python}-sphinx_rtd_theme \
+     py${python}-jupyter +qtconsole \
+     py${python}-shapely \
+     py${python}-cython \
      py${python}-fiona \
      py${python}-gdal \
      py${python}-pyproj \
@@ -70,6 +71,9 @@ $PORT -vN install \
      py${python}-autopep8 \
      py${python}-pytest \
      py${pyton}-flake8* \
+     py${python}-openpyxl \
+     py${python}-virtualenv \
+     qt5-qtwebkit \
      swig-python \
      qgis3 +mpich  
 
@@ -82,7 +86,7 @@ $PORT select --set python3 python${python}
 $PORT select --set python python${python}
 $PORT select --set cython cython${python}
 $PORT select --set gcc mp-gcc10
-$PORT select --set mpi mpich-clang11-fortran
+$PORT select --set mpi mpich-clang${clang}-fortran
 $PORT select --set sphinx py${python}-sphinx
 $PORT select --set nosetests nosetests${python}
 $PORT select --set virtualenv virtualenv${python}
