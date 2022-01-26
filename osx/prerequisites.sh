@@ -26,6 +26,8 @@ sudo port -vN install mpich-${cc} \
      py${python}-numpy +openblas \
      py${python}-cython \
      emacs-app \
+     py${python}-build \
+     py${python}-openpyxl \
      git +bash_completion +svn \
      py${python}-black      py${python}-jupyterlab      py${python}-pip      py${python}-autopep8      py${python}-pyproj      py${python}-scipy      py${python}-nose      py${python}-simplegeneric      py${python}-future      py${python}-netcdf4 +mpich      py${python}-matplotlib      py${python}-seaborn      py${python}-statsmodels      py${python}-pip      py${python}-pandas      py${python}-xarray   py${python}-virtualenv      gdal +netcdf +hdf5 +mpich       ncview py${python}-pyqt5 +webkit qgis3 +mpich \
      
