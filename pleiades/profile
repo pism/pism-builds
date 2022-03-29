@@ -10,13 +10,11 @@ fi
 # Add your commands here to extend your PATH, etc.
 
 module purge
-module use -a /swbuild/analytix/tools/modulefiles
-module use -a /nasa/modulefiles/testing
-module load comp-intel/2020.2.254 
-module load mpi-hpe/mpt.2.22 
-module load szip/2.1.1 
-module load hdf5/1.12.0_mpt
-module load python3/3.7.0
+module load comp-intel/2020.4.304
+module load mpi-hpe/mpt
+module load szip/2.1.1
+module load pkgsrc/2021Q2
+module load python3/3.9.5
 
 # Increase MPI_TYPE_DEPTH from 14 to 24 (seems to be needed by HDF5
 # when used with SGI MPT 2.12).
@@ -27,6 +25,7 @@ add_lib_path () {
 }
 
 add_lib_path ${LOCAL_LIB_DIR}/lib
+add_lib_path ${LOCAL_LIB_DIR}/hdf5/lib
 add_lib_path ${LOCAL_LIB_DIR}/netcdf/lib
 
 export PISM_MPIDO='mpiexec -n'
