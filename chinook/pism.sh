@@ -4,7 +4,7 @@ set -e
 set -u
 set -x
 
-optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
+optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model precise"
 
 # No. of cores for make
 N=8
@@ -32,6 +32,8 @@ build_pism() {
     # use Intel's C and C++ compilers
     export CC=mpicc
     export CXX=mpicxx
+    # Silence OpenMPI's error message about a part of its system that is not available on login nodes
+    export OMPI_MCA_plm_rsh_agent=""
     # NETCDFHOME below is set by the module system
     cmake -DCMAKE_CXX_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006,2102" \
           -DCMAKE_C_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006" \

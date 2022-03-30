@@ -37,7 +37,7 @@ build_pism() {
           -DCMAKE_C_FLAGS="${optimization_flags}" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
           -DPETSC_EXECUTABLE_RUNS=ON \
-	  -DPism_BUILD_PYTHON_BINDINGS=ON \
+	  -DPism_BUILD_PYTHON_BINDINGS=OFF \
           -DPism_USE_JANSSON=NO \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ4=YES \
