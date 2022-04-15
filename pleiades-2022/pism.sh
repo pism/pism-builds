@@ -4,7 +4,11 @@ set -x
 set -e
 set -u
 
-version=${version:-v2.0.2}
+version=dev
+if [ $# -gt 0 ] ; then  # if user says "pism.sh frontal-melt" then use "frontal-melt" branch
+  version="$1"
+fi
+
 opt_flags=${opt_flags:--mavx2}
 
 # Compilers:

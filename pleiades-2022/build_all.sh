@@ -35,4 +35,5 @@ export opt_flags="-axCORE-AVX512,CORE-AVX2 -xAVX -fp-model precise -diag-disable
 prefix=$LOCAL/petsc build_dir=$BUILD ./petsc.sh | tee petsc.log
 export PETSC_DIR=$LOCAL/petsc
 
-prefix=$LOCAL/pism build_dir=$BUILD/pism ./pism.sh | tee pism.log
+prefix=$HOME/pism-as19 build_dir=$BUILD/pism-as19 ./pism.sh tags/v1.0-millennium-study-v2 | tee pism.log
+# prefix=$HOME/pism build_dir=$BUILD/pism ./pism.sh dev | tee pism.log
