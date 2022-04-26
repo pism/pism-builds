@@ -10,8 +10,9 @@ fi
 # Load modules
 
 module purge
+module load mpi-intel/2019.5.281
+#module load mpi-intel/2020.0.166 # this version does not seem to work
 module load comp-intel/2020.4.304
-module load mpi-hpe/mpt
 module load pkgsrc/2021Q2
 module load python3/3.9.5
 

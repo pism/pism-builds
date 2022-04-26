@@ -4,10 +4,8 @@ set -x
 set -e
 set -u
 
-version=dev
-if [ $# -gt 0 ] ; then  # if user says "pism.sh frontal-melt" then use "frontal-melt" branch
-  version="$1"
-fi
+# run as version=v2.0 ./pism.sh to build v2.0, etc
+version=${version:-dev}
 
 opt_flags=${opt_flags:--mavx2}
 
@@ -40,6 +38,7 @@ popd
 CC="${MPICC}" CXX="${MPICXX}" cmake \
     -B ${build_dir}/build \
     -S ${build_dir} \
+    -DCMAKE_BUILD_TYPE="Release" \
     -DCMAKE_CXX_FLAGS="${opt_flags}" \
     -DCMAKE_C_FLAGS="${opt_flags}" \
     -DCMAKE_FIND_ROOT_PATH="${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${udunits_prefix};${proj_prefix}" \
