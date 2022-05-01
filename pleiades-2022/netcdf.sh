@@ -31,5 +31,5 @@ cd netcdf-c-${version}
         --disable-dap \
         --prefix=${prefix} 2>&1 | tee netcdf_configure.log
 
-make all 2>&1 | tee netcdf_compile.log
-make install 2>&1 | tee netcdf_install.log
+make all -j 12 2>&1 | tee netcdf_compile.log
+make install -j 12  2>&1 | tee netcdf_install.log

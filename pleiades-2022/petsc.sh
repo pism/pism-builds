@@ -43,6 +43,6 @@ python3 ./configure \
 # with an optimized version when building PETSc with a direct solver
 # such as MUMPS.
 
-make all
-make install
+make all -j 12
+make install -j 12
 
