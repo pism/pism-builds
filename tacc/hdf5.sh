@@ -30,5 +30,5 @@ cd hdf5-${version}
   --enable-parallel \
   --prefix=${prefix} 2>&1 | tee hdf5_configure.log
 
-make -j 12 all 2>&1 | tee hdf5_compile.log
-make -j 12 install 2>&1 | tee hdf5_install.log
+make  all 2>&1 | tee hdf5_compile.log
+make  install 2>&1 | tee hdf5_install.log
