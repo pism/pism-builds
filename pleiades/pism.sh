@@ -43,8 +43,8 @@ build_pism() {
     cd build
     rm -f CMakeCache.txt
 
-    export CPPFLAGS=-I${hdf5_prefix}/include
-    export LDFLAGS=-L${hdf5_prefix}/lib
+    # export CPPFLAGS=-I${hdf5_prefix}/include
+    # export LDFLAGS=-L${hdf5_prefix}/lib
     export CC=icc
     export CXX=icpc
     opt_flags="-O3 -ipo -axCORE-AVX2 -xSSE4.2 -fp-model precise"

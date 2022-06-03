@@ -11,7 +11,7 @@ build_netcdf() {
     version=4.7.4
     prefix=${LOCAL_LIB_DIR}/netcdf
     build_dir=${LOCAL_LIB_DIR}/sources/netcdf
-    url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-${version}.tar.gz
+    url=https://downloads.unidata.ucar.edu/netcdf-c/${version}/src/netcdf-c-${version}.tar.gz
 
     mkdir -p ${build_dir}
     pushd ${build_dir}
@@ -22,6 +22,8 @@ build_netcdf() {
     pushd netcdf-c-${version}
     export CFLAGS='-g'
     export CC=mpicc
+    export CPPFLAGS="-I$LOCAL_LIB_DIR/hdf5/include"
+    export LDFLAGS=-L$LOCAL_LIB_DIR/hdf5/lib
 
    ./configure \
       --enable-netcdf4 \
