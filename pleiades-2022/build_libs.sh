@@ -33,10 +33,16 @@ export build_dir=$BUILD
 ${SET_ENV} || ./netcdf.sh | tee netcdf.log
 export netcdf_prefix=$LOCAL/netcdf
 
+
 export prefix=$LOCAL/udunits2
 export build_dir=$BUILD
 ${SET_ENV} || ./udunits2.sh | tee udunits2.log
 export udunits_prefix=$LOCAL/udunits2
+
+export prefix=$LOCAL/ncview
+export build_dir=$BUILD
+${SET_ENV} || ./ncview.sh | tee ncview.log
+export ncview_prefix=$LOCAL/ncview
 
 export prefix=$LOCAL/proj
 export build_dir=$BUILD
