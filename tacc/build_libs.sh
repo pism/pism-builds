@@ -14,24 +14,14 @@ else
     SET_ENV=false
 fi
 
-export LOCAL=$HOME/local/
-export BUILD=$HOME/local/build/
+export LOCAL=$WORK/local/
+export BUILD=$WORK/local/build/
 
 # Build most dependencies using GCC
 export CC=gcc
 export CXX=g++
 export MPICC="mpicc -cc=$CC"
 export MPICXX="mpicxx -cxx=$CXX"
-
-export prefix=$LOCAL/hdf5
-export build_dir=$BUILD
-${SET_ENV} || ./hdf5.sh | tee hdf5.log
-export hdf5_prefix=$LOCAL/hdf5
-
-export prefix=$LOCAL/netcdf
-export build_dir=$BUILD
-${SET_ENV} || ./netcdf.sh | tee netcdf.log
-export netcdf_prefix=$LOCAL/netcdf
 
 export prefix=$LOCAL/udunits2
 export build_dir=$BUILD
@@ -43,4 +33,4 @@ export build_dir=$BUILD
 ${SET_ENV} || ./proj.sh | tee proj.log
 export proj_prefix=$LOCAL/proj
 
-export PETSC_DIR=/home1/apps/intel18/impi18_0/petsc/3.16
+export PETSC_DIR=/home1/apps/intel18/impi18_0/petsc/3.16/

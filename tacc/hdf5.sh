@@ -9,7 +9,7 @@ set -x
 
 MPICC=${MPICC:-mpicc}
 
-version=1.12.0
+version=1.12.1
 prefix=${prefix:-/opt/hdf5}
 build_dir=${build_dir:-/var/tmp/build/hdf5}
 hdf5_site=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12
