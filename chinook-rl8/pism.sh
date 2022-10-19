@@ -34,7 +34,7 @@ build_pism() {
     export CXX=icpx
     # Silence OpenMPI's error message about a part of its system that is not available on login nodes
     export OMPI_MCA_plm_rsh_agent=""
-    # NETCDFHOME below is set by the module system
+    # EBROOTNETCDF below is set by the module system
     cmake -DCMAKE_CXX_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006,2102" \
           -DCMAKE_C_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006" \
 	  -DNETCDF_ROOT=${EBROOTNETCDF} \
