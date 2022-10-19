@@ -18,9 +18,9 @@ build_petsc() {
 
     ./config/configure.py \
         --march native \
-        --with-cc=icc \
+        --with-cc=icx \
         --with-fc=0 \
-        --with-cxx=icpc \
+        --with-cxx=icpx \
         --CFLAGS="${optimization_flags}" \
         --known-mpi-shared-libraries=1 \
         --with-blas-lapack-dir=${MKL} \
