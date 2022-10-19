@@ -7,7 +7,7 @@ set -x
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 
 MKL=/usr/local/pkg/Core/imkl/2022.1.0/mkl/2022.1.0/lib/intel64
-optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model precise"
+optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model precise -diag-disable=cpu-dispatch"
 
 build_petsc() {
     rm -rf $PETSC_DIR
@@ -16,12 +16,11 @@ build_petsc() {
 
     git clone --depth=1 -b release https://gitlab.com/petsc/petsc.git .
 
-    # Note that on Chinook mpicc and mpicxx wrap Intel's C and C++ compilers
     ./config/configure.py \
         --march native \
         --with-cc=icc \
         --with-fc=0 \
-        --with-cxx=icx \
+        --with-cxx=icpc \
         --CFLAGS="${optimization_flags}" \
         --known-mpi-shared-libraries=1 \
         --with-blas-lapack-dir=${MKL} \
@@ -32,9 +31,10 @@ build_petsc() {
         --with-x=0 \
         --with-ssl=0 \
         --with-batch=1 \
-        --with-shared-libraries=1
+        --with-shared-libraries=1 \
+	| tee petsc-configure.log
 
-    make all
+    make all | tee petsc-build.log
 }
 
 build_petsc
