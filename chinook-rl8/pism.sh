@@ -31,7 +31,7 @@ build_pism() {
 
     # use Intel's C and C++ compilers
     export CC=icc
-    export CXX=icx
+    export CXX=icpc
     # Silence OpenMPI's error message about a part of its system that is not available on login nodes
     export OMPI_MCA_plm_rsh_agent=""
     # NETCDFHOME below is set by the module system
@@ -39,7 +39,6 @@ build_pism() {
           -DCMAKE_C_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006" \
 	  -DNETCDF_ROOT=${EBROOTNETCDF} \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
-          -DPETSC_EXECUTABLE_RUNS=ON \
 	  -DPism_BUILD_PYTHON_BINDINGS=OFF \
           -DPism_USE_JANSSON=NO \
           -DPism_USE_PARALLEL_NETCDF4=YES \
