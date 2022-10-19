@@ -6,7 +6,7 @@ set -x
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 
-MKL=/usr/local/pkg/numlib/imkl/2019.3.199-pic-iompi-2019b/mkl/lib/intel64
+MKL=/usr/local/pkg/Core/imkl/2022.1.0/mkl/2022.1.0/lib/intel64
 optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model precise"
 
 build_petsc() {
@@ -19,9 +19,9 @@ build_petsc() {
     # Note that on Chinook mpicc and mpicxx wrap Intel's C and C++ compilers
     ./config/configure.py \
         --march native \
-        --with-cc=mpicc \
+        --with-cc=icc \
         --with-fc=0 \
-        --with-cxx=mpicxx \
+        --with-cxx=icx \
         --CFLAGS="${optimization_flags}" \
         --known-mpi-shared-libraries=1 \
         --with-blas-lapack-dir=${MKL} \

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+umask 007
+
+module purge
+module load intel/2022a
+module load CMake/3.23.1
+module load HDF5/1.13.1
+module load netCDF/4.9.0
+module load Python/3.10.4
+module load PROJ/9.0.0
+module load UDUNITS/2.2.28
+module load GSL/2.7  
+
+# start an interactive job
+alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
+
+export PYTHONPATH=$PETSC_DIR/$PETSC_ARCH/lib:$PYTHONPATH
+
+export PISM_MPIDO='mpirun -np'
