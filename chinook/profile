@@ -18,6 +18,8 @@ module load tools/ANTLR/2.7.7-pic-intel-2019b-Python-3.7.0
 module load phys/UDUNITS/2.2.26-pic-intel-2019b
 module load tools/git/2.23.0-GCCcore-8.3.0
 
+export PETSC_ARCH=opt-64bit
+
 # start an interactive job
 alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
 
