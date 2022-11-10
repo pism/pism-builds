@@ -30,8 +30,8 @@ build_pism() {
     cd build
 
     # use Intel's C and C++ compilers
-    export CC=icx
-    export CXX=icpx
+    export CC=mpiicc
+    export CXX=mpiicpc
     # Silence OpenMPI's error message about a part of its system that is not available on login nodes
     export OMPI_MCA_plm_rsh_agent=""
     # EBROOTNETCDF below is set by the module system
