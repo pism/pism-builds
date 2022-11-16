@@ -20,6 +20,7 @@ module load tools/git/2.23.0-GCCcore-8.3.0
 
 export LOCAL_LIB_DIR=$HOME/local
 export PISM_DIR=$LOCAL_LIB_DIR/pism
+export PISM_PREFIX=${PISM_DIR}/bin/
 export PETSC_DIR=$LOCAL_LIB_DIR/petsc
 export PETSC_ARCH=opt-64bit
 

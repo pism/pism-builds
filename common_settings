@@ -18,8 +18,6 @@ alias nch='ncdump -h'
 alias em='emacs -nw -Q'
 alias myqstat='qstat -u `whoami`'
 
-export PISM_DIR=~/pism
-export PISM_PREFIX=${PISM_DIR}/bin/
 export PISM_DO=echo
 
 # Add private commands to PATH
