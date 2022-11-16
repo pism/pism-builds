@@ -1,0 +1,16 @@
+module purge
+module load intel
+module load impi
+module load cmake
+module load phdf5/1.10.4
+module load parallel-netcdf
+module load nco
+module load gsl/2.6
+module load fftw3
+module load petsc/3.16-nohdf5 
+module load git
+module load python3/3.7.0 
+
+export LOCAL_LIB_DIR=$HOME/local
+export PISM_DIR=$LOCAL_LIB_DIR/pism
+export PISM_PREFIX=${PISM_DIR}/bin/
