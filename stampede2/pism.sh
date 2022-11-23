@@ -7,7 +7,7 @@ set -u
 # run as version=v2.0 ./pism.sh to build v2.0, etc
 version=${version:-dev}
 
-opt_flags=${opt_flags:--mavx2}
+opt_flags=${opt_flags:--mavx2 -xCORE-AVX2 -axCORE-AVX512,MIC-AVX512}
 
 # Compilers:
 export MPICC=${MPICC:-mpicc}
