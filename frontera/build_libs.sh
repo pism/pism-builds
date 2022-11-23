@@ -14,8 +14,8 @@ else
     SET_ENV=false
 fi
 
-export LOCAL=$WORK/local/
-export BUILD=$WORK/local/build/
+export LOCAL=$HOME/local/
+export BUILD=$HOME/local/build/
 
 # Build most dependencies using GCC
 export CC=gcc
