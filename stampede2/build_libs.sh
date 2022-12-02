@@ -33,4 +33,3 @@ export build_dir=$BUILD
 ${SET_ENV} || ./proj.sh | tee proj.log
 export proj_prefix=$LOCAL/proj
 
-export PETSC_DIR=/home1/apps/intel18/impi18_0/petsc/3.16/

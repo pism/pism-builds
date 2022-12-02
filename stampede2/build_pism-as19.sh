@@ -3,6 +3,10 @@
 export SET_ENV=1
 source ./build_libs.sh
 
+# reset MPICC and MPICXX (otherwise PISM will be build with GCC even if we don't want that)
+unset MPICC
+unset MPICXX
+
 # Build the Millennium study branch:
 export version=v1.0-millennium-study-v2
 export prefix=$LOCAL/pism-as19
