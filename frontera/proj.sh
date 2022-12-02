@@ -27,6 +27,8 @@ cd proj-${version}
 PKG_CONFIG_PATH=${PKG_CONFIG_PATH:-}
 export PKG_CONFIG_PATH=${sqlite_prefix}/lib/pkgconfig:${PKG_CONFIG_PATH}
 
+echo $PKG_CONFIG_PATH
+
 ./configure --prefix=${prefix}
 
 make -j8 all
