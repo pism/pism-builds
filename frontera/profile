@@ -2,7 +2,7 @@ module purge
 module load intel
 module load impi
 module load cmake
-module load phdf5/1.10.4
+module load phdf5/1.12.2
 module load parallel-netcdf
 module load nco
 module load gsl/2.6
