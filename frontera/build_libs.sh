@@ -33,3 +33,7 @@ export build_dir=$BUILD
 ${SET_ENV} || ./proj.sh | tee proj.log
 export proj_prefix=$LOCAL/proj
 
+export prefix=$LOCAL/cdo
+export build_dir=$BUILD
+${SET_ENV} || ./cdo.sh | tee cdo.log
+export cdo_prefix=$LOCAL/cdo
