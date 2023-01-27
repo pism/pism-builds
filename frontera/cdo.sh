@@ -20,7 +20,7 @@ tar xzf cdo-2.1.1.tar.gz
 
 cd cdo-2.1.1
 
-./configure --prefix=${prefix}
+./configure --prefix=${prefix} --with-netcdf=$TACC_NETCDF_DIR
 
 make -j8 all
 make install
