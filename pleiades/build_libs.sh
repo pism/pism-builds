@@ -33,7 +33,6 @@ export build_dir=$BUILD
 ${SET_ENV} || ./netcdf.sh | tee netcdf.log
 export netcdf_prefix=$LOCAL/netcdf
 
-
 export prefix=$LOCAL/udunits2
 export build_dir=$BUILD
 ${SET_ENV} || ./udunits2.sh | tee udunits2.log
@@ -49,6 +48,11 @@ export build_dir=$BUILD
 ${SET_ENV} || ./proj.sh | tee proj.log
 export proj_prefix=$LOCAL/proj
 
+export prefix=$LOCAL/cdo
+export build_dir=$BUILD
+${SET_ENV} || ./cdo.sh | tee cdo.log
+export cdo_prefix=$LOCAL/cdo
+
 # Build PETSc using Intel's icc
 export CC=icc
 # Note: icc can compile both C and C++ code
@@ -60,5 +64,5 @@ export opt_flags="-axCORE-AVX512,CORE-AVX2 -xAVX -fp-model precise -diag-disable
 
 export prefix=$LOCAL/petsc
 export build_dir=$BUILD
-${SET_ENV} || ./petsc.sh | tee petsc.log
+ ${SET_ENV} || ./petsc.sh | tee petsc.log
 export PETSC_DIR=$LOCAL/petsc
