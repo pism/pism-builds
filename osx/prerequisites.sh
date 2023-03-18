@@ -16,8 +16,8 @@ clang=13
 
 $PORT -vN install \
      mpich \
-     hdf5  \
-     netcdf  \
+     hdf5  +mpich +threadsafe \
+     netcdf +mpich \
      cdo +cdi +grib_api  \
      gdal +netcdf +hdf5  \
      ncview \
