@@ -50,4 +50,4 @@ CC="${MPICC}" CXX="${MPICXX}" cmake \
     -DPism_USE_PROJ=YES \
     ;
 
-make -C ${build_dir}/build install
+make -j 8 -C ${build_dir}/build install

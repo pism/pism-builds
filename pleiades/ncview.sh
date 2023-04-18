@@ -29,7 +29,7 @@ N=8
 
 build_ncview(){
 
-#    build_png
+    build_png
 
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
@@ -52,10 +52,9 @@ build_png() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
 
-    wget -nc ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-1.6.37.tar.gz
-    tar -zxvf libpng-1.6.37.tar.gz
-    cd libpng-1.6.37
-
+    git clone --depth 1 --single-branch --branch v1.6.39 https://github.com/glennrp/libpng.git 
+    cd libpng
+ 
     CC=mpicc ./configure \
         --prefix=${LOCAL_LIB_DIR}  2>&1 | tee png_configure.log
 

@@ -25,10 +25,11 @@ tar xzf hdf5-${version}.tar.gz
 
 cd hdf5-${version}
 
-./configure CC="${MPICC}" CFLAGS=-w \
-  --disable-static \
+./configure CC=mpicc CXX=mpicxx CFLAGS=-w \
   --enable-parallel \
+  --enable-unsupported \
   --prefix=${prefix} 2>&1 | tee hdf5_configure.log
 
 make -j 12 all 2>&1 | tee hdf5_compile.log
 make -j 12 install 2>&1 | tee hdf5_install.log
+make -j 12 test  2>&1 | tee hdf5_test.log

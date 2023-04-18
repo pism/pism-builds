@@ -26,6 +26,8 @@ tar zxf netcdf-c-${version}.tar.gz
 
 cd netcdf-c-${version}
 
+# hdf5_prefix=/nasa/hdf5/1.12.0_mpt
+
 ./configure CC="${MPICC}" CPPFLAGS=-I${hdf5_prefix}/include LDFLAGS=-L${hdf5_prefix}/lib \
         --enable-netcdf4 \
         --disable-dap \
