@@ -13,7 +13,7 @@ prefix=${prefix:-$HOME/local}
 mkdir -p ${build_dir}
 cd ${build_dir}
 
-wget -nc https://code.mpimet.mpg.de/attachments/download/27654/cdo-2.1.1.tar.gz
+wget -nc https://code.mpimet.mpg.de/attachments/download/27954/cdo-2.1.1.tar.gz
 rm -rf cdo-2.1.1
 tar xzf cdo-2.1.1.tar.gz 
 
