@@ -7,70 +7,45 @@
 # In particular I compile ports with +clang90 +mpich
 # to get OpenMP capabilities in CDO
 
-if [ -z "$PORT" ] ; then
-    PORT='sudo port'
-fi
 
-python=310
-clang=13
-
-$PORT -vN install \
-     mpich \
-     hdf5  +mpich +threadsafe \
-     netcdf +mpich \
-     cdo +cdi +grib_api  \
-     gdal +netcdf +hdf5  \
-     ncview \
-     git +bash_completion +svn \
-     wget \
-     emacs-app-devel \
-     doxygen \
-     aspell aspell-dict-en aspell-dict-de aspell-dict-de-alt \
-     ffmpeg +nonfree \
-     py${python}-nose \
-     py${python}-future \
-     py${python}-black \
-     py${python}-sphinx \
-     py${python}-sphinx_rtd_theme \
-     py${python}-jupyter \
-     py${python}-jupyterlab \
-     py${python}-pip \
-     py${python}-autopep8 \
-     py${python}-pyproj \
-     py${python}-scipy \
-     py${python}-shapely \
-     py${python}-cython \
-     py${python}-netcdf4 \
-     py${python}-matplotlib \
-     py${python}-seaborn \
-     py${python}-statsmodels \
-     py${python}-pip \
-     py${python}-pandas \
-     py${python}-fiona \
-     py${python}-gdal \
-     py${python}-scikit-learn \
-     py${python}-unidecode \
-     pip_select \
-     py${python}-flake8 \
-     py${python}-pylint \
-     py${python}-xarray \
-     py${python}-jupyter \
-     py${python}-jupyterlab \
-     py${python}-virtualenv \
-     py${python}-sympy \
-     py${python}-codestyle \
-     py${python}-autopep8 \
-     py${python}-pytest \
-     py${python}-pathlib2 \
-     py${python}-openpyxl \
-     py${python}-tensorboard \
-     py${python}-tensorboardX \
-     swig-python \
-     py${python}-pyqt5-webengine \
-     py${python}-pyqt5 +scintilla +webkit \
-     qgis3    
+python=311
+clang=15
 
 
+sudo port -vN install \
+      mpich-clang${clang}  \
+      hdf5 +clang${clang} +threadsafe +mpich\
+      cdo +cdi +clang${clang} +mpich ncview \
+      gsl \
+      fftw-3 \
+      emacs-app \
+      gdal +mpich +netcdf +clang${clang} \
+      python${python} \
+      py${python}-pip \
+      py${python}-numpy \
+      py${python}-pandas \
+      py${python}-scipy \
+      py${python}-arrow \
+      py${python}-seaborn \
+      py${python}-xarray   \
+      py${python}-black \
+      py${python}-virtualenv  \
+      py${python}-mypy \
+      py${python}-jupyterlab \
+      py${python}-gdal \
+      py${python}-jupyterlab \
+      py${python}-autopep8 \
+      py${python}-isort \
+      py${python}-joblib \
+      py${python}-h5netcdf \
+      py${python}-openpyxl \
+      swig \
+      swig-python \
+      pre-commit \
+      julia
+
+
+export PORT="sudo port"
 
 $PORT select --set autopep8 autopep8-${python}    
 $PORT select --set flake8 flake8-${python}    
@@ -91,7 +66,7 @@ $PORT select --set pylint pylint${python}
 $PORT select --set black black${python}
 
 # # Python modules
-for module in braceexpand cdo nco SALib pyDOE sklearn torch torchvision torchaudio tensorboardX pytorch-lightning gpytorch cf-units cf-xarray pint-xarray; do
+for module in pyarrow fastparquet braceexpand cdo nco SALib pyDOE pyDOE2 scikit-learn torch torchvision torchaudio tensorboardX lightning==1.9.0  cf-units cf-xarray pint-xarray; do
     python -m pip install $module --user
 done
 
