@@ -11,6 +11,8 @@
 python=311
 clang=15
 
+# NCO requires ANTRL which needs Java
+# https://www.oracle.com/java/technologies/downloads/#jdk20-mac
 
 sudo port -vN install \
       mpich-clang${clang}  \
@@ -20,6 +22,7 @@ sudo port -vN install \
       fftw-3 \
       emacs-app \
       gdal +mpich +netcdf +clang${clang} \
+      nco +clang${clang} \
       python${python} \
       py${python}-pip \
       py${python}-numpy \
@@ -39,6 +42,9 @@ sudo port -vN install \
       py${python}-joblib \
       py${python}-h5netcdf \
       py${python}-openpyxl \
+      py${python}-pytest \
+      py${python}-jedi \
+      py${python}-pylint \
       swig \
       swig-python \
       pre-commit \
