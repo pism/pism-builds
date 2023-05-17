@@ -22,7 +22,7 @@ sudo port -vN install \
       fftw-3 \
       emacs-app \
       gdal +mpich +netcdf +clang${clang} \
-      nco +clang${clang} \
+      nco \
       python${python} \
       py${python}-pip \
       py${python}-numpy \
