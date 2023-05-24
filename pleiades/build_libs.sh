@@ -57,6 +57,11 @@ export build_dir=$BUILD
 ${SET_ENV} || ./cdo.sh | tee cdo.log
 export cdo_prefix=$LOCAL/cdo
 
+export prefix=$LOCAL/ncview
+export build_dir=$BUILD
+${SET_ENV} || ./ncview.sh | tee ncview.log
+export cdo_prefix=$LOCAL/ncview
+
 # Build PETSc using Intel's icc
 export CC=icc
 # Note: icc can compile both C and C++ code
