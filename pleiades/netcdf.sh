@@ -28,6 +28,10 @@ cd netcdf-c-${version}
 
 # hdf5_prefix=/nasa/hdf5/1.12.0_mpt
 
+export MPICXX_CXX=icpc
+export MPIF90_F90=ifort
+export MPICC_CC=icc
+
 ./configure CC="${MPICC}" CPPFLAGS=-I${hdf5_prefix}/include LDFLAGS=-L${hdf5_prefix}/lib \
         --enable-netcdf4 \
         --disable-dap \

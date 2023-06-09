@@ -25,7 +25,12 @@ tar xzf hdf5-${version}.tar.gz
 
 cd hdf5-${version}
 
-./configure CC=mpicc CXX=mpicxx CFLAGS=-w \
+export MPI_TYPE_DEPTH=50
+export MPICXX_CXX=icpc
+export MPIF90_F90=ifort
+export MPICC_CC=icc
+
+./configure CC=icc CXX=icpc CFLAGS=-w \
   --enable-parallel \
   --enable-unsupported \
   --prefix=${prefix} 2>&1 | tee hdf5_configure.log
