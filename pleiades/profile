@@ -10,10 +10,11 @@ fi
 # Load modules
 
 module purge
-module load /nasa/modulefiles/testing/mpi-hpe/mpt.2.27_toss3
+module load mpi-hpe/mpt.2.26
+# module load /nasa/modulefiles/testing/mpi-hpe/mpt.2.27_toss3
 module load comp-intel/2020.4.304
-module load pkgsrc/2021Q2
-module load python3/3.9.5
+module load pkgsrc/2022Q1-rome 
+module load python3/3.9.12
 module load gcc/10.3
 
 export MPICXX_CXX=icpc
@@ -24,5 +25,5 @@ export MPI_TYPE_DEPTH=50
 export PETSC_ARCH=opt-64bit
 export PETSC_DIR=~/local/petsc
 export LOCAL_LIB_DIR=$HOME/local
-export PATH=$PATH:$HOME/local/cdo/bin
+export PATH=$PATH:$HOME/local/bin:$HOME/local/cdo/bin
 export PISM_MPIDO='mpiexec -n'

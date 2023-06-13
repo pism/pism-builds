@@ -23,23 +23,27 @@ export BUILD=$HOME/local/build/
 #export MPICC="mpicc -cc=$CC"
 ##export MPICXX="mpicxx -cxx=$CXX"
 
-# export hdf5_prefix=/nasa/hdf5/1.12.0_mpt
+export MPICXX_CXX=icpc
+export MPIF90_F90=ifort
+export MPICC_CC=icc
+
+export MPICXX=icpc
+export MPIF90=ifort
+export MPICC=icc
 
 export prefix=$LOCAL/hdf5
 export build_dir=$BUILD
-# ${SET_ENV} || ./hdf5.sh | tee hdf5.log
+${SET_ENV} || ./hdf5.sh | tee hdf5.log
 export hdf5_prefix=$LOCAL/hdf5
-#export hdf5_prefix=/nasa/hdf5/1.8.18_mpt
 
 export prefix=$LOCAL/netcdf
 export build_dir=$BUILD
 ${SET_ENV} || ./netcdf.sh | tee netcdf.log
 export netcdf_prefix=$LOCAL/netcdf
-#export netcdf_prefix=/nasa/netcdf/4.4.1.1_mpt
 
 export prefix=$LOCAL/udunits2
 export build_dir=$BUILD
-#${SET_ENV} || ./udunits2.sh | tee udunits2.log
+${SET_ENV} || ./udunits2.sh | tee udunits2.log
 export udunits_prefix=$LOCAL/udunits2
 
 export prefix=$LOCAL/ncview
@@ -49,7 +53,7 @@ export ncview_prefix=$LOCAL/ncview
 
 export prefix=$LOCAL/proj
 export build_dir=$BUILD
-#${SET_ENV} || ./proj.sh | tee proj.log
+${SET_ENV} || ./proj.sh | tee proj.log
 export proj_prefix=$LOCAL/proj
 
 export prefix=$LOCAL/cdo
@@ -68,5 +72,5 @@ export opt_flags="-axCORE-AVX512,CORE-AVX2 -xAVX -fp-model precise -diag-disable
 
 export prefix=$LOCAL/petsc
 export build_dir=$BUILD
-#${SET_ENV} || ./petsc.sh | tee petsc.log
+${SET_ENV} || ./petsc.sh | tee petsc.log
 export PETSC_DIR=$LOCAL/petsc
