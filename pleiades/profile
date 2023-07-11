@@ -10,8 +10,7 @@ fi
 # Load modules
 
 module purge
-module load mpi-hpe/mpt.2.26
-# module load /nasa/modulefiles/testing/mpi-hpe/mpt.2.27_toss3
+module load mpi-hpe/mpt
 module load comp-intel/2020.4.304
 module load pkgsrc/2022Q1-rome 
 module load python3/3.9.12
