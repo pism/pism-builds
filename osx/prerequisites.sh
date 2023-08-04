@@ -72,7 +72,7 @@ $PORT select --set pylint pylint${python}
 $PORT select --set black black${python}
 
 # # Python modules
-for module in pyarrow fastparquet braceexpand cdo nco SALib pyDOE pyDOE2 scikit-learn torch torchvision torchaudio tensorboardX lightning==1.9.0  cf-units cf-xarray pint-xarray; do
+for module in pyarrow fastparquet braceexpand cdo nco SALib pyDOE pyDOE2 nc-time-axis scikit-learn torch torchvision torchaudio tensorboard tensorboardX lightning==1.9.0  cf-units cf-xarray pint-xarray; do
     python -m pip install $module --user
 done
 
