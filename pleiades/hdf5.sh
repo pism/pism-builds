@@ -35,6 +35,6 @@ export MPICC_CC=icc
   --enable-unsupported \
   --prefix=${prefix} 2>&1 | tee hdf5_configure.log
 
-make -j 12 all 2>&1 | tee hdf5_compile.log
-make -j 12 install 2>&1 | tee hdf5_install.log
-make -j 12 test  2>&1 | tee hdf5_test.log
+make -j 16 all 2>&1 | tee hdf5_compile.log
+make -j 16 install 2>&1 | tee hdf5_install.log
+make -j 16 test  2>&1 | tee hdf5_test.log

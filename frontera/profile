@@ -7,11 +7,11 @@ module load parallel-netcdf
 module load nco
 module load gsl/2.6
 module load fftw3
-module load petsc/3.16-nohdf5 
+module load petsc/3.19-i64nohdf5 
 module load git
 module load python3/3.9.2 
 
 export LOCAL_LIB_DIR=$HOME/local
 export PISM_DIR=$LOCAL_LIB_DIR/pism-dev
 export PISM_PREFIX=${PISM_DIR}/bin/
-export PATH=$PATH:$PISM_PREFIX:$HOME/local/cdo/bin
+export PATH=$PATH:$PISM_PREFIX:$HOME/local/cdo/bin:$HOME/local/bin

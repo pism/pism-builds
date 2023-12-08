@@ -38,6 +38,8 @@ python3 ./configure \
         --with-shared-libraries \
         --with-debugging=0 \
         --with-x=0 \
+	--with-64-bit-indices \
+        --with-debugging=0 \
         --download-f2cblaslapack
 # Note: f2cblaslapack is "good enough" for most PISM runs. Replace it
 # with an optimized version when building PETSc with a direct solver

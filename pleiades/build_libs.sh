@@ -58,7 +58,7 @@ export proj_prefix=$LOCAL/proj
 
 export prefix=$LOCAL/cdo
 export build_dir=$BUILD
-${SET_ENV} || ./cdo.sh | tee cdo.log
+#${SET_ENV} || ./cdo.sh | tee cdo.log
 export cdo_prefix=$LOCAL/cdo
 
 # Build PETSc using Intel's icc
