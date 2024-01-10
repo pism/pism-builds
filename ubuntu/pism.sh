@@ -1,14 +1,21 @@
 #!/bin/bash
 
+set -e
+set -u
+set -x
 
-prefix=${HOME}/local/
-N=4
+optimization_flags="-O3"
 
-branch=${1}
-dbg=$2
+# No. of cores for make
+N=8
+PISM_DIR=$HOME/pism
 
-PISM_DIR=${HOME}/local/pism
-BUILD_DIR=build-${dbg}
+# the default branch is "dev"
+branch=dev
+if [ $# -gt 0 ] ; then  # if user says "pism.sh frontal-melt" then use "frontal-melt" branch
+  branch="$1"
+fi
+
 
 build_pism() {
     set -e
@@ -16,35 +23,28 @@ build_pism() {
     mkdir -p $PISM_DIR/sources
     cd $PISM_DIR/sources
 
-    git clone --depth 1 -b ${branch} https://github.com/pism/pism.git . || git pull
+    git clone --no-single-branch https://github.com/pism/pism.git . || git pull
 
-    rm -rf ${BUILD_DIR}
-    mkdir -p ${BUILD_DIR}
-    cd ${BUILD_DIR}
+    git checkout $branch
 
-    export PETSC_DIR=~/local/petsc/petsc-3.10.0/
-    
-    export PETSC_ARCH=${dbg}-32bit
+    rm -rf build
+    mkdir -p build
+    cd build
 
-    if [ "$dbg" = "dbg" ]; then
-        export BUILD_TYPE=Debug
-    else
-        export BUILD_TYPE=Release
-    fi
-
-    CC=mpicc CXX=mpicxx cmake \
-        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
-        -DCMAKE_INSTALL_PREFIX=${PISM_DIR} \
-        -DPism_LOOK_FOR_LIBRARIES=YES \
-        -DPism_BUILD_DOCS=YES \
-        -DPism_BUILD_PYTHON_BINDINGS=NO \
-        -DPism_USE_PROJ4=YES \
-        ${PISM_DIR}/sources
-
-    make -j $N install    
+    export CC=mpicc
+    export CXX=mpicxx
+    cmake -DCMAKE_CXX_FLAGS="${optimization_flags}" \
+          -DCMAKE_C_FLAGS="${optimization_flags}" \
+          -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
+	  -DPism_BUILD_PYTHON_BINDINGS=ON \
+          -DPism_PKG_CONFIG_STATIC=OFF \
+          -DPism_USE_JANSSON=NO \
+          -DPism_USE_PARALLEL_NETCDF4=NO \
+          -DPism_USE_PROJ=YES \
+          $PISM_DIR/sources
+    make -j $N install
     set +x
     set +e
-    
 }
 
-build_pism $1 $2
+build_pism
