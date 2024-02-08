@@ -25,9 +25,10 @@ sudo port -vN install \
       nco \
       python${python} \
       py${python}-pip \
-      py${python}-numpy \
-      py${python}-pandas \
+      py${python}-pylint \
       py${python}-scipy \
+      py${python}-netcdf4 +mpich +clang{clang} \      
+      py${python}-h5netcdf \
       py${python}-arrow \
       py${python}-seaborn \
       py${python}-xarray   \
@@ -36,7 +37,6 @@ sudo port -vN install \
       py${python}-mypy \
       py${python}-jupyterlab \
       py${python}-gdal \
-      py${python}-jupyterlab \
       py${python}-autopep8 \
       py${python}-isort \
       py${python}-joblib \
@@ -45,6 +45,7 @@ sudo port -vN install \
       py${python}-pytest \
       py${python}-jedi \
       py${python}-pylint \
+      py${pythonyy}-arviz \ 
       swig \
       swig-python \
       pre-commit \
@@ -72,10 +73,21 @@ $PORT select --set pylint pylint${python}
 $PORT select --set black black${python}
 
 # # Python modules
-for module in pyarrow fastparquet braceexpand cdo nco SALib pyDOE pyDOE2 nc-time-axis scikit-learn torch torchvision torchaudio tensorboard tensorboardX lightning==1.9.0  cf-units cf-xarray pint-xarray; do
+
+for module in pipreqs xarray pandas geopandas seaborn pyarrow pyogrio fastparquet; do
     python -m pip install $module --user
 done
 
+for module in pipreqs xarray pandas geopandas seaborn pyarrow pyogrio fastparquet braceexpand cdo nco SALib pyDOE2 nc-time-axis scikit-learn torch torchvision torchaudio tensorboard tensorboardX lightning  cf-units cf-xarray pint-xarray; do
+    python -m pip install $module --user
+done
+
+
+for module in pyarrow fastparquet braceexpand cdo nco SALib pyDOE pyDOE2 nc-time-axis scikit-learn torch torchvision torchaudio tensorboard tensorboardX lightning  cf-units cf-xarray pint-xarray; do
+    python -m pip install $module --user
+done
+
+pipreqs
 
 # # cfunits currently fails to build with pip.
 # # compile use the flag:
