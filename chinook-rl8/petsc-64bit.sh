@@ -6,8 +6,7 @@ set -x
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 
-MKL=/usr/local/pkg/Core/imkl/2022.1.0/mkl/2022.1.0/lib/intel64
-optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model precise -diag-disable=cpu-dispatch"
+optimization_flags="-O3"
 
 build_petsc() {
     rm -rf $PETSC_DIR
@@ -18,12 +17,12 @@ build_petsc() {
 
     ./config/configure.py \
         --march native \
-        --with-cc=icx \
+        --with-cc=mpicc \
         --with-fc=0 \
-        --with-cxx=icpx \
+        --with-cxx=mpicxx \
         --CFLAGS="${optimization_flags}" \
+        --CXXOPTFLAGS="${optimization_flags}" \
         --known-mpi-shared-libraries=1 \
-        --with-blas-lapack-dir=${MKL} \
         --known-64-bit-blas-indices \
         --with-64-bit-indices \
 	--with-debugging=0 \
@@ -32,6 +31,7 @@ build_petsc() {
         --with-ssl=0 \
         --with-batch=1 \
         --with-shared-libraries=1 \
+        --with-download-blas \
 	| tee petsc-configure.log
 
     make all | tee petsc-build.log
