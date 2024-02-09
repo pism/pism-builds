@@ -120,8 +120,8 @@ build_pism() {
     cmake -DCMAKE_CXX_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006,2102" \
           -DCMAKE_C_FLAGS="-O3 -ipo -axCORE-AVX2 -xSSE4.2 -diag-disable=cpu-dispatch,10006" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
-          -DCMAKE_FIND_ROOT_PATH=$LOCAL_LIB_DIR \
-          -DCMAKE_FIND_ROOT_PATH="$LOCAL_LIB_DIR;$HDF5PARALLEL_ROOT;$NETCDF_ROOT" \
+          -DCMAKE_PREFIX_PATH=$LOCAL_LIB_DIR \
+          -DCMAKE_PREFIX_PATH="$LOCAL_LIB_DIR;$HDF5PARALLEL_ROOT;$NETCDF_ROOT" \
           -DPism_USE_PARALLEL_NETCDF4=YES \
 	  -DPism_USE_PNETCDF=YES \
           -DPism_USE_PROJ4=YES $PISM_DIR/sources
