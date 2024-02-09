@@ -13,6 +13,7 @@ export LOCAL_LIB_DIR=$HOME/local-rl8
 export PISM_DIR=$LOCAL_LIB_DIR/pism
 export PISM_PREFIX=${PISM_DIR}/bin/
 export PETSC_DIR=$LOCAL_LIB_DIR/petsc
+export PETSC_ARCH=opt-64bit
 
 # start an interactive job
 alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"

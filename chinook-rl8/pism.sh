@@ -38,9 +38,9 @@ export CC=mpicc
 export CXX=mpicxx
 # Silence OpenMPI's error message about a part of its system that is not available on login nodes
 export OMPI_MCA_plm_rsh_agent=""
-cmake -DCMAKE_CXX_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006,2102" \
-      -DCMAKE_C_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006" \
-      -DCMAKE_FIND_ROOT_PATH="${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${udunits2_prefix};${proj_prefix}" \
+cmake -DCMAKE_CXX_FLAGS="${optimization_flags}" \
+      -DCMAKE_C_FLAGS="${optimization_flags}" \
+      -DCMAKE_PREFIX_PATH="${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${udunits2_prefix};${proj_prefix}" \
       -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
       -DPism_BUILD_PYTHON_BINDINGS=OFF \
       -DPism_USE_JANSSON=NO \
