@@ -1,0 +1,28 @@
+name: pism
+channels:
+  - conda-forge
+dependencies:
+  - openmpi
+  - hdf5
+  - netcdf-cxx4
+  - cmake
+  - gsl
+  - udunits2
+  - proj
+  - openmpi-mpicc
+  - openmpi-mpicxx
+  - lapack
+  - fftw
+  - petsc
+  - petsc4py
+  - xarray
+  - h5netcdf
+  - matplotlib
+  - cartopy
+  - pandas
+  - geopandas
+  - nco
+  - cdo
+  - nose
+  - doxygen
+  - tbb=2020.2
