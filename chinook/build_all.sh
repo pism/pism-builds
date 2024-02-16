@@ -17,6 +17,7 @@ set -u
 
 build_all () {
  # build PISM, its prerequisites, and some tools
+./cmake.sh
 ./cdo.sh
 ./petsc-64bit.sh
 ./pism.sh
