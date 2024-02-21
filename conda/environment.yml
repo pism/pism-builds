@@ -25,4 +25,5 @@ dependencies:
   - cdo
   - nose
   - doxygen
+  - notebook
   - tbb=2020.2
