@@ -8,7 +8,6 @@ optimization_flags="-O3"
 
 # No. of cores for make
 N=8
-PISM_DIR=$HOME/pism-conda
 
 # the default branch is "dev"
 branch=dev
@@ -17,7 +16,7 @@ if [ $# -gt 0 ] ; then  # if user says "pism.sh frontal-melt" then use "frontal-
 fi
 
 # the default directory is "pism-conda"
-PISM_DIR=$HOME/pism-conda
+PISM_DIR=$HOME/pism
 if [ $# -gt 1 ] ; then  # if user says "pism.sh frontal-melt" then use "frontal-melt" branch
   PISM_DIR="$2"
 fi

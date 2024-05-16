@@ -2,19 +2,22 @@ name: pism
 channels:
   - conda-forge
 dependencies:
-  - openmpi
-  - hdf5
-  - netcdf-cxx4
   - cmake
-  - gsl
-  - udunits2
-  - proj
+  - pkg-config
+  - openmpi
   - openmpi-mpicc
   - openmpi-mpicxx
+  - hdf5
+  - netcdf-cxx4
+  - gsl
+  - swig
+  - udunits2
+  - nose
+  - proj
   - lapack
   - fftw
-  - petsc
-  - petsc4py
+  - petsc<3.20
+  - petsc4py<=3.20
   - xarray
   - h5netcdf
   - matplotlib
@@ -26,4 +29,5 @@ dependencies:
   - nose
   - doxygen
   - notebook
+  - ncview
   - tbb=2020.2
