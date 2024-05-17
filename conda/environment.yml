@@ -2,13 +2,16 @@ name: pism
 channels:
   - conda-forge
 dependencies:
+  - python=3.11.7
   - cmake
   - pkg-config
-  - openmpi
-  - openmpi-mpicc
-  - openmpi-mpicxx
-  - hdf5
+  - mpich
+  - mpich-mpicc
+  - mpich-mpicxx
+  - hdf5=*=*mpich*
+  - h5py=*=*mpich*
   - netcdf-cxx4
+  - netcdf4=*=*mpich*
   - gsl
   - swig
   - udunits2
