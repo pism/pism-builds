@@ -27,6 +27,6 @@ export PETSC_ARCH=opt-64bit
 # start an interactive job
 alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
 
-export PYTHONPATH=$PETSC_DIR/$PETSC_ARCH/lib:$PYTHONPATH
+# export PYTHONPATH=$PETSC_DIR/$PETSC_ARCH/lib:$PYTHONPATH
 
 export PISM_MPIDO='mpirun -np'

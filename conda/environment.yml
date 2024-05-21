@@ -1,0 +1,36 @@
+name: pism
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11.7
+  - cmake
+  - pkg-config
+  - mpich
+  - mpich-mpicc
+  - mpich-mpicxx
+  - hdf5=*=*mpich*
+  - h5py=*=*mpich*
+  - netcdf-cxx4
+  - netcdf4=*=*mpich*
+  - gsl
+  - swig
+  - udunits2
+  - nose
+  - proj
+  - lapack
+  - fftw
+  - petsc<3.20
+  - petsc4py<=3.20
+  - xarray
+  - h5netcdf
+  - matplotlib
+  - cartopy
+  - pandas
+  - geopandas
+  - nco
+  - cdo
+  - nose
+  - doxygen
+  - notebook
+  - ncview
+  - tbb=2020.2
