@@ -16,17 +16,16 @@ prefix=${prefix:-/opt/petsc}
 
 mkdir -p ${build_dir}
 cd ${build_dir}
-version=3.16.6
+version=3.18.6
 
 wget -nc \
      https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${version}.tar.gz
-rm -rf petsc-${version}
+# rm -rf petsc-${version}
 tar xzf petsc-${version}.tar.gz
 
 cd petsc-${version}
 
 PETSC_DIR=$PWD
-PETSC_ARCH="linux-opt"
 
 python3 ./configure \
         COPTFLAGS="${opt_flags}" \
@@ -35,6 +34,7 @@ python3 ./configure \
         --with-cc="${MPICC}" \
         --with-cxx="${MPICXX}" \
         --with-fc=0 \
+	--download-petsc4py \
         --with-shared-libraries \
         --with-debugging=0 \
         --with-x=0 \

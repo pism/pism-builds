@@ -45,6 +45,7 @@ CC="${MPICC}" CXX="${MPICXX}" cmake \
     -DCMAKE_PREFIX_PATH="${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${udunits_prefix};${proj_prefix}" \
     -DCMAKE_INSTALL_PREFIX=${prefix} \
     -DPism_USE_PARALLEL_NETCDF4=YES \
+    -DPism_BUILD_PYTHON_BINDINGS=ON \
     -DPism_USE_PIO=NO \
     -DPism_USE_PNETCDF=NO \
     -DPism_USE_PROJ=YES \

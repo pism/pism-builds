@@ -15,6 +15,7 @@ module load comp-intel/2020.4.304
 module load pkgsrc/2022Q1-rome 
 module load python3/3.9.12
 module load gcc/10.3
+module load nco
 
 export MPICXX_CXX=icpc
 export MPIF90_F90=ifort
