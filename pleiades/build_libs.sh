@@ -33,44 +33,34 @@ export MPICC=icc
 
 export prefix=$LOCAL/hdf5
 export build_dir=$BUILD
-#${SET_ENV} || ./hdf5.sh | tee hdf5.log
+${SET_ENV} || ./hdf5.sh | tee hdf5.log
 export hdf5_prefix=$LOCAL/hdf5
 
 export prefix=$LOCAL/netcdf
 export build_dir=$BUILD
-#${SET_ENV} || ./netcdf.sh | tee netcdf.log
+${SET_ENV} || ./netcdf.sh | tee netcdf.log
 export netcdf_prefix=$LOCAL/netcdf
 
 export prefix=$LOCAL/udunits2
 export build_dir=$BUILD
-#${SET_ENV} || ./udunits2.sh | tee udunits2.log
+${SET_ENV} || ./udunits2.sh | tee udunits2.log
 export udunits_prefix=$LOCAL/udunits2
 
 export prefix=$LOCAL/ncview
 export build_dir=$BUILD
-#${SET_ENV} || ./ncview.sh | tee ncview.log
+${SET_ENV} || ./ncview.sh | tee ncview.log
 export ncview_prefix=$LOCAL/ncview
 
 export prefix=$LOCAL/proj
 export build_dir=$BUILD
-#${SET_ENV} || ./proj.sh | tee proj.log
+${SET_ENV} || ./proj.sh | tee proj.log
 export proj_prefix=$LOCAL/proj
 
 export prefix=$LOCAL/cdo
 export build_dir=$BUILD
-#${SET_ENV} || ./cdo.sh | tee cdo.log
+${SET_ENV} || ./cdo.sh | tee cdo.log
 export cdo_prefix=$LOCAL/cdo
 
-# Build PETSc using Intel's icc
-export CC=icc
-# Note: icc can compile both C and C++ code
-export CXX=icc
-export MPICC="mpicc -cc=${CC}"
-export MPICXX="mpicxx -cxx=${CXX}"
-# Support all CPUs on Pleiades and select an optimized version at runtime:
-export opt_flags="-axCORE-AVX512,CORE-AVX2 -xAVX -fp-model precise -diag-disable=cpu-dispatch"
 
-export prefix=$LOCAL/petsc
-export build_dir=$BUILD
 ${SET_ENV} || ./petsc.sh | tee petsc.log
 export PETSC_DIR=$LOCAL/petsc

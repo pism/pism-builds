@@ -26,4 +26,5 @@ export PETSC_ARCH=opt-64bit
 export PETSC_DIR=~/local/petsc
 export LOCAL_LIB_DIR=$HOME/local
 export PATH=$PATH:$HOME/local/bin:$HOME/local/cdo/bin
+export PYTHONPATH=/home1/aaschwan/local/petsc/opt-64bit/lib:/home1/aaschwan/local/pism-dev/lib/python3.9/site-packages:$PYTHONPATH
 export PISM_MPIDO='mpiexec -n'
