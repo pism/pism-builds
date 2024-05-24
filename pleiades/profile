@@ -28,3 +28,5 @@ export LOCAL_LIB_DIR=$HOME/local
 export PATH=$PATH:$HOME/local/bin:$HOME/local/cdo/bin
 export PYTHONPATH=/home1/aaschwan/local/petsc/opt-64bit/lib:/home1/aaschwan/local/pism-dev/lib/python3.9/site-packages:$PYTHONPATH
 export PISM_MPIDO='mpiexec -n'
+export LD_PRELOAD="$MKLROOT/lib/intel64_lin/libmkl_def.so: $MKLROOT/lib/intel64/libmkl_avx2.so:$MKLROOT/lib/intel64/libmkl_core.so:$MKLROOT/lib/intel64/libmkl_intel_lp64.so:$MKLROOT/lib/intel64/libmkl_intel_thread.so:/nasa/intel/Compiler/2020.4.304/lib/intel64_lin/libiomp5.so"
+
