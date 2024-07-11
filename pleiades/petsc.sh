@@ -4,47 +4,36 @@ set -e
 set -u
 set -x
 
-# Install PETSc in /opt/petsc using /var/tmp/build/petsc as the build
-# directory.
+MKL=/nasa/intel/Compiler/2020.4.304/compilers_and_libraries_2020.4.304/linux/mkl/lib/intel64_lin
 
-MPICC=${MPICC:-mpicc}
-MPICXX=${MPICXX:-mpicxx}
-opt_flags=${opt_flags:--mavx2 -O3}
 
-build_dir=${build_dir:-/var/tmp/build/petsc}
-prefix=${prefix:-/opt/petsc}
+build_petsc() {
+    rm -rf $PETSC_DIR
+    mkdir -p $PETSC_DIR
+    cd $PETSC_DIR
 
-mkdir -p ${build_dir}
-cd ${build_dir}
-version=3.16.6
+    git clone --depth=1 -b release https://gitlab.com/petsc/petsc.git .
 
-wget -nc \
-     https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${version}.tar.gz
-rm -rf petsc-${version}
-tar xzf petsc-${version}.tar.gz
-
-cd petsc-${version}
-
-PETSC_DIR=$PWD
-PETSC_ARCH="linux-opt"
-
-python3 ./configure \
-        COPTFLAGS="${opt_flags}" \
-        CXXOPTFLAGS="${opt_flags}" \
-        --prefix=${prefix} \
-        --with-cc="${MPICC}" \
-        --with-cxx="${MPICXX}" \
-        --with-fc=0 \
-        --with-shared-libraries \
+    ./config/configure.py \
         --with-debugging=0 \
-        --with-x=0 \
-	--with-64-bit-indices \
-        --with-debugging=0 \
-        --download-f2cblaslapack
-# Note: f2cblaslapack is "good enough" for most PISM runs. Replace it
-# with an optimized version when building PETSc with a direct solver
-# such as MUMPS.
+	--with-fc=0 \
+        --with-petsc4py \
+        --with-shared \
+        --with-cc=mpicc \
+        --with-cxx=mpicxx \
+        --with-blaslapack-dir=$MKLROOT/lib/intel64 \
+        --with-cpp=/usr/bin/cpp \
+        --with-gnu-compilers=0 \
+        --with-vendor-compilers=intel \
+        --with-64-bit-indices \
+        COPTFLAGS='-g -Ofast'   \
+        CXXOPTFLAGS='-g -Ofast' \
+        FOPTFLAGS='-g -Ofast'   \
+        --download-make=yes \
+	| tee petsc-configure.log
 
-make all -j 12
-make install -j 12
+    make all | tee petsc-build.log
+}
+
+build_petsc
 

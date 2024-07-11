@@ -58,19 +58,9 @@ export proj_prefix=$LOCAL/proj
 
 export prefix=$LOCAL/cdo
 export build_dir=$BUILD
-#${SET_ENV} || ./cdo.sh | tee cdo.log
+${SET_ENV} || ./cdo.sh | tee cdo.log
 export cdo_prefix=$LOCAL/cdo
 
-# Build PETSc using Intel's icc
-export CC=icc
-# Note: icc can compile both C and C++ code
-export CXX=icc
-export MPICC="mpicc -cc=${CC}"
-export MPICXX="mpicxx -cxx=${CXX}"
-# Support all CPUs on Pleiades and select an optimized version at runtime:
-export opt_flags="-axCORE-AVX512,CORE-AVX2 -xAVX -fp-model precise -diag-disable=cpu-dispatch"
 
-export prefix=$LOCAL/petsc
-export build_dir=$BUILD
 ${SET_ENV} || ./petsc.sh | tee petsc.log
 export PETSC_DIR=$LOCAL/petsc
