@@ -1,0 +1,27 @@
+#!/bin/bash
+
+umask 007
+
+module purge
+module load slurm
+module load foss
+module load CMake/3.23.1
+module load PROJ
+module load GSL/2.7
+module load Python
+
+export LOCAL_LIB_DIR=$HOME/local-gcc
+export PISM_DIR=$LOCAL_LIB_DIR/pism
+export PISM_PREFIX=${PISM_DIR}/bin/
+export PETSC_DIR=$LOCAL_LIB_DIR/petsc
+export PETSC_ARCH=opt-64bit
+export LD_LIBRARY_PATH=$HOME/local-gcc/udunits2/lib:$LD_LIBRARY_PATH
+
+export PATH=$LOCAL_LIB_DIR/netcdf/bin:$PATH
+
+# start an interactive job
+alias interact="srun -p debug --nodes=:1 --exclusive -I --pty /bin/bash"
+
+# export PYTHONPATH=$PETSC_DIR/$PETSC_ARCH/lib:$PYTHONPATH
+
+export PISM_MPIDO='mpirun -np'
