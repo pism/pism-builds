@@ -42,9 +42,11 @@ rm -rf build
 mkdir -p build
 popd
 
+echo $MPICC
+echo $MPICXX
 
-cmake -DCMAKE_CXX_FLAGS="${opt_flags}" \
-      -DCMAKE_C_FLAGS="${opt_flags}" \
+cmake -DCMAKE_CXX_FLAGS="${opt_flags} -std=c++14" \
+      -DCMAKE_C_FLAGS="${opt_flags} -std=c14" \
       -B ${build_dir}/build \
       -S ${build_dir} \
       -DCMAKE_PREFIX_PATH="${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${udunits_prefix}" \

@@ -19,23 +19,23 @@ export BUILD=$LOCAL_LIB_DIR/build/
 
 export CC=icc
 export CXX=icpc
-export MPICXX=mpicxx
-export MPICC=mpicc
+export MPICXX=icc
+export MPICC=icpc
 
 
 export prefix=$LOCAL/hdf5
 export build_dir=$BUILD
-# ${SET_ENV} || ./hdf5.sh | tee hdf5.log
+${SET_ENV} || ./hdf5.sh | tee hdf5.log
 export hdf5_prefix=$LOCAL/hdf5
 
 export prefix=$LOCAL/netcdf
 export build_dir=$BUILD
-# ${SET_ENV} || ./netcdf.sh | tee netcdf.log
+${SET_ENV} || ./netcdf.sh | tee netcdf.log
 export netcdf_prefix=$LOCAL/netcdf
 
 export prefix=$LOCAL/petsc
 export build_dir=$BUILD
-# {SET_ENV} || ./petsc.sh | tee petsc.log
+${SET_ENV} || ./petsc.sh | tee petsc.log
 export PETSC_DIR=$LOCAL/petsc
 
 ./pism.sh
