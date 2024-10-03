@@ -8,9 +8,7 @@ cd libfyaml
 
 ./bootstrap.sh
 
-./configure --prefix=$LOCAL_LIB_DIR \
-	    CC="mpicc -cc=icx" \
-	    CXX="mpicc -cc=icx"
+./configure --prefix=$LOCAL_LIB_DIR
 
 make all
 
