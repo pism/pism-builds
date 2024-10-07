@@ -42,14 +42,14 @@ CC="${MPICC}" CXX="${MPICXX}" cmake \
     -DCMAKE_BUILD_TYPE="Release" \
     -DCMAKE_CXX_FLAGS="${opt_flags}" \
     -DCMAKE_C_FLAGS="${opt_flags}" \
-    -DCMAKE_PREFIX_PATH="${yac_prefix};${yaxt_prefix};${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${udunits_prefix};${proj_prefix}" \
+    -DCMAKE_PREFIX_PATH="${yac_prefix};${yaxt_prefix};${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${proj_prefix}" \
     -DCMAKE_INSTALL_PREFIX=${prefix} \
     -DPism_USE_YAC_INTERPOLATION=YES \
     -DPism_USE_PARALLEL_NETCDF4=YES \
     -DPism_BUILD_PYTHON_BINDINGS=ON \
     -DPism_USE_PIO=NO \
     -DPism_USE_PNETCDF=NO \
-    -DPism_USE_PROJ=YES \
-    ;
+    -DPism_USE_PROJ=YES 
+  
 
 make -j 8 -C ${build_dir}/build install
