@@ -11,11 +11,10 @@ MPICC=${MPICC:-mpicc}
 
 hdf5_prefix=${hdf5_prefix:-/opt/hdf5}
 
-version=4.7.4
+version=4.9.2
 prefix=${prefix:-/opt/netcdf}
 build_dir=${build_dir:-/var/tmp/build/netcdf}
-url=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-c-${version}.tar.gz
-
+url=https://downloads.unidata.ucar.edu/netcdf-c/${version}/netcdf-c-${version}.tar.gz
 mkdir -p ${build_dir}
 cd ${build_dir}
 

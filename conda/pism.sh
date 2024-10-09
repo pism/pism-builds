@@ -41,8 +41,10 @@ build_pism() {
     cmake -DCMAKE_CXX_FLAGS="${optimization_flags}" \
           -DCMAKE_C_FLAGS="${optimization_flags}" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
-	  -DPism_BUILD_PYTHON_BINDINGS=ON \
+          -DCMAKE_PREFIX_PATH="${HOME}/local/yac" \
+          -DPism_BUILD_PYTHON_BINDINGS=ON \
           -DPism_USE_JANSSON=NO \
+          -DPism_USE_YAC_INTERPOLATION=YES \
           -DPism_PKG_CONFIG_STATIC=OFF \
           -DPism_USE_PARALLEL_NETCDF4=YES \
           -DPism_USE_PROJ=YES \
