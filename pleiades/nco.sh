@@ -27,8 +27,8 @@ build_antlr2(){
 build_nco() {
     mkdir -p $LOCAL_LIB_DIR/sources
     cd $LOCAL_LIB_DIR/sources
-    #rm -rf nco
-    #git clone https://github.com/nco/nco.git
+    rm -rf nco
+    git clone https://github.com/nco/nco.git
     cd nco/cmake
 
     export NETCDF_ROOT=$LOCAL_LIB_DIR/netcdf
@@ -50,5 +50,5 @@ build_nco() {
     make install  2>&1 | tee nco_install.log
 }
 
-#build_antlr2
+build_antlr2
 build_nco
