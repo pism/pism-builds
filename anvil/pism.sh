@@ -7,7 +7,7 @@ set -u
 # run as version=v2.0 ./pism.sh to build v2.0, etc
 version=${version:-dev}
 
-opt_flags=${opt_flags:--mavx2 -xCORE-AVX2 -axCORE-AVX512,MIC-AVX512}
+opt_flags=${opt_flags:--mavx2}
 
 
 # Prerequisites:
@@ -26,6 +26,8 @@ build_dir=${build_dir:-/var/build/pism}
 # Compilers:
 export MPICC=${MPICC:-mpicc}
 export MPICXX=${MPICXX:-mpicxx}
+export CC=${CC:-icx}
+export CXX=${CXX:-icpx}
 
 # Prerequisites:
 export PETSC_DIR=${PETSC_DIR:-/opt/petsc}
@@ -42,19 +44,20 @@ rm -rf build
 mkdir -p build
 popd
 
-echo $MPICC
-echo $MPICXX
+echo $CC
+echo $CXX
 
-cmake -DCMAKE_CXX_FLAGS="${opt_flags} -std=c++14" \
-      -DCMAKE_C_FLAGS="${opt_flags} -std=c14" \
+cmake -DCMAKE_CXX_FLAGS="${opt_flags} -H" \
+      -DCMAKE_C_FLAGS="${opt_flags}" \
       -B ${build_dir}/build \
       -S ${build_dir} \
-      -DCMAKE_PREFIX_PATH="${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${udunits_prefix}" \
+      -DCMAKE_PREFIX_PATH="${yac_prefix};${hdf5_prefix};${netcdf_prefix};${udunits_prefix}" \
       -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
       -DPism_BUILD_PYTHON_BINDINGS=OFF \
       -DPism_USE_JANSSON=NO \
       -DPism_USE_PARALLEL_NETCDF4=YES \
       -DPism_USE_PROJ=YES \
+      -DPism_USE_YAC_INTERPOLATION=YES \
       $PISM_DIR
 
 
