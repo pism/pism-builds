@@ -5,7 +5,7 @@ source ./build_libs.sh
 
 # Build the dev branch:
 export version=dev
-export prefix=$LOCAL/pism-dev
-export build_dir=$BUILD/pism-dev
+export prefix=$LOCAL/pism
+export build_dir=$BUILD/pism
 
-./pism.sh | tee pism-dev.log
+./pism.sh | tee pism.log

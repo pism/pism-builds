@@ -17,7 +17,7 @@ cd ${build_dir}
 
 rm -rf yac
 
-yac_version=3.3.0
+yac_version=3.4.0
 git clone -b release-${yac_version} \
     https://gitlab.dkrz.de/dkrz-sw/yac.git
 
@@ -44,6 +44,6 @@ export MPICC=icc
 
 
 
-make -j 16 all 2>&1 | tee yac_compile.log
-make -j 16 install 2>&1 | tee yac_install.log
+make -j 1 all 2>&1 | tee yac_compile.log
+make -j 1 install 2>&1 | tee yac_install.log
 

@@ -19,12 +19,3 @@ rm -rf libfyaml
 
 git clone https://github.com/pantoniou/libfyaml.git
 
-cd libfyaml
-
-./bootstrap.sh
-
-./configure --disable-static --prefix=${prefix} \
-
-
-make -j 1 all 2>&1 | tee libfyaml_compile.log
-make -j 1 install 2>&1 | tee libfyam_install.log

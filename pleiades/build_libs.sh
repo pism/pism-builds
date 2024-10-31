@@ -41,6 +41,26 @@ export build_dir=$BUILD
 ${SET_ENV} || ./yac.sh | tee yac.log
 export yac_prefix=$LOCAL/yac
 
+export prefix=$LOCAL/udunits2
+export build_dir=$BUILD
+${SET_ENV} || ./udunits2.sh | tee udunits2.log
+export udunits_prefix=$LOCAL/udunits2
+
+export sql_prefix=/nasa/pkgsrc/toss4/2023Q3
+export prefix=$LOCAL/proj
+export build_dir=$BUILD
+${SET_ENV} || ./proj.sh | tee proj.log
+export proj_prefix=$LOCAL/proj
+
+export prefix=$LOCAL/gsal
+export build_dir=$BUILD
+${SET_ENV} || ./gsl.sh | tee gsl.log
+export gsl_prefix=$LOCAL/gsl
+
+export prefix=$LOCAL/fftw
+export build_dir=$BUILD
+${SET_ENV} || ./fftw.sh | tee fftw.log
+export fftw_prefix=$LOCAL/fftw
 
 export prefix=$LOCAL/hdf5
 export build_dir=$BUILD
@@ -52,20 +72,15 @@ export build_dir=$BUILD
 ${SET_ENV} || ./netcdf.sh | tee netcdf.log
 export netcdf_prefix=$LOCAL/netcdf
 
-export prefix=$LOCAL/udunits2
-export build_dir=$BUILD
-${SET_ENV} || ./udunits2.sh | tee udunits2.log
-export udunits_prefix=$LOCAL/udunits2
-
 export prefix=$LOCAL/ncview
 export build_dir=$BUILD
 ${SET_ENV} || ./ncview.sh | tee ncview.log
 export ncview_prefix=$LOCAL/ncview
 
-export prefix=$LOCAL/proj
+export prefix=$LOCAL/nco
 export build_dir=$BUILD
-${SET_ENV} || ./proj.sh | tee proj.log
-export proj_prefix=$LOCAL/proj
+${SET_ENV} || ./nco.sh | tee nco.log
+export nco_prefix=$LOCAL/nco
 
 export prefix=$LOCAL/cdo
 export build_dir=$BUILD

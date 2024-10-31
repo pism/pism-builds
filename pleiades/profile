@@ -12,26 +12,30 @@ fi
 module purge
 module use -a /nasa/modulefiles/testing
 module load mpi-hpe/mpt
-#module load comp-intel/2020.4.304
 module load comp-intel/2023.2.1 
-module load pkgsrc/2023Q3 
+#module load hdf5/1.12.3_mpt
+#module load pkgsrc/2023Q3 
+module load pkgsrc/2022Q1-rome
 module load python3/3.11.5
-module load gcc/13.2 
-module load nco
+#module load gcc/13.2 
 
-export MPICXX_CXX="mpicxx -cxx=icx"
-export MPIF90_F90="mpif90 -f90=ifx"
-export MPICC_CC="mpicc -cxx=icx”
+export MPICXX_CXX='mpicxx -cxx=icpx'
+export MPIF90_F90='mpif90 -f90=ifx'
+export MPICC_CC='mpicc -cxx=icx'
 
-export MPICC="mpicc -cc=icx"
-export MPICXX="mpicxx -cxx=icx"
-export MPIF90="mpif90 -f90=ifx"
+export MPICC='mpicc -cc=icx'
+export MPICXX='mpicxx -cxx=icpx'
+export MPIF90='mpif90 -f90=ifx'
+
+export CC=icx
+export CXX=icpx
+export F90=ifx
 
 export MPI_TYPE_DEPTH=50
 export PETSC_ARCH=opt-64bit
 export PETSC_DIR=~/local/petsc
 export LOCAL_LIB_DIR=$HOME/local
-export PATH=$PATH:$HOME/local/bin:$HOME/.local/bin:$HOME/local/cdo/bin
-export PYTHONPATH=/home1/aaschwan/local/petsc/opt-64bit/lib:/home1/aaschwan/local/pism-dev/lib/python3.11/site-packages:$PYTHONPATH
+export PATH=$PATH:$HOME/local/bin:$HOME/.local/bin:$HOME/local/cdo/bin:$HOME/local/netcdf/bin:$HOME/local/hdf5/bin:$HOME/local/pism/bin
+export PYTHONPATH=/home1/aaschwan/local/petsc/opt-64bit/lib:/home1/aaschwan/local/pism/lib/python3.11/site-packages:$PYTHONPATH
 export PISM_MPIDO='mpiexec -n'
 
