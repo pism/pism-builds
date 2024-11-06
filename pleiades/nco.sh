@@ -35,7 +35,7 @@ build_nco() {
     export ANTLR_ROOT=$LOCAL_LIB_DIR
     #export UDUNITS2_PATH=$LOCAL_LIB_DIR
     cmake .. \
-	-DCMAKE_INSTALL_PREFIX=$LOCAL_LIB_DIR \
+	-DCMAKE_INSTALL_PREFIX=${nco_prefix} \
 	-DHDF5_HL_LIBRARY=${hdf5_prefix}/lib/libhdf5_hl.so \
         -DHDF5_LIBRARY=${hdf5_prefix}/lib/libhdf5.so \
         -DNETCDF_INCLUDE=${netcdf_prefix}/include \
@@ -50,5 +50,5 @@ build_nco() {
     make install  2>&1 | tee nco_install.log
 }
 
-build_antlr2
+#build_antlr2
 build_nco

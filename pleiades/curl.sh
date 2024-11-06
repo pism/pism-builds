@@ -15,7 +15,7 @@ tar -zxvf curl-${version}.tar.gz
 cd curl-${version}
 
 
-./configure --prefix=${prefix} 
+./configure --without-ssl --prefix=${prefix} 
 
 make all && make install
 

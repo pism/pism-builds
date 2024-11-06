@@ -39,8 +39,6 @@ build_ncview(){
     CC=mpicc CFLAGS='-g' CPPFLAGS="-I$LOCAL_LIB_DIR/include -I${HOME}/local/netcdf/include" LDFLAGS="-L$LOCAL_LIB_DIR/lib -L${HOME}/local/netcdf/lib" ./configure \
 	--prefix=${LOCAL_LIB_DIR} \
 	--with-nc-config=${HOME}/local/netcdf/bin/nc-config \
-        --with-udunits2_incdir=$HOME/local/udunits2/include \
-        --with-udunits2_libdir=$HOME/local/udunits2/lib \
 	 2>&1 | tee ncview_configure.log
 
     make -j $N 2>&1 | tee ncview_compile.log

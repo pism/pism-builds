@@ -25,6 +25,10 @@ export MPICXX_CXX="mpicxx -cxx=icx"
 export MPIF90_F90="mpif90 -f90=ifx"
 export MPICC_CC="mpicc -cxx=icx"
 
+export prefix=$LOCAL
+export build_dir=$BUILD
+${SET_ENV} || ./curl.sh | tee curl.log
+export curl_prefix=$LOCAL
 
 export prefix=$LOCAL/libfyaml
 export build_dir=$BUILD
@@ -41,26 +45,12 @@ export build_dir=$BUILD
 ${SET_ENV} || ./yac.sh | tee yac.log
 export yac_prefix=$LOCAL/yac
 
-export prefix=$LOCAL/udunits2
-export build_dir=$BUILD
-${SET_ENV} || ./udunits2.sh | tee udunits2.log
-export udunits_prefix=$LOCAL/udunits2
 
 export sql_prefix=/nasa/pkgsrc/toss4/2023Q3
 export prefix=$LOCAL/proj
 export build_dir=$BUILD
 ${SET_ENV} || ./proj.sh | tee proj.log
 export proj_prefix=$LOCAL/proj
-
-export prefix=$LOCAL/gsal
-export build_dir=$BUILD
-${SET_ENV} || ./gsl.sh | tee gsl.log
-export gsl_prefix=$LOCAL/gsl
-
-export prefix=$LOCAL/fftw
-export build_dir=$BUILD
-${SET_ENV} || ./fftw.sh | tee fftw.log
-export fftw_prefix=$LOCAL/fftw
 
 export prefix=$LOCAL/hdf5
 export build_dir=$BUILD
@@ -88,5 +78,5 @@ ${SET_ENV} || ./cdo.sh | tee cdo.log
 export cdo_prefix=$LOCAL/cdo
 
 
-${SET_ENV} || ./petsc-mumps.sh | tee petsc.log
+${SET_ENV} || ./petsc.sh | tee petsc.log
 export PETSC_DIR=$LOCAL/petsc

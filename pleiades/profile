@@ -11,7 +11,7 @@ fi
 
 module purge
 module use -a /nasa/modulefiles/testing
-module load mpi-hpe/mpt
+module load mpi-hpe/mpt.2.30_27Sep24
 module load comp-intel/2023.2.1 
 #module load hdf5/1.12.3_mpt
 #module load pkgsrc/2023Q3 
