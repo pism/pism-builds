@@ -11,7 +11,7 @@ fi
 
 module purge
 module use -a /nasa/modulefiles/testing
-module load mpi-hpe/mpt.2.30_27Sep24
+module load mpi-hpe/mpt.2.30
 module load comp-intel/2023.2.1 
 #module load hdf5/1.12.3_mpt
 #module load pkgsrc/2023Q3 
@@ -38,4 +38,4 @@ export LOCAL_LIB_DIR=$HOME/local
 export PATH=$PATH:$HOME/local/bin:$HOME/.local/bin:$HOME/local/cdo/bin:$HOME/local/netcdf/bin:$HOME/local/hdf5/bin:$HOME/local/pism/bin
 export PYTHONPATH=/home1/aaschwan/local/petsc/opt-64bit/lib:/home1/aaschwan/local/pism/lib/python3.11/site-packages:$PYTHONPATH
 export PISM_MPIDO='mpiexec -n'
-
+export PISM_PREFIX=$HOME/local/pism
