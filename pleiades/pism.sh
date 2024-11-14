@@ -29,9 +29,9 @@ build_dir=${build_dir:-/var/build/pism}
 mkdir -p ${build_dir}
 
 pushd ${build_dir}
-#git clone https://github.com/pism/pism.git . || (git checkout main && git pull)
-#git checkout ${version}
-#git pull
+git clone https://github.com/pism/pism.git . || (git checkout main && git pull)
+git checkout ${version}
+git pull
 rm -rf build
 mkdir -p build
 popd

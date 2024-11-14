@@ -9,6 +9,9 @@ version=${version:-dev}
 
 opt_flags=${opt_flags:--mavx2}
 
+# Compilers:
+export MPICC=${MPICC:-mpicc}
+export MPICXX=${MPICXX:-mpicxx}
 
 # Prerequisites:
 export PETSC_DIR=${PETSC_DIR:-/opt/petsc}
@@ -23,17 +26,6 @@ proj_prefix=${proj_prefix:-/opt/proj}
 prefix=${prefix:-/opt/pism}
 build_dir=${build_dir:-/var/build/pism}
 
-# Compilers:
-export MPICC=${MPICC:-mpicc}
-export MPICXX=${MPICXX:-mpicxx}
-export CC=${CC:-icx}
-export CXX=${CXX:-icpx}
-
-# Prerequisites:
-export PETSC_DIR=${PETSC_DIR:-/opt/petsc}
-build_dir=${PISM_DIR:-/var/build/pism}
-prefix=${PISM_DIR:-/opt/pism}
-
 mkdir -p ${build_dir}
 
 pushd ${build_dir}
@@ -44,21 +36,22 @@ rm -rf build
 mkdir -p build
 popd
 
-echo $CC
-echo $CXX
+CC="${CC}" CXX="${CXX}" cmake \
+    -B ${build_dir}/build \
+    -S ${build_dir} \
+    -DCMAKE_BUILD_TYPE="Release" \
+    -DCMAKE_CXX_FLAGS="${opt_flags}" \
+    -DCMAKE_C_FLAGS="${opt_flags}" \
+    -DCMAKE_PREFIX_PATH="${yaxt_prefix};${yac_prefix};${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${proj_prefix}" \
+    -DPism_PKG_CONFIG_STATIC=YES \
+    -DCMAKE_INSTALL_PREFIX=${prefix} \
+    -DPism_USE_YAC_INTERPOLATION=YES \
+    -DHDF5_PREFER_PARALLEL=TRUE \
+    -DPism_USE_PARALLEL_NETCDF4=YES \
+    -DPism_BUILD_PYTHON_BINDINGS=OFF \
+    -DPism_USE_PIO=NO \
+    -DPism_USE_PNETCDF=NO \
+    -DPism_USE_PROJ=YES  
+  
 
-cmake -DCMAKE_CXX_FLAGS="${opt_flags} -H" \
-      -DCMAKE_C_FLAGS="${opt_flags}" \
-      -B ${build_dir}/build \
-      -S ${build_dir} \
-      -DCMAKE_PREFIX_PATH="${yac_prefix};${hdf5_prefix};${netcdf_prefix};${udunits_prefix}" \
-      -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
-      -DPism_BUILD_PYTHON_BINDINGS=OFF \
-      -DPism_USE_JANSSON=NO \
-      -DPism_USE_PARALLEL_NETCDF4=YES \
-      -DPism_USE_PROJ=YES \
-      -DPism_USE_YAC_INTERPOLATION=YES \
-      $PISM_DIR
-
-
-make -C ${build_dir}/build install
+make -j 24 VERBOSE=1 -C ${build_dir}/build install
