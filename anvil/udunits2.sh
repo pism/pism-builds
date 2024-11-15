@@ -27,5 +27,5 @@ cd udunits-${version}
 
 ./configure CC="${CC}" --prefix=${prefix}
 
-make -j8 all
+make -j 128 all
 make install

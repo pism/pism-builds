@@ -9,11 +9,12 @@ set -x
 
 MPICC=${MPICC:-mpicc}
 
-version=1.12.0
+version=1.14.5
 prefix=${prefix:-/opt/hdf5}
 build_dir=${build_dir:-/var/tmp/build/hdf5}
-hdf5_site=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12
-url=${hdf5_site}/hdf5-${version}/src/hdf5-${version}.tar.gz
+hdf5_site=https://support.hdfgroup.org/releases/hdf5/v1_14/v1_14_5/downloads
+url=${hdf5_site}/hdf5-${version}.tar.gz
+
 
 mkdir -p ${build_dir}
 cd ${build_dir}
@@ -26,15 +27,13 @@ tar xzf hdf5-${version}.tar.gz
 cd hdf5-${version}
 
 export MPI_TYPE_DEPTH=50
-export MPICXX_CXX=mpiicpc
-export MPICC_CC=mpiicc
 
-./configure CC=mpiicc CXX=mpiicpc CFLAGS=-w \
+./configure CC="MPICC" CXX=$MPICXX" CFLAGS=-w \
   --enable-parallel \
   --enable-threadsafe \
   --enable-unsupported \
   --prefix=${prefix} 2>&1 | tee hdf5_configure.log
 
-make -j 16 all 2>&1 | tee hdf5_compile.log
-make -j 16 install 2>&1 | tee hdf5_install.log
-make -j 16 test  2>&1 | tee hdf5_test.log
+make -j 128 all 2>&1 | tee hdf5_compile.log
+make -j 128 install 2>&1 | tee hdf5_install.log
+make -j 128 test  2>&1 | tee hdf5_test.log

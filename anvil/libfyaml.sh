@@ -27,5 +27,5 @@ cd libfyaml
 ./configure CC="$MPICC" CXX="$MPICXX" --disable-static --prefix=${prefix} \
 
 
-make -j 1 all 2>&1 | tee libfyaml_compile.log
-make -j 1 install 2>&1 | tee libfyam_install.log
+make -j 128 all 2>&1 | tee libfyaml_compile.log
+make -j 128 install 2>&1 | tee libfyam_install.log

@@ -45,12 +45,12 @@ export yac_prefix=$LOCAL/yac
 
 export prefix=$LOCAL/hdf5
 export build_dir=$BUILD
-#${SET_ENV} || ./hdf5.sh | tee hdf5.log
+${SET_ENV} || ./hdf5.sh | tee hdf5.log
 export hdf5_prefix=$LOCAL/hdf5
 
 export prefix=$LOCAL/netcdf
 export build_dir=$BUILD
-#${SET_ENV} || ./netcdf.sh | tee netcdf.log
+${SET_ENV} || ./netcdf.sh | tee netcdf.log
 export netcdf_prefix=$LOCAL/netcdf
 
 export prefix=$LOCAL/petsc

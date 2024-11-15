@@ -54,4 +54,4 @@ CC="${CC}" CXX="${CXX}" cmake \
     -DPism_USE_PROJ=YES  
   
 
-make -j 24 VERBOSE=1 -C ${build_dir}/build install
+make -j 128 VERBOSE=1 -C ${build_dir}/build install

@@ -41,6 +41,6 @@ autoreconf -i
 
 
 
-make -j 1 all 2>&1 | tee yac_compile.log
-make -j 1 install 2>&1 | tee yac_install.log
+make -j 128 all 2>&1 | tee yac_compile.log
+make -j 128 install 2>&1 | tee yac_install.log
 

@@ -37,5 +37,5 @@ export MPICC_CC=icc
 	--disable-libxml2 \
         --prefix=${prefix} 2>&1 | tee netcdf_configure.log
 
-make all -j 12 2>&1 | tee netcdf_compile.log
-make install -j 12  2>&1 | tee netcdf_install.log
+make all -j 128 2>&1 | tee netcdf_compile.log
+make install -j 128  2>&1 | tee netcdf_install.log
