@@ -26,6 +26,8 @@ build_petsc() {
     ./config/configure.py \
         --march=native \
         --with-fc=0 \
+	--with-cc="$MPICC" \
+        --with-cxx="$MPICXX" \
         --CFLAGS="${optimization_flags}" \
         --CXXOPTFLAGS="${optimization_flags}" \
         --known-mpi-shared-libraries=1 \

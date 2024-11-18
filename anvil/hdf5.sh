@@ -28,7 +28,7 @@ cd hdf5-${version}
 
 export MPI_TYPE_DEPTH=50
 
-./configure CC="MPICC" CXX=$MPICXX" CFLAGS=-w \
+./configure CC="MPICC" CXX="$MPICXX" CFLAGS=-w \
   --enable-parallel \
   --enable-threadsafe \
   --enable-unsupported \

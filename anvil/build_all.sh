@@ -21,10 +21,10 @@ export CXX=icpx
 export CC=icx
 
 export MPICC="mpicc -cc=icx"
-export MPICXX="mpicxx -cxx=icx"
+export MPICXX="mpicxx -cxx=icpx"
 export MPIF90="mpif90 -f90=ifx"
 
-export MPICXX_CXX="mpicxx -cxx=icx"
+export MPICXX_CXX="mpicxx -cxx=icpx"
 export MPIF90_F90="mpif90 -f90=ifx"
 export MPICC_CC="mpicc -cxx=icx"
 
