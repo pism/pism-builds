@@ -45,17 +45,22 @@ export build_dir=$BUILD
 ${SET_ENV} || ./yac.sh | tee yac.log
 export yac_prefix=$LOCAL/yac
 
+export prefix=$LOCAL/c-blosc
+export build_dir=$BUILD
+${SET_ENV} || ./blosc.sh | tee blosc.log
+export blosc_prefix=$LOCAL/c-blosc
+
 export prefix=$LOCAL/hdf5
 export build_dir=$BUILD
 ${SET_ENV} || ./hdf5.sh | tee hdf5.log
 export hdf5_prefix=$LOCAL/hdf5
-export LD_LIBRARY_PATH=${hdf5_prefix}/lib:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=${hdf5_prefix}/lib:${blosc_prefix}/lib:$LD_LIBRARY_PATH
 
 export prefix=$LOCAL/netcdf
 export build_dir=$BUILD
 ${SET_ENV} || ./netcdf.sh | tee netcdf.log
 export netcdf_prefix=$LOCAL/netcdf
-export LD_LIBRARY_PATH=${netcdf_prefix}/lib:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=${netcdf_prefix}/lib:$LD_LIBRARY_PATH
 
 export prefix=$PETSC_DIR
 export build_dir=$BUILD

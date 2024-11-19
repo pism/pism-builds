@@ -29,4 +29,6 @@ alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
 
 export PATH=$PISM_PREFIX/bin:$LOCAL/bin:$LOCAL/hdf5/bin:$LOCAL/netcdf/bin:$PATH
 export PYTHONPATH=$PETSC_DIR/$PETSC_ARCH/lib:$PYTHONPATH
+#export LD_LIBRARY_PATH=$LOCAL/hdf5/lib:$LOCAL/netcdf/lib:$PATH
+
 export PISM_MPIDO='mpirun -np'

@@ -34,12 +34,14 @@ export MPI_TYPE_DEPTH=50
 CC="${MPICC}" CXX="${MPICXX}" cmake \
     -B ${build_dir}/hdf5-${version}/build \
     -S ${build_dir}/hdf5-${version} \
+    -DBUILD_SHARED_LIBS=ON \
+    -DHDF5_ENABLE_SZIP=NO \
     -DHDF5_ENABLE_PARALLEL=YES \
     -DHDF5_ENABLE_THREADSAFE=YES \
     -DCMAKE_CXX_FLAGS="${opt_flags}" \
     -DCMAKE_C_FLAGS="${opt_flags}" \
     -DCMAKE_INSTALL_PREFIX=${prefix} \
+    -DCMAKE_PREFIX_PATH="${blosc_prefix}" \
     2>&1 | tee hdf5_configure.log
 
-make -j 128 VERBOSE=1 -C ${build_dir}/hdf5-${version}/build 2>&1 install | tee hdf5_compile.log
-#make -j 128 test  2>&1 | tee hdf5_test.log
+make -j 128 VERBOSE=1 -C ${build_dir}/hdf5-${version}/build 2>&1 install  | tee hdf5_compile.log

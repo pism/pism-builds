@@ -21,6 +21,7 @@ url=https://downloads.unidata.ucar.edu/netcdf-c/${version}/netcdf-c-${version}.t
 
 mkdir -p ${prefix}
 mkdir -p ${build_dir}
+
 cd ${build_dir}
 
 wget -nc ${url}
@@ -30,12 +31,17 @@ tar zxf netcdf-c-${version}.tar.gz
 
 cd netcdf-c-${version}
 
+CC="${MPICC}" CXX="${MPICXX}" cmake \
+    -B ${build_dir}/netcdf-c-${version}/build \
+    -S ${build_dir}/netcdf-c-${version} \
+    -DENABLE_PARALLEL=ON \
+    -DENABLE_DAP=OFF \
+    -DENABLE_NETCDF_4=ON \
+    -DCMAKE_CXX_FLAGS="${opt_flags}" \
+    -DCMAKE_C_FLAGS="${opt_flags}" \
+    -DCMAKE_INSTALL_PREFIX=${prefix} \
+    -DCMAKE_PREFIX_PATH="${hdf5_prefix};${blosc_prefix}" \
+    2>&1 | tee netcf_configure.log
 
-./configure CC="${MPICC}" CFLAGS="${opt_flags}" CPPFLAGS="-I${hdf5_prefix}/include" LDFLAGS="-L${hdf5_prefix}/lib" \
-        --enable-netcdf4 \
-        --disable-dap \
-	--disable-libxml2 \
-        --prefix=${prefix} 2>&1 | tee netcdf_configure.log
+make -j 128 VERBOSE=1 -C ${build_dir}/netcdf-c-${version}/build 2>&1 install | tee netcdf_compile.log
 
-make all -j 128 2>&1 | tee netcdf_compile.log
-make install -j 128  2>&1 | tee netcdf_install.log

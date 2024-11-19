@@ -39,6 +39,7 @@ popd
 CC="${CC}" CXX="${CXX}" cmake \
     -B ${build_dir}/build \
     -S ${build_dir} \
+    -DNCGEN_PROGRAM=${netcdf_prefix}/bin/ncgen3 \
     -DCMAKE_BUILD_TYPE="Release" \
     -DCMAKE_CXX_FLAGS="${opt_flags}" \
     -DCMAKE_C_FLAGS="${opt_flags}" \
@@ -46,7 +47,6 @@ CC="${CC}" CXX="${CXX}" cmake \
     -DPism_PKG_CONFIG_STATIC=YES \
     -DCMAKE_INSTALL_PREFIX=${prefix} \
     -DPism_USE_YAC_INTERPOLATION=YES \
-    -DHDF5_PREFER_PARALLEL=TRUE \
     -DPism_USE_PARALLEL_NETCDF4=YES \
     -DPism_BUILD_PYTHON_BINDINGS=OFF \
     -DPism_USE_PIO=NO \
