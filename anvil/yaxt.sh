@@ -9,6 +9,7 @@ set -x
 
 MPICC=${MPICC:-mpicc}
 
+opt_flags=${opt_flags:--mavx2}
 prefix=${prefix:-/opt/yac}
 build_dir=${build_dir:-/var/tmp/build/yac}
 
@@ -25,9 +26,9 @@ cd yaxt
 
 autoreconf -i
 
-./configure --prefix=${yaxt_prefix} \
+./configure --prefix=${prefix} \
             --with-pic --without-regard-for-quality \
-            CFLAGS="-O3 -g -march=native" CC="$MPICC" FC="$MPIF90" \
+            CFLAGS="-O3 -g ${opt_flags}" CC="$MPICC" FC="$MPIF90" FCFLAGS="${opt_flags}" \
 
 
 make -j 128 all 2>&1 | tee yaxt_compile.log

@@ -9,6 +9,7 @@ set -x
 
 MPICC=${MPICC:-mpicc}
 
+opt_flags=${opt_flags:--mavx2}
 prefix=${prefix:-/opt/yac}
 build_dir=${build_dir:-/var/tmp/build/yac}
 
@@ -26,7 +27,7 @@ cd yac
 autoreconf -i
 
 
-./configure --prefix=${yac_prefix} \
+./configure --prefix=${prefix} \
             --with-yaxt-root=${yaxt_prefix} \
             --with-fyaml-root=${libfyaml_prefix} \
             --disable-netcdf \
@@ -35,8 +36,8 @@ autoreconf -i
             --disable-deprecated \
             --with-pic \
             CC="$MPICC" \
-            CFLAGS="-O3 -g -march=native" \
-            FC="$MPIF90" \
+            CFLAGS="-O3 -g ${opt_flags}" \
+	    FC="$MPIF90" \
 	    --disable-mpi-checks 
 
 

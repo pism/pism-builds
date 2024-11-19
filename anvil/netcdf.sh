@@ -14,8 +14,12 @@ hdf5_prefix=${hdf5_prefix:-/opt/hdf5}
 version=4.9.2
 prefix=${prefix:-/opt/netcdf}
 build_dir=${build_dir:-/var/tmp/build/netcdf}
+opt_flags=${opt_flags:--mavx2}
+
+
 url=https://downloads.unidata.ucar.edu/netcdf-c/${version}/netcdf-c-${version}.tar.gz
 
+mkdir -p ${prefix}
 mkdir -p ${build_dir}
 cd ${build_dir}
 
@@ -27,11 +31,7 @@ tar zxf netcdf-c-${version}.tar.gz
 cd netcdf-c-${version}
 
 
-export MPICXX_CXX=icpc
-export MPIF90_F90=ifort
-export MPICC_CC=icc
-
-./configure CC="${MPICC}" CPPFLAGS=-I${hdf5_prefix}/include LDFLAGS=-L${hdf5_prefix}/lib \
+./configure CC="${MPICC}" CFLAGS="${opt_flags}" CPPFLAGS="-I${hdf5_prefix}/include" LDFLAGS="-L${hdf5_prefix}/lib" \
         --enable-netcdf4 \
         --disable-dap \
 	--disable-libxml2 \
