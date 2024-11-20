@@ -44,7 +44,6 @@ CC="${CC}" CXX="${CXX}" cmake \
     -DCMAKE_CXX_FLAGS="${opt_flags}" \
     -DCMAKE_C_FLAGS="${opt_flags}" \
     -DCMAKE_PREFIX_PATH="${yaxt_prefix};${yac_prefix};${hdf5_prefix};${netcdf_prefix};${pnetcdf_prefix};${parallelio_prefix};${proj_prefix}" \
-    -DPism_PKG_CONFIG_STATIC=YES \
     -DCMAKE_INSTALL_PREFIX=${prefix} \
     -DPism_USE_YAC_INTERPOLATION=YES \
     -DPism_USE_PARALLEL_NETCDF4=YES \
