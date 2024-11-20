@@ -34,14 +34,15 @@ autoreconf -i
             --disable-examples \
             --disable-tools \
             --disable-deprecated \
+	    --enable-mpi-checks \
+            --enable-concurrent-mpi-tests \
             --with-pic \
             CC="$MPICC" \
             CFLAGS="-O3 -g ${opt_flags}" \
-	    FC="$MPIF90" \
-	    --disable-mpi-checks 
+	    FC="$MPIF90" 
 
 
 
 make -j 128 all 2>&1 | tee yac_compile.log
 make -j 128 install 2>&1 | tee yac_install.log
-
+make -j 128 check 2>&1 | tee yac_check.log

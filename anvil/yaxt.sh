@@ -27,13 +27,12 @@ cd yaxt
 autoreconf -i
 
 ./configure --prefix=${prefix} \
-            --with-pic --without-regard-for-quality \
             CFLAGS="-O3 -g ${opt_flags}" CC="$MPICC" FC="$MPIF90" FCFLAGS="${opt_flags}" \
 
 
 make -j 128 all 2>&1 | tee yaxt_compile.log
 make -j 128 install 2>&1 | tee yaxt_install.log
-
+make -j 128 check 2>&1 | tee yaxt_check.log
 cd -
 
 
