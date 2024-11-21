@@ -22,7 +22,7 @@ url=https://downloads.unidata.ucar.edu/netcdf-c/${version}/netcdf-c-${version}.t
 mkdir -p ${prefix}
 mkdir -p ${build_dir}
 
-cd ${build_dir}
+pushd ${build_dir}
 
 wget -nc ${url}
 
@@ -30,6 +30,10 @@ rm -rf netcdf-c-${version}
 tar zxf netcdf-c-${version}.tar.gz
 
 cd netcdf-c-${version}
+rm -rf build
+mkdir -p build
+popd
+
 
 CC="${MPICC}" CXX="${MPICXX}" cmake \
     -B ${build_dir}/netcdf-c-${version}/build \
@@ -43,5 +47,5 @@ CC="${MPICC}" CXX="${MPICXX}" cmake \
     -DCMAKE_PREFIX_PATH="${hdf5_prefix};${blosc_prefix}" \
     2>&1 | tee netcf_configure.log
 
-make -j 128 VERBOSE=1 -C ${build_dir}/netcdf-c-${version}/build 2>&1 install | tee netcdf_compile.log
+make -j 128 VERBOSE=1 -C ${build_dir}/netcdf-c-${version}/build 2>&1 install test | tee netcdf_compile.log
 

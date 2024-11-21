@@ -30,6 +30,12 @@ export opt_flags="-march=znver3"
 echo "local_dir=${LOCAL}"
 echo "build_dir=${BUILD}"
 
+export prefix=$LOCAL/openmpi
+export build_dir=$BUILD
+${SET_ENV} || ./openmpi.sh | tee openmpi.log
+export openmpi_prefix=$LOCAL/openmpi
+export PATH=${openmpi_prefix}/bin:$PATH
+
 export prefix=$LOCAL/libfyaml
 export build_dir=$BUILD
 ${SET_ENV} || ./libfyaml.sh | tee libfyaml.log

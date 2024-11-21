@@ -4,7 +4,7 @@ umask 007
 
 module purge
 module load gcc/11.2.0
-module load openmpi/4.1.6
+#module load openmpi/4.1.6
 #module load mvapich2/2.3.6
 module load openblas/0.3.17
 module load cmake/3.20.0
@@ -28,8 +28,9 @@ export PETSC_ARCH=arch-linux-c-opt
 # start an interactive job
 alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
 
-export PATH=$PISM_PREFIX/bin:$LOCAL/bin:$LOCAL/hdf5/bin:$LOCAL/netcdf/bin:$PATH
+export PATH=$PISM_PREFIX/bin:$LOCAL/openmpi/bin:$LOCAL/bin:$LOCAL/hdf5/bin:$LOCAL/netcdf/bin:$PATH
 export PYTHONPATH=$PETSC_DIR/$PETSC_ARCH/lib:$PYTHONPATH
 #export LD_LIBRARY_PATH=$LOCAL/hdf5/lib:$LOCAL/netcdf/lib:$PATH
+
 
 export PISM_MPIDO='mpirun -np'

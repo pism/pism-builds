@@ -20,7 +20,7 @@ url=${hdf5_site}/hdf5-${version}.tar.gz
 
 mkdir -p ${prefix}
 mkdir -p ${build_dir}
-cd ${build_dir}
+pushd ${build_dir}
 
 wget -nc ${url}
 
@@ -28,6 +28,9 @@ rm -rf hdf5-${version}
 tar xzf hdf5-${version}.tar.gz
 
 cd hdf5-${version}
+rm -rf build
+mkdir -p build
+popd
 
 export MPI_TYPE_DEPTH=50
 
