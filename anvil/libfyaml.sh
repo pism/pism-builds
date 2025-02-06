@@ -9,6 +9,7 @@ set -x
 
 MPICC=${MPICC:-mpicc}
 
+opt_flags=${opt_flags:--mavx2}
 prefix=${prefix:-/opt/libfyaml}
 build_dir=${build_dir:-/var/tmp/build/libfyaml}
 

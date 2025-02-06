@@ -29,7 +29,7 @@ build_petsc() {
 	--with-cc="$MPICC" \
         --with-cxx="$MPICXX" \
         --CFLAGS="${optimization_flags}" \
-        --CXXOPTFLAGS="${optimization_flags} ${opt_flags}" \
+        --CXXOPTFLAGS="${optimization_flags}" \
         --known-mpi-shared-libraries=1 \
         --with-debugging=0 \
         --with-valgrind=0 \
@@ -38,7 +38,7 @@ build_petsc() {
         --with-batch=1 \
         --with-shared-libraries=1 \
         --with-64-bit-indices \
-          | tee petsc-configure.log
+        --with-blas-lapack-dir=$MKL  | tee petsc-configure.log
 
     make all | tee petsc-build.log
 }

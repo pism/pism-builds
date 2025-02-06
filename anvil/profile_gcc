@@ -3,13 +3,12 @@
 umask 007
 
 module purge
-#module load impi/2019.9.304
-module load intel/2024.1
-module load impi/2021.12
-module load intel-rt/2024.1.0
+module load gcc/11.2.0
+#module load openmpi/4.1.6
+#module load mvapich2/2.3.6
+module load openblas/0.3.17
 module load cmake/3.20.0
 module load fftw/3.3.8
-module load anaconda/2024.02-py311 
 module load gsl/2.4
 module load libxml2
 module load curl
@@ -17,17 +16,21 @@ module load proj/6.2.0
 module load udunits/2.2.28
 module load zlib/1.2.11
 module load libszip/2.1.1
+module load anaconda/2024.02-py311
 
-export LOCAL_LIB_DIR=$HOME/local
-export PISM_DIR=$LOCAL_LIB_DIR/pism
+export LOCAL=$HOME/local-gcc
+export BUILD=$LOCAL/build
+export PISM_DIR=$LOCAL/pism
 export PISM_PREFIX=${PISM_DIR}
-export PETSC_DIR=$HOME/local/petsc
+export PETSC_DIR=$LOCAL/petsc
 export PETSC_ARCH=arch-linux-c-opt
 
 # start an interactive job
 alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
 
-export PATH=$PISM_PREFIX/bin:$LOCAL_LIB_DIR/bin:$LOCAL_LIB_DIR/hdf5/bin:$LOCAL_LIB_DIR/netcdf/bin:$PATH
+export PATH=$PISM_PREFIX/bin:$LOCAL/openmpi/bin:$LOCAL/bin:$LOCAL/hdf5/bin:$LOCAL/netcdf/bin:$PATH
 export PYTHONPATH=$PETSC_DIR/$PETSC_ARCH/lib:$PYTHONPATH
-export LD_LIBRARY_PATH=$HOME/local/netcdf/lib:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=$LOCAL/hdf5/lib:$LOCAL/netcdf/lib:$PATH
+
+
 export PISM_MPIDO='mpirun -np'
