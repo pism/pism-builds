@@ -6,6 +6,9 @@ dependencies:
   - cmake
   - automake
   - autoconf
+  - libfyaml
+  - libtool
+  - m4
   - yaml
   - pkg-config
   - mpich
