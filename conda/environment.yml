@@ -1,43 +1,32 @@
-name: pism
+name: pism-conda-dbg
 channels:
   - conda-forge
+  - pism
 dependencies:
   - python=3.11.7
-  - cmake
-  - automake
-  - autoconf
-  - libfyaml
-  - libtool
-  - m4
-  - yaml
+  - yaxt
+  - yac
+  - cmake >=3.16
   - pkg-config
-  - mpich
-  - mpich-mpicc
-  - mpich-mpicxx
-  - mpich-mpifort
+  - make
+  - swig
+  - gnuconfig   # [unix]
   - hdf5=*=*mpich*
   - h5py=*=*mpich*
   - netcdf-cxx4
   - netcdf4=*=*mpich*
-  - gsl
-  - swig
-  - udunits2
-  - nose
-  - proj
-  - lapack
   - fftw
-  - petsc<=3.21
-  - petsc4py<=3.21
+  - gsl >=1.15
+  - mpich
+  - mpich-mpicc
+  - mpich-mpicxx
+  - udunits2
+  - proj
+  - liblzma-devel  # Needed for `pkg-config --exists proj` on at least some python version
+  - petsc
+  - petsc4py
+  - libopenblas
   - xarray
-  - h5netcdf
   - matplotlib
-  - cartopy
-  - pandas
-  - geopandas
   - nco
   - cdo
-  - nose
-  - doxygen
-  - notebook
-  - ncview
-  - tbb=2020.2
