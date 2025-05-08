@@ -9,7 +9,7 @@ rm -rf yac
 
 prefix=$LOCAL_LIB_DIR
 
-yaxt_version=0.11.2
+yaxt_version=0.11.3
 git clone -b release-${yaxt_version} \
     https://gitlab.dkrz.de/dkrz-sw/yaxt.git
 
@@ -21,13 +21,13 @@ autoreconf -i
             --with-pic \
 	    CC="mpicc -cc=icx" \
 	    CFLAGS="-O3 -g -march=native" \
-	    FC=mpiifort
+	    FC=no
 
 make all && make install
 
 cd -
 
-yac_version=3.3.0
+yac_version=3.6.2
 git clone -b release-${yac_version} \
     https://gitlab.dkrz.de/dkrz-sw/yac.git
 
@@ -42,9 +42,9 @@ autoreconf -i
             --disable-examples \
             --disable-tools \
             --disable-deprecated \
+            --disable-fortran-bindings \
             --with-pic \
 	    CC="mpicc -cc=icx" \
-	    CFLAGS="-O3 -g -march=native" \
-	    FC=mpiifort
+	    CFLAGS="-O3 -g -march=native"
 
 make all && make install
