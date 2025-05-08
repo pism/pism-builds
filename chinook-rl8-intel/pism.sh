@@ -34,13 +34,12 @@ build_pism() {
     export CXX=icpx
     # Silence OpenMPI's error message about a part of its system that is not available on login nodes
     export OMPI_MCA_plm_rsh_agent=""
-    # EBROOTNETCDF below is set by the module system
     cmake -DCMAKE_CXX_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006,2102" \
           -DCMAKE_C_FLAGS="${optimization_flags} -diag-disable=cpu-dispatch,10006" \
+          -DCMAKE_PREFIX_PATH="${LOCAL_LIB_DIR}" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
-	  -DPism_BUILD_PYTHON_BINDINGS=ON \
-          -DPism_USE_JANSSON=NO \
           -DPism_USE_PARALLEL_NETCDF4=YES \
+          -DPism_USE_YAC_INTERPOLATION=YES \
           -DPism_USE_PROJ=YES \
           $PISM_DIR/sources
     make -j $N install
