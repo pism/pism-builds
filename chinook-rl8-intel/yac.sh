@@ -46,6 +46,7 @@ autoreconf -i
             --with-pic \
             --with-external-lapack=mkl \
             --with-mkl-root=${MKLROOT} \
+            LDFLAGS="-qmkl=sequential" \
 	    CC="mpicc -cc=icx" \
 	    CFLAGS="-O3 -g -march=native"
 
