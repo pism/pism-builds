@@ -8,7 +8,7 @@ echo 'PETSC_DIR = ' ${PETSC_DIR}
 echo 'PETSC_ARCH = ' ${PETSC_ARCH}
 
 MKL=/usr/local/pkg/numlib/imkl/2019.3.199-pic-iompi-2019b/mkl/lib/intel64
-optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise"
+optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model=precise"
 
 build_petsc() {
     # rm -rf $PETSC_DIR
@@ -26,9 +26,9 @@ build_petsc() {
     #     --download-scalapack \
     #     --download-mumps \
     #     --download-f2cblaslapack \
-    #     COPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
-    #     CXXOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
-    #     FOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
+    #     COPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model=precise' \
+    #     CXXOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model=precise' \
+    #     FOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model=precise' \
     #     --known-mpi-shared-libraries=1 \
     #     --with-debugging=0 \
     #     --with-valgrind=0 \
@@ -58,9 +58,9 @@ build_petsc() {
      --with-shared-libraries \
      --with-debugging=0 \
      --with-petsc4py \
-     COPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
-     CXXOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
-     FOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model precise' \
+     COPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model=precise' \
+     CXXOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model=precise' \
+     FOPTFLAGS='-O3 -march=native -mtune=native -axCORE-AVX2 -xSSE4.2 -ipo -fp-model=precise' \
      --download-f2cblaslapack \
      --download-mumps \
      --download-scalapack

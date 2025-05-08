@@ -18,7 +18,7 @@ start=`date +%s`
 startnew=$start
 
 
-optprec='-fp-model precise '
+optprec='-fp-model=precise '
 for optlev in '-no-fast-transcendentals ' '-O3 ' '-O2 ' '-Os ' '-Ofast ' ; do
     for archlev in '' '-axCORE-AVX2 ' '-xHost ' ; do
         for tunelev in '' '-mtune=broadwell ' '-mtune=haswell ' ; do

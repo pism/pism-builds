@@ -7,7 +7,7 @@ set -x
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 
 MKL=/usr/local/pkg/numlib/imkl/2019.3.199-pic-iompi-2019b/mkl/lib/intel64
-optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model precise"
+optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model=precise"
 
 build_petsc() {
     rm -rf $PETSC_DIR

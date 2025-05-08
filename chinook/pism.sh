@@ -4,7 +4,7 @@ set -e
 set -u
 set -x
 
-optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model precise"
+optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model=precise"
 
 # No. of cores for make
 N=8
