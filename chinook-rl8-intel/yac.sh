@@ -44,6 +44,8 @@ autoreconf -i
             --disable-deprecated \
             --disable-fortran-bindings \
             --with-pic \
+            --with-external-lapack=mkl \
+            --with-mkl-root=${MKLROOT} \
 	    CC="mpicc -cc=icx" \
 	    CFLAGS="-O3 -g -march=native"
 
