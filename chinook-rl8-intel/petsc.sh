@@ -22,11 +22,11 @@ build_petsc() {
         --with-cxx="mpicc -cc=icx" \
         --CFLAGS="${optimization_flags}" \
         --CXXOPTFLAGS="${optimization_flags}" \
+        --FOPTFLAGS="${optimization_flags}" \
         --known-mpi-shared-libraries=1 \
 	--with-debugging=0 \
         --with-valgrind=0 \
         --with-x=0 \
-	--with-petsc4py \
         --with-ssl=0 \
         --with-batch=1 \
         --with-shared-libraries=1 \
