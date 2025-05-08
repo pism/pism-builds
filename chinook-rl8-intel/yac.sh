@@ -20,7 +20,7 @@ autoreconf -i
 ./configure --prefix=${prefix} \
             --with-pic \
 	    CC="mpicc -cc=icx" \
-	    CFLAGS="-O3 -g -march=native" \
+	    CFLAGS="-O3 -march=native" \
 	    FC=no
 
 make all && make install
@@ -48,6 +48,6 @@ autoreconf -i
             --with-mkl-root=${MKLROOT} \
             LDFLAGS="-qmkl=sequential" \
 	    CC="mpicc -cc=icx" \
-	    CFLAGS="-O3 -g -march=native"
+	    CFLAGS="-O3 -march=native"
 
 make all && make install
