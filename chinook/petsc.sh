@@ -6,43 +6,38 @@ set -x
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 
-MKL=/usr/local/pkg/numlib/imkl/2019.3.199-pic-iompi-2019b/mkl/lib/intel64
-optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -fp-model=precise"
+optimization_flags="-O3 -fp-model=precise"
 
 build_petsc() {
     rm -rf $PETSC_DIR
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b release https://gitlab.com/petsc/petsc.git .
+    git clone --depth=1 -b v3.23.1 https://gitlab.com/petsc/petsc.git .
 
-    # Note that on Chinook mpicc and mpicxx wrap Intel's C and C++ compilers
     ./config/configure.py \
-        --march native \
-	--download-petsc4py \
-	--with-cc=mpicc \
-	--with-cxx=mpicxx \
-        --with-fortran=0 \
-        --with-fc=mpifort \
-        --download-scalapack \
-        --download-ml \
-        --download-mumps \
-        --download-hypre \
-        --download-parmetis \
-        --download-metis \
-        --download-ptscotch \
-        --with-openmp \
-	--CFLAGS="${optimization_flags}" \
-	--known-mpi-shared-libraries=1 \
-	--with-blas-lapack-dir=${MKL} \
-        --with-debugging=0 \
-	--with-valgrind=0 \
-	--with-x=0 \
-	--with-ssl=0 \
-	--with-batch=1 \
-	--with-shared-libraries=1
+        --march=native \
+        --with-cc="mpicc -cc=icx" \
+        --with-fc=mpiifort \
+        --with-cxx="mpicc -cc=icx" \
+        --CFLAGS="${optimization_flags}" \
+        --CXXOPTFLAGS="${optimization_flags}" \
+        --FOPTFLAGS="${optimization_flags}" \
+        --known-mpi-shared-libraries=1 \
+	--with-debugging=0 \
+        --with-valgrind=0 \
+        --with-x=0 \
+        --with-ssl=0 \
+        --with-batch=1 \
+        --with-shared-libraries=1 \
+        --with-64-bit-indices \
+        --known-64-bit-blas-indices \
+        --with-scalapack-lib="-L$MKLROOT/lib/intel64 -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64" \
+	--with-blas-lapack-dir=$MKLROOT/lib/intel64  | tee petsc-configure.log
 
-    make all
+    make all | tee petsc-build.log
 }
 
 build_petsc
+
+
