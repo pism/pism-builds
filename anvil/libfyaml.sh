@@ -7,6 +7,7 @@ set -x
 # Install libf yaml/opt/libfyaml,
 # using /var/tmp/build/libfyaml as the build directory.
 
+N=${N:-12}
 MPICC=${MPICC:-mpicc}
 
 opt_flags=${opt_flags:--mavx2}
@@ -25,8 +26,8 @@ cd libfyaml
 
 ./bootstrap.sh
 
-./configure CC="$MPICC" CXX="$MPICXX" --disable-static --prefix=${prefix} \
+./configure CC="$CC" CXX="$CXX" --disable-static --prefix=${prefix} \
 
 
-make -j 128 all 2>&1 | tee libfyaml_compile.log
-make -j 128 install 2>&1 | tee libfyam_install.log
+make -j $N all 2>&1 | tee libfyaml_compile.log
+make -j $N install 2>&1 | tee libfyam_install.log

@@ -14,6 +14,7 @@ else
     SET_ENV=false
 fi
 
+export N=12
 export CXX=icpx
 export CC=icx
 
@@ -36,6 +37,7 @@ export build_dir=$BUILD
 ${SET_ENV} || ./libfyaml.sh | tee libfyaml.log
 export libfyaml_prefix=$LOCAL/libfyaml
 
+
 export prefix=$LOCAL/yac
 export build_dir=$BUILD
 ${SET_ENV} || ./yaxt.sh | tee yaxt.log
@@ -46,6 +48,7 @@ export build_dir=$BUILD
 ${SET_ENV} || ./yac.sh | tee yac.log
 export yac_prefix=$LOCAL/yac
 
+exit
 export prefix=$LOCAL/c-blosc
 export build_dir=$BUILD
 ${SET_ENV} || ./blosc.sh | tee blosc.log

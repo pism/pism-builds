@@ -7,6 +7,7 @@ set -x
 # Install parallel NetCDF using parallel HDF5 in /opt/hdf5 and
 # /var/tmp/build/netcdf as the build directory.
 
+N=${N:-12}
 MPICC=${MPICC:-mpicc}
 
 hdf5_prefix=${hdf5_prefix:-/opt/hdf5}
@@ -47,5 +48,5 @@ CC="${MPICC}" CXX="${MPICXX}" cmake \
     -DCMAKE_PREFIX_PATH="${hdf5_prefix};${blosc_prefix}" \
     2>&1 | tee netcf_configure.log
 
-make -j 128 VERBOSE=1 -C ${build_dir}/netcdf-c-${version}/build 2>&1 install test | tee netcdf_compile.log
+make -j $N VERBOSE=1 -C ${build_dir}/netcdf-c-${version}/build 2>&1 install test | tee netcdf_compile.log
 

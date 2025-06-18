@@ -4,9 +4,7 @@ set -e
 set -u
 set -x
 
-# Install HDF5 1.12.0 with parallel I/O in /opt/hdf5,
-# using /var/tmp/build/hdf5 as the build directory.
-
+N=${N:-12}
 MPICC=${MPICC:-mpicc}
 
 version=1.14.5
@@ -47,4 +45,4 @@ CC="${MPICC}" CXX="${MPICXX}" cmake \
     -DCMAKE_PREFIX_PATH="${blosc_prefix}" \
     2>&1 | tee hdf5_configure.log
 
-make -j 128 VERBOSE=1 -C ${build_dir}/hdf5-${version}/build 2>&1 install  | tee hdf5_compile.log
+make -j $N VERBOSE=1 -C ${build_dir}/hdf5-${version}/build 2>&1 install  | tee hdf5_compile.log

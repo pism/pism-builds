@@ -14,6 +14,8 @@ else
     SET_ENV=false
 fi
 
+export N=12
+
 export CXX=g++
 export CC=gcc
 
@@ -25,16 +27,10 @@ export MPICXX_CXX="mpicxx"
 export MPIF90_F90="mpif90"
 export MPICC_CC="mpicc"
 
-export opt_flags="-march=znver3"
+export opt_flags="-O3"
 
 echo "local_dir=${LOCAL}"
 echo "build_dir=${BUILD}"
-
-export prefix=$LOCAL/openmpi
-export build_dir=$BUILD
-${SET_ENV} || ./openmpi.sh | tee openmpi.log
-export openmpi_prefix=$LOCAL/openmpi
-export PATH=${openmpi_prefix}/bin:$PATH
 
 export prefix=$LOCAL/libfyaml
 export build_dir=$BUILD

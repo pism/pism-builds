@@ -6,14 +6,6 @@ set -x
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 
-MKL=/apps/anvil/external/apps/intel/oneapi/2024.1/mkl/2024.1/lib/
-
-set -e
-set -u
-set -x
-
-echo 'PETSC_DIR = ' ${PETSC_DIR}
-
 optimization_flags="-O3"
 
 build_petsc() {

@@ -4,19 +4,18 @@ umask 007
 
 module purge
 module load gcc/11.2.0
-#module load openmpi/4.1.6
-#module load mvapich2/2.3.6
-module load openblas/0.3.17
-module load cmake/3.20.0
-module load fftw/3.3.8
-module load gsl/2.4
+module load intel-mkl
+module load openmpi/4.1.6
+module load openblas
+module load cmake
+module load fftw
+module load gsl
 module load libxml2
 module load curl
-module load proj/6.2.0
-module load udunits/2.2.28
-module load zlib/1.2.11
-module load libszip/2.1.1
-module load anaconda/2024.02-py311
+module load proj
+module load udunits
+module load zlib
+module load libszip
 
 export LOCAL=$HOME/local-gcc
 export BUILD=$LOCAL/build
