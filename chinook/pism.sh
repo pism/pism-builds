@@ -51,10 +51,8 @@ cmake \
     -DCMAKE_C_FLAGS="${opt_flags} -diag-disable=cpu-dispatch,10006" \
     -DCMAKE_INSTALL_PREFIX=${prefix} \
     -DPism_USE_YAC_INTERPOLATION=YES \
-    -DHDF5_PREFER_PARALLEL=TRUE \
     -DPism_USE_PARALLEL_NETCDF4=YES \
     -DPism_BUILD_PYTHON_BINDINGS=OFF \
-    -DPism_USE_PIO=NO \
     -DPism_USE_PNETCDF=NO \
     -DPism_USE_PROJ=YES  
   

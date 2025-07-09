@@ -45,7 +45,7 @@ make -j $N check 2>&1 | tee yaxt_check.log
 
 cd -
 
-yac_version=3.7.0
+yac_version=3.7.1
 
 mkdir -p yac
 cd yac
@@ -74,4 +74,4 @@ autoreconf -i
 
 make -j $N all 2>&1 | tee yac_compile.log
 make -j $N install 2>&1 | tee yac_install.log
-#make -j $N check 2>&1 | tee yac_check.log
+make -j $N check 2>&1 | tee yac_check.log
