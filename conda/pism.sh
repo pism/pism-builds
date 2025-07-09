@@ -4,7 +4,6 @@ set -e
 set -u
 set -x
 
-optimization_flags="-O3   -mcpu=apple-m2 -mtune=apple-m2"
 optimization_flags="-O3"
 
 # No. of cores for make
@@ -42,6 +41,8 @@ build_pism() {
     cmake -DCMAKE_CXX_FLAGS="${optimization_flags}" \
           -DCMAKE_C_FLAGS="${optimization_flags}" \
           -DCMAKE_INSTALL_PREFIX=$PISM_DIR \
+          -DCMAKE_PREFIX_PATH="${PETSC_DIR};" \
+          -DPETSC4PY_INCLUDES=$PETSC_DIR/$PETSC_ARCH \
           -DPism_DEBUG=YES \
           -DPism_BUILD_PYTHON_BINDINGS=ON \
           -DPism_USE_JANSSON=NO \

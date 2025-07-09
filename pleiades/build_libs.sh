@@ -80,3 +80,4 @@ export cdo_prefix=$LOCAL/cdo
 
 ${SET_ENV} || ./petsc.sh | tee petsc.log
 export PETSC_DIR=$LOCAL/petsc
+

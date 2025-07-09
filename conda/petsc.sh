@@ -3,7 +3,7 @@
 set -e
 set -x
 
-# Make sure PETSC_DIR and PETSC_ARCH are already set before running this script
+# Make sure PETSC_DIR is already set before running this script
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 
@@ -13,14 +13,15 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b main https://gitlab.com/petsc/petsc.git .
+    git clone -b v3.21.5  https://gitlab.com/petsc/petsc.git .
 
     python ./config/configure.py \
-	    --with-cc=mpicc \
-	    --with-cxx=mpicxx \
+	    --with-cc=$MPICC \
+	    --with-cxx=$MPICXX \
            --with-shared-libraries \
-           --with-debugging=0 \
+           --with-debugging=1 \
            --with-fc=0 \
+           --with-x=0 \
 	   --with-64-bit-indices \
            --with-petsc4py \
            COPTFLAGS='-O3' \

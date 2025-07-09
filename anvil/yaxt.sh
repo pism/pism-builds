@@ -1,38 +1,44 @@
 #!/bin/bash
 
-set -e
 set -u
+set -e
 set -x
 
-# Install yaxt and yac in  /opt/yac,
-# using /var/tmp/build/yac as the build directory.
+rm -rf yaxt
+rm -rf yac
 
-MPICC=${MPICC:-mpicc}
+N=${N:-12}
 
-opt_flags=${opt_flags:--mavx2}
 prefix=${prefix:-/opt/yac}
+libfyaml_prefix=${libfyaml_prefix:-/opt/libfyaml}
+yaxt_prefix=${yaxt_prefix:-/opt/yaxt}
+yac_prefix=${yac_prefix:-/opt/yac}
+
 build_dir=${build_dir:-/var/tmp/build/yac}
 
 mkdir -p ${build_dir}
 cd ${build_dir}
 
-rm -rf yaxt
 
-yaxt_version=0.11.2
-git clone -b release-${yaxt_version} \
-    https://gitlab.dkrz.de/dkrz-sw/yaxt.git
+yaxt_version=0.11.4
 
+mkdir -p yaxt
 cd yaxt
+
+git clone https://gitlab.dkrz.de/dkrz-sw/yaxt.git . || git pull
+git checkout release-${yaxt_version}
+git pull
+
 
 autoreconf -i
 
 ./configure --prefix=${prefix} \
-            CFLAGS="-O3 -g ${opt_flags}" CC="$MPICC" FC="$MPIF90" FCFLAGS="${opt_flags}" \
+            --with-pic \
+            --disable-xt-ddt-exchanger \
+	    CC=$CC \
+	    CFLAGS="-O3 -march=native" \
+	    FC=no
 
-
-make -j 128 all 2>&1 | tee yaxt_compile.log
-make -j 128 install 2>&1 | tee yaxt_install.log
-make -j 128 check 2>&1 | tee yaxt_check.log
-cd -
-
-
+make -j $N all 2>&1 | tee yaxt_compile.log
+make -j $N install 2>&1 | tee yaxt_install.log
+make -j $N check 2>&1 | tee yaxt_check.log
