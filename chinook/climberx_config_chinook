@@ -16,8 +16,8 @@ INC_COORD = -I${COORDROOT}/libcoordinates/include
 LIB_COORD = -L${COORDROOT}/libcoordinates/include -lcoordinates
 
 # FESM-UTILS
-INC_FESMUTILS = -I${FESMUTILSROOT}/include-omp
-LIB_FESMUTILS = -L${FESMUTILSROOT}/include-omp -lfesmutils
+INC_FESMUTILS = -I${FESMUTILSROOT}/utils/include-omp
+LIB_FESMUTILS = -L${FESMUTILSROOT}/utils/include-omp -lfesmutils
 
 # FFTW
 FFTWROOT = ${FESMUTILSROOT}/fftw-omp

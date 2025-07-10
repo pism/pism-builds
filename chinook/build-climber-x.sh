@@ -29,7 +29,7 @@ export CLIMBER_DIR=$LOCAL/climber-x
 mkdir -p $CLIMBER_DIR
 
 export prefix=$LOCAL/coordinates
-${SET_ENV} || ./coordinates.sh | tee coordinates.log
+# ${SET_ENV} || ./coordinates.sh | tee coordinates.log
 export coordinates_prefix=$LOCAL/coordinates
 
 export prefix=$LOCAL/fesm-utils

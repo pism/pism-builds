@@ -11,4 +11,5 @@ git clone https://github.com/fesmc/coordinates.git . || git pull
 
 python config.py config/coordinates_config_chinook
 make clean
+# This fails to compile wihth -j N
 make coord-static openmp=1 
