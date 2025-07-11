@@ -30,12 +30,10 @@ INC_LIS = -I${LISROOT}/include
 LIB_LIS = -L${LISROOT}/lib/ -llis
 
 # Yelmo
-YELMOROOT = src/yelmo
 INC_YELMO = -I${YELMOROOT}/libyelmo/include
 LIB_YELMO = -L${YELMOROOT}/libyelmo/include -lyelmo
 
 # VILMA
-VILMAROOT = src/vilma
 INC_VILMA = -I${VILMAROOT}/include
 LIB_VILMA = ${VILMAROOT}/lib/vega_pism.a
 

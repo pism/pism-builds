@@ -19,10 +19,9 @@ git clone https://github.com/fesmc/fesm-utils.git . || (git checkout main && git
 cp ${SCRIPTDIR}/fesm_utils_install_chinook install_chinook
 cp ${SCRIPTDIR}/fesm_utils_config_chinook utils/config/
 
-# ./install_chinook ifx
+./install_chinook ifx
 
 cd utils
-export openmp=1
 python config.py config/fesm_utils_config_chinook
 make clean
 make -j $N fesmutils-static
