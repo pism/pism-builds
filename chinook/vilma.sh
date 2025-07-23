@@ -12,6 +12,6 @@ prefix=${prefix:-/opt/vilma}
 SCRIPTDIR=$PWD
 mkdir -p ${prefix}
 pushd ${prefix}
-git clone git@github.com:cxesmc/vilma.git . || git pull
-
+git clone git@github.com:cxesmc/vilma_src.git . || git pull
+make
 

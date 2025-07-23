@@ -22,14 +22,4 @@ cd ..
 
 # Compile the climate model 
 make clean
-make climber-clim
-
-# Make sure to install the `runner` package too
-pip install https://github.com/fesmc/runner/archive/refs/heads/master.zip
-
-# Set up your `runme` config file for your system
-cp .runme/runme_config .runme_config
-# - Edit hpc and account name to match your settings
-
-# Run a pre-industrial equilibrium climate-only test simulation
-./runme -rs -q short --omp 32 -o output/clim
+make climber-clim-ice

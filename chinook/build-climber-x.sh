@@ -46,7 +46,7 @@ export prefix=$LOCAL/yelmo
 export yelmo_prefix=$LOCAL/yelmo
 
 export prefix=$LOCAL/vilma
-${SET_ENV} || ./vilma.sh | tee vilma.log
+# ${SET_ENV} || ./vilma.sh | tee vilma.log
 export vilma_prefix=$LOCAL/vilma
 
 export VILMAROOT=${vilma_prefix}
