@@ -35,7 +35,7 @@ LIB_YELMO = -L${YELMOROOT}/libyelmo/include -lyelmo
 
 # VILMA
 INC_VILMA = -I${VILMAROOT}/
-LIB_VILMA = -L${VILMAROOT}/lib/vega_pism.a
+LIB_VILMA = ${VILMAROOT}/lib/vega_pism.a
 
 ### Compiler options #############
 
