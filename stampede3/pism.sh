@@ -41,8 +41,12 @@ CC="${MPICC}" CXX="${MPICXX}" cmake \
     -S ${build_dir} \
     -DCMAKE_CXX_FLAGS="${opt_flags}" \
     -DCMAKE_C_FLAGS="${opt_flags}" \
-    -DCMAKE_PREFIX_PATH="${yaxt_prefix};${yac_prefix};${TACC_NETCDF_DIR};${TACC_GSL_DIR};${TACC_PROJ_DIR}" \
+    -DCMAKE_PREFIX_PATH="${yaxt_prefix};${yac_prefix};${TACC_NETCDF_DIR};${TACC_GSL_DIR}" \
     -DCMAKE_INSTALL_PREFIX=${prefix} \
+    -DCMAKE_BUILD_TYPE="Release" \
+    -DCMAKE_C_FLAGS_RELEASE="-O3 -g -fno-omit-frame-pointer -UNDEBUG" \
+    -DCMAKE_CXX_FLAGS_RELEASE="-O3 -g -fno-omit-frame-pointer -UNDEBUG" \
+    -DCMAKE_Fortran_FLAGS_RELEASE="-O3 -g -fno-omit-frame-pointer -UNDEBUG" \
     -DPism_USE_YAC_INTERPOLATION=YES \
     -DPism_USE_PARALLEL_NETCDF4=YES \
     -DPism_BUILD_PYTHON_BINDINGS=OFF \

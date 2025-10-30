@@ -25,7 +25,7 @@ export MPICXX_CXX="mpicxx -cxx=icpx"
 export MPIF90_F90="mpif90 -f90=ifx"
 export MPICC_CC="mpicc -cxx=icx"
 
-export N=8
+export N=40
 export opt_flags="-xCORE-AVX512 -O3"
 
 echo "local_dir=${LOCAL}"
@@ -33,12 +33,12 @@ echo "build_dir=${BUILD}"
 
 export prefix=$LOCAL/libfyaml
 export build_dir=$BUILD
-${SET_ENV} || ./libfyaml.sh | tee libfyaml.log
+#${SET_ENV} || ./libfyaml.sh | tee libfyaml.log
 export libfyaml_prefix=$LOCAL/libfyaml
 
 export prefix=$LOCAL/yac
 export build_dir=$BUILD
-${SET_ENV} || ./yaxt.sh | tee yaxt.log
+#${SET_ENV} || ./yaxt.sh | tee yaxt.log
 export yaxt_prefix=$LOCAL/yac
 
 export prefix=$LOCAL/yac

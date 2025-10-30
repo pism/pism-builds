@@ -5,7 +5,7 @@ umask 007
 module purge
 module load intel/24.0
 module load impi/21.11
-module load cmake/3.29.5
+module load cmake
 module load phdf5/1.14.4
 module load parallel-netcdf 
 module load proj
@@ -16,7 +16,7 @@ module load cdo
 module load fftw3
 module load ncview
 module load petsc/3.23-nohdf5i64
-#module load petsc/3.21-nohdf5i64debug
+module load python_cacher
 
 export LOCAL=$HOME/local
 export PISM_DIR=$LOCAL/pism
