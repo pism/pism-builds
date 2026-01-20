@@ -6,7 +6,7 @@ set -x
 
 echo 'PETSC_DIR = ' ${PETSC_DIR}
 
-optimization_flags="-O3 -axCORE-AVX2 -xSSE4.2 -ipo -fp-model=precise"
+optimization_flags="-O3 -fp-model=precise"
 
 build_petsc() {
     rm -rf $PETSC_DIR
@@ -32,13 +32,10 @@ build_petsc() {
         --download-mumps \
         --with-shared-libraries=1 \
         --with-64-bit-indices \
-        --known-64-bit-blas-indices \
         --with-scalapack-lib="-L$MKLROOT/lib/intel64 -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64" \
 	--with-blas-lapack-dir=$MKLROOT/lib/intel64  | tee petsc-configure.log
-    
 
-    make all
+    make all | tee petsc-build.log
 }
 
 build_petsc
-

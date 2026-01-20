@@ -35,7 +35,7 @@ export yac_prefix=$LOCAL/yac
 
 
 export PETSC_DIR=$LOCAL/petsc
-${SET_ENV} || ./petsc.sh | tee petsc.log
+${SET_ENV} || ./petsc-mumps.sh | tee petsc.log
 
 # Build the dev branch:
 export version=dev

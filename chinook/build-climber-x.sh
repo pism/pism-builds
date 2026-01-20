@@ -30,23 +30,23 @@ export CLIMBER_DIR=$LOCAL/climber-x
 mkdir -p $CLIMBER_DIR
 
 export prefix=$LOCAL/coordinates
-# ${SET_ENV} || ./coordinates.sh | tee coordinates.log
+${SET_ENV} || ./coordinates.sh | tee coordinates.log
 export coordinates_prefix=$LOCAL/coordinates
 
 export COORDROOT=${coordinates_prefix}
 
 export prefix=$LOCAL/fesm-utils
-#${SET_ENV} || ./fesm.sh | tee fesm.log
+${SET_ENV} || ./fesm.sh | tee fesm.log
 export fesm_prefix=$LOCAL/fesm-utils
 
 export FESMUTILSROOT=${fesm_prefix}
 
 export prefix=$LOCAL/yelmo
-#${SET_ENV} || ./yelmo.sh | tee yelmo.log
+${SET_ENV} || ./yelmo.sh | tee yelmo.log
 export yelmo_prefix=$LOCAL/yelmo
 
 export prefix=$LOCAL/vilma
-# ${SET_ENV} || ./vilma.sh | tee vilma.log
+${SET_ENV} || ./vilma.sh | tee vilma.log
 export vilma_prefix=$LOCAL/vilma
 
 export VILMAROOT=${vilma_prefix}
