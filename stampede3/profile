@@ -1,0 +1,30 @@
+#!/bin/bash
+
+umask 007
+
+module purge
+module load intel/24.0
+module load impi/21.11
+module load cmake
+module load phdf5/1.14.4
+module load parallel-netcdf 
+module load proj
+module load udunits
+module load gsl
+module load nco
+module load cdo
+module load fftw3
+module load ncview
+module load petsc/3.23-nohdf5i64
+module load python_cacher
+
+export LOCAL=$HOME/local
+export PISM_DIR=$LOCAL/pism
+export BUILD=$LOCAL/build
+export PISM_PREFIX=${PISM_DIR}
+
+# start an interactive job
+alias interact="srun -p debug --nodes=1 --exclusive -I --pty /bin/bash"
+
+export PATH=$PISM_PREFIX/bin:$PATH
+export PISM_MPIDO='mpirun -np'
