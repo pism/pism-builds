@@ -25,7 +25,7 @@ export MPICXX=mpiicpc
 
 export prefix=$LOCAL/libfyaml
 export build_dir=$BUILD
-# ${SET_ENV} || ./libfyaml.sh | tee libfyaml.log
+${SET_ENV} || ./libfyaml.sh | tee libfyaml.log
 export libfyaml_prefix=$LOCAL/libfyaml
 
 export prefix=$LOCAL/yac
