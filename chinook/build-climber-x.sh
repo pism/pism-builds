@@ -55,4 +55,4 @@ export YELMOROOT=${yelmo_prefix}
 export prefix=$CLIMBER_DIR
 ${SET_ENV} || ./climberx.sh | tee climberx.log
 
-pip install https://github.com/cxesmc/runner/archive/refs/heads/master.zip
+pip install https://github.com/fesmc/runner/archive/refs/heads/master.zip
