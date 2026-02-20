@@ -13,5 +13,6 @@ SCRIPTDIR=$PWD
 mkdir -p ${prefix}
 pushd ${prefix}
 git clone git@github.com:cxesmc/vilma_src.git . || git pull
+mkdir -p lib
 make
 
