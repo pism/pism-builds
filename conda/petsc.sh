@@ -22,7 +22,6 @@ build_petsc() {
            --with-debugging=1 \
            --with-fc=0 \
            --with-x=0 \
-	   --with-64-bit-indices \
            --with-petsc4py \
            COPTFLAGS='-O3' \
            CXXOPTFLAGS='-O3' \

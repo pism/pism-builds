@@ -6,7 +6,7 @@ set -e
 
 # Build prerequisite libraries
 
-# Run as "SET_ENV=1 ./build_libs.sh" to set environment variables
+# Run as "SET_ENV=1 ./build_all.sh" to set environment variables
 # needed to build PISM *without* actually re-building libraries.
 if [ -v SET_ENV ]; then
     SET_ENV=true
