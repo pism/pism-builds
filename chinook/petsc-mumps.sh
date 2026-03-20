@@ -13,7 +13,7 @@ build_petsc() {
     mkdir -p $PETSC_DIR
     cd $PETSC_DIR
 
-    git clone --depth=1 -b v3.23.1 https://gitlab.com/petsc/petsc.git .
+    git clone -b release --depth=1 https://gitlab.com/petsc/petsc.git .
 
     ./config/configure.py \
         --march=native \
