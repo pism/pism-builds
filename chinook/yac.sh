@@ -60,6 +60,7 @@ autoreconf -i
 ./configure --prefix=${prefix} \
             --with-yaxt-root=${prefix} \
 	    --with-fyaml-root=${libfyaml_prefix} \
+            --enable-python-bindings \
             --disable-netcdf \
             --disable-examples \
             --disable-tools \

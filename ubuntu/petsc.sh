@@ -1,38 +1,40 @@
 #!/bin/bash
 
 set -e
+set -u
 set -x
 
-prefix=${HOME}/local/petsc
 
-configure_and_build() {
-    sixty_four=$1
-    debugging=$2
-    ./config/configure.py \
-        --with-shared-libraries \
-        --with-fc=0 \
-        --with-debugging=${debugging} \
-        --with-64-bit-indices=${sixty_four}
+rm -rf ${build_dir}
+mkdir -p ${build_dir}
+pushd ${build_dir}
 
-    make all
-}
+git clone -b release --depth=1 https://gitlab.com/petsc/petsc.git .
 
-build_petsc() {
-    version=3.10.0
+PETSC_DIR=$PWD
+PETSC_ARCH="linux-opt"
 
-    mkdir -p ${prefix}
-    cd ${prefix}
-    wget -nc http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${version}.tar.gz
-    tar xzf petsc-${version}.tar.gz
+./configure \
+  COPTFLAGS='-O3 -march=native -mtune=native' \
+  CXXOPTFLAGS='-O3 -march=native -mtune=native' \
+  FOPTFLAGS='-O3 -march=native -mtune=native' \
+  --prefix=${prefix} \
+  --with-shared-libraries \
+  --with-debugging=0 \
+  --with-petsc4py \
+  --download-cmake \
+  --download-scalapack \
+  --download-mumps \
+  --download-parmetis \
+  --download-metis \
+  --download-ptscotch \
+  --download-f2cblaslapack --download-blis \
+  --with-valgrind=0 \
+  --with-x=0
 
-    cd petsc-${version}
-    export PETSC_DIR=$PWD
+export PYTHONPATH=${prefix}/lib
+make all
+make install
+make PETSC_DIR=${prefix} PETSC_ARCH="" check
 
-    export PETSC_ARCH=opt-32bit
-    if [ "$2" = "1" ]; then
-        export PETSC_ARCH=dbg-32bit
-    fi
-    configure_and_build $1 $2
-}
-
-build_petsc $1 $2
+popd

@@ -36,8 +36,6 @@ mkdir -p build
 popd
 
 
-echo $yac_prefix
-
 export CC=icx
 export CXX=icpx
 # Silence OpenMPI's error message about a part of its system that is not available on login nodes
