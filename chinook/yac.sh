@@ -20,7 +20,7 @@ mkdir -p ${build_dir}
 cd ${build_dir}
 
 
-yaxt_version=0.11.4
+yaxt_version=0.11.5.1
 
 mkdir -p yaxt
 cd yaxt
@@ -45,7 +45,7 @@ make -j $N check 2>&1 | tee yaxt_check.log
 
 cd -
 
-yac_version=3.7.1
+yac_version=3.14.0
 
 mkdir -p yac
 cd yac
