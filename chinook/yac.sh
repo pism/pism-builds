@@ -20,14 +20,12 @@ mkdir -p ${build_dir}
 cd ${build_dir}
 
 
-yaxt_version=0.11.5.1
-
 mkdir -p yaxt
 cd yaxt
 
-git clone https://gitlab.dkrz.de/dkrz-sw/yaxt.git . || git pull
-git checkout release-${yaxt_version}
-git pull
+yaxt_version=0.11.5.1
+git clone -b release-${yaxt_version} \
+    https://gitlab.dkrz.de/dkrz-sw/yaxt.git
 
 
 autoreconf -i
@@ -45,14 +43,12 @@ make -j $N check 2>&1 | tee yaxt_check.log
 
 cd -
 
-yac_version=3.14.0
-
 mkdir -p yac
 cd yac
 
-git clone https://gitlab.dkrz.de/dkrz-sw/yac.git . || git pull
-git checkout release-${yac_version}
-git pull
+yac_version=3.14.0
+git clone -b release-${yac_version} \
+    https://gitlab.dkrz.de/dkrz-sw/yac.git
 
 
 autoreconf -i
