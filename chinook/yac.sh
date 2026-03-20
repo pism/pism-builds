@@ -20,36 +20,28 @@ mkdir -p ${build_dir}
 cd ${build_dir}
 
 
-mkdir -p yaxt
-cd yaxt
-
 yaxt_version=0.11.5.1
 git clone -b release-${yaxt_version} \
     https://gitlab.dkrz.de/dkrz-sw/yaxt.git
 
+cd yaxt
 
 autoreconf -i
 
-./configure --prefix=${prefix} \
-            --with-pic \
-            --disable-xt-ddt-exchanger \
-	    CC="mpicc -cc=icx" \
-	    CFLAGS="-O3 -march=native" \
-	    FC=no
+./configure --prefix=${prefix} FC=no \
+            --with-pic
 
-make -j $N all 2>&1 | tee yaxt_compile.log
-make -j $N install 2>&1 | tee yaxt_install.log
-make -j $N check 2>&1 | tee yaxt_check.log
+make all -j $N && make install
 
 cd -
-
-mkdir -p yac
-cd yac
 
 yac_version=3.14.0
 git clone -b release-${yac_version} \
     https://gitlab.dkrz.de/dkrz-sw/yac.git
 
+cd yac
+
+test -f ./configure || ./autogen.sh
 
 autoreconf -i
 
